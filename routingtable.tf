@@ -23,7 +23,7 @@ resource "aws_route_table" "user_dmz_pri_rt" {
   }
 }
 
-resource "aws_route_table" "dev_dmz_pub_rt" {
+resource "aws_route_table" "dev_dmz_pub_rts" {
   vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id  
   route {
     cidr_block = "0.0.0.0/0"
@@ -34,7 +34,7 @@ resource "aws_route_table" "dev_dmz_pub_rt" {
   }
 }
 resource "aws_route_table" "dev_dmz_pri_rt" {
-  for_each = var.dev_dmz_pri_rt
+  for_each = var.dev_dmz_pri_rts
   vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"

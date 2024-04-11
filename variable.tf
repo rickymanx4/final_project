@@ -236,7 +236,7 @@ variable "user_dmz_pub_rt" {
   default     = 4
 }
 
-variable "user_dmz_pri_rt" { 
+variable "user_dmz_pri_rts" { 
   description = "user_dmz_pri_rt" 
   type        = map(object({
     name  = string
@@ -245,17 +245,17 @@ variable "user_dmz_pri_rt" {
   default     = {
     user_dmz_pri_rt_a = {
         name = "user_dmz_pri_rt_a"
-        ngw = aws_nat_gateway.user_dmz_ngw_a.id
+        ngw = "aws_nat_gateway.user_dmz_ngw_a.id"
     }
     user_dmz_pri_rt_c = {
         name = "user_dmz_pri_rt_c"
-        ngw = aws_nat_gateway.user_dmz_ngw_c.id
+        ngw = "aws_nat_gateway.user_dmz_ngw_c.id"
     }
 
   }
 }
 
-variable "dev_dmz_pri_rt" { 
+variable "dev_dmz_pri_rts" { 
   description = "dev_dmz_pri_rt" 
   type        = map(object({
     name  = string
@@ -264,11 +264,11 @@ variable "dev_dmz_pri_rt" {
   default     = {
     dev_dmz_pri_rt_a = {
         name = "dev_dmz_pri_rt_a"
-        ngw = aws_nat_gateway.dev_dmz_ngw_a.id
+        ngw = "aws_nat_gateway.dev_dmz_ngw_a.id"
     }
     dev_dmz_pri_rt_c = {
         name = "dev_dmz_pri_rt_c"
-        ngw = aws_nat_gateway.dev_dmz_ngw_c.id
+        ngw = "aws_nat_gateway.dev_dmz_ngw_c.id"
     }
 
   }
