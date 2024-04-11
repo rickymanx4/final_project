@@ -16,7 +16,7 @@ variable "vpc" {
         cidr = "10.10.0.0/16"
     }
     dev_dmz_vpc = {
-        name = "shared_vpc"
+        name = "dev_dmz_vpc"
         cidr = "10.30.0.0/16"
     }
     shared_vpc = {
@@ -264,11 +264,11 @@ variable "dev_dmz_pri_rt" {
   default     = {
     dev_dmz_pri_rt_a = {
         name = "dev_dmz_pri_rt_a"
-        ngw = "aws_nat_gateway.dev_dmz_nat_a.id"
+        ngw = aws_nat_gateway.dev_dmz_nat_a.id
     }
     dev_dmz_pri_rt_c = {
         name = "dev_dmz_pri_rt_c"
-        ngw = "aws_nat_gateway.dev_dmz_nat_c.id"
+        ngw = aws_nat_gateway.dev_dmz_nat_c.id
     }
 
   }
