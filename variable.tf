@@ -10,7 +10,7 @@ variable "vpc" {
     name  = string
     cidr  = string
   }))
-  default     = [
+  default     = {
     {
         name = "user_dmz_vpc"
         cidr = "10.10.0.0/16"
@@ -31,7 +31,7 @@ variable "vpc" {
         name = "testdev_vpc"
         cidr = "10.230.0.0/16"
     }
-  ]
+  }
 }
 
 # variable "vpc" {
