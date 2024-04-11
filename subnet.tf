@@ -10,7 +10,9 @@ resource "aws_subnet" "subnet_user_dmz" {
     Name = "each.value.name"
   }
   map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
 }
+
 
 resource "aws_subnet" "subnet_dev_dmz" {
   vpc_id  = "$(aws_vpc.project_vpc[1].id)" 
@@ -21,6 +23,7 @@ resource "aws_subnet" "subnet_dev_dmz" {
     Name = "each.value.name"
   }
   map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
 }
 
 resource "aws_subnet" "subnet_shared" {
@@ -32,6 +35,7 @@ resource "aws_subnet" "subnet_shared" {
     Name = "each.value.name"
   }
   map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
 }
 
 resource "aws_subnet" "subnet_product" {
@@ -43,6 +47,7 @@ resource "aws_subnet" "subnet_product" {
     Name = "each.value.name"
   }
   map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
 }
 
 resource "aws_subnet" "subnet_testdev" {
@@ -54,4 +59,5 @@ resource "aws_subnet" "subnet_testdev" {
     Name = "each.value.name"
   }
   map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
 }
