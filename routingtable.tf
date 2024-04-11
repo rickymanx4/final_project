@@ -73,20 +73,27 @@ resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
   route_table_id = aws_route_table.user_dmz_pub_rt.id
 }
 
-resource "aws_route_table_association" "user_dmz_pri_rt_asso" {
-  for_each       = var.subnet_user_dmz_pri
-  subnet_id      = aws_subnet.user_dmz_pri_subnet[each.key].id
-  route_table_id = aws_route_table.user_dmz_pri_rt.id
+resource "aws_route_table_association" "user_dmz_pri_rt_asso1" {  
+  subnet_id      = aws_subnet.user_dmz_pri_subnet["user_dmz_pri_01a"].id
+  route_table_id = aws_route_table.user_dmz_pri_rt_a.id
 }
 
+resource "aws_route_table_association" "user_dmz_pri_rt_asso2" {  
+  subnet_id      = aws_subnet.user_dmz_pri_subnet["user_dmz_pri_01c"].id
+  route_table_id = aws_route_table.user_dmz_pri_rt_c.id
+}
 resource "aws_route_table_association" "dev_dmz_pub_rt_asso" {
   for_each       = var.subnet_dev_dmz_pub
   subnet_id      = aws_subnet.dev_dmz_pub_subnet[each.key].id
   route_table_id = aws_route_table.dev_dmz_pub_rt.id
 }
 
+resource "aws_route_table_association" "dev_dmz_pri_rt_asso1" {
+  subnet_id      = aws_subnet.dev_dmz_pri_subnet["dev_dmz_pri_01a"].id
+  route_table_id = aws_route_table.dev_dmz_pri_rt_a.id
+}
+
 resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
-  for_each       = var.subnet_dev_dmz_pri
-  subnet_id      = aws_subnet.dev_dmz_pri_subnet[each.key].id
-  route_table_id = aws_route_table.dev_dmz_pri_rt.id
+  subnet_id      = aws_subnet.dev_dmz_pri_subnet["dev_dmz_pri_01c"].id
+  route_table_id = aws_route_table.dev_dmz_pri_rt_c.id
 }
