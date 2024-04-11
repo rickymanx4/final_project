@@ -12,7 +12,7 @@ resource "aws_route_table" "user_dmz_pub_rt" {
   }
 }
 resource "aws_route_table" "user_dmz_pri_rt_a" {
-  count = lenth(var.az_select)  
+  count = length(var.az_select)  
   vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"
