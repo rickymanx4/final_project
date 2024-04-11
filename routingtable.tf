@@ -82,51 +82,47 @@ resource "aws_route_table" "shared_pri_rt" {
 
 ################################ d. product_zone ################################
 resource "aws_route_table" "product_pri_rt_a" {
-  for_each = var.subnet_product_a
   vpc_id = aws_vpc.project_vpc["product_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "var.subnet_product_a[each.key]"
+    Name = "product_rt_a"
   }
 }
 
-resource "aws_route_table" "product_pri_rt_c" {
-  for_each = var.subnet_product_c
+resource "aws_route_table" "product_pri_rt_c" {  
   vpc_id = aws_vpc.project_vpc["product_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "var.subnet_product_c[each.key]"
+    Name = "product_rt_c"
   }
 }
 
 ################################ e. testdev_zone ################################
 resource "aws_route_table" "testdev_pri_rt_a" {
-  for_each = var.subnet_testdev_a
   vpc_id = aws_vpc.project_vpc["testdev_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "var.subnet_testdev_a[each.key]"
+    Name = "testdev_rt_a"
   }
 }
 
-resource "aws_route_table" "testdev_pri_rt_c" {
-  for_each = var.subnet_testdev_c
+resource "aws_route_table" "testdev_pri_rt_c" {  
   vpc_id = aws_vpc.project_vpc["testdev_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "var.subnet_testdev_c[each.key]"
+    Name = "testdev_rt_c"
   }
 }
 
