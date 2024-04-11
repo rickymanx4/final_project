@@ -15,8 +15,8 @@ variable "vpc" {
         name = "user_dmz_vpc"
         cidr = "10.10.0.0/16"
     }
-    dev_dmz_vpc = {
-        name = "dev_dmz_vpc"
+    shared_vpc = {
+        name = "shared_vpc"
         cidr = "10.30.0.0/16"
     }
     shared_vpc = {
@@ -34,8 +34,8 @@ variable "vpc" {
   }
 }
 
-variable "subnet" { 
-  description = "subnet" 
+variable "subnet_user_dmz" { 
+  description = "subnet_user_dmz" 
   type        = map(object({
     name  = string
     cidr  = string
@@ -82,4 +82,146 @@ variable "subnet" {
     }
 }
 
+variable "subnet_dev_dmz" { 
+  description = "subnet_dev_dmz" 
+  type        = map(object({
+    name  = string
+    cidr  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
+    dev_dmz_pub_01a = {
+        name = "dev_dmz_pub_01a"
+        cidr = "10.30.10.0/24"
+        az = "ap-northeast-3a"
+        pub = true
+        }
+    dev_dmz_pub_02a = {
+        name = "dev_dmz_pub_02a"
+        cidr = "10.30.20.0/24"
+        az = "ap-northeast-3a"
+        pub = true
+        }
+    dev_dmz_pri_01a = {
+        name = "dev_dmz_pri_01a"
+        cidr = "10.30.50.0/24"
+        az = "ap-northeast-3a"
+        pub = false
+        }
+    dev_dmz_pub_01c = {
+        name = "dev_dmz_pub_01c"
+        cidr = "10.30.110.0/24"
+        az = "ap-northeast-3c"
+        pub = true
+        }
+    dev_dmz_pub_02c = {
+        name = "dev_dmz_pub_02c"
+        cidr = "10.30.120.0/24"
+        az = "ap-northeast-3c"
+        pub = true
+        }
+    dev_dmz_pri_01c = {
+        name = "dev_dmz_pri_01c"
+        cidr = "10.30.150.0/24"
+        az = "ap-northeast-3c"
+        pub = false
+        }
+    }
+}
 
+variable "subnet_shared" { 
+  description = "subnet_shared" 
+  type        = map(object({
+    name  = string
+    cidr  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
+    shared_pri_01a = {
+        name = "shared_pri_01a"
+        cidr = "10.100.50.0/24"
+        az = "ap-northeast-3a"
+        pub = false
+        }
+    shared_pri_02a = {
+        name = "shared_pri_02a"
+        cidr = "10.100.150.0/24"
+        az = "ap-northeast-3a"
+        pub = false
+        }
+    }
+}
+
+variable "subnet_product" { 
+  description = "subnet_product" 
+  type        = map(object({
+    name  = string
+    cidr  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
+    product_pri_01a = {
+        name = "product_pri_01a"
+        cidr = "10.210.50.0/24"
+        az = "ap-northeast-3a"
+        pub = false
+        }
+    product_pri_02a = {
+        name = "product_pri_02a"
+        cidr = "10.210.150.0/24"
+        az = "ap-northeast-3a"
+        pub = false
+        }
+    product_pri_01c = {
+        name = "product_pri_01c"
+        cidr = "10.210.50.0/24"
+        az = "ap-northeast-3c"
+        pub = false
+        }
+    product_pri_02c = {
+        name = "product_pri_02c"
+        cidr = "10.210.150.0/24"
+        az = "ap-northeast-3c"
+        pub = false
+        }        
+    }
+}
+
+variable "subnet_testdev" { 
+  description = "subnet_testdev" 
+  type        = map(object({
+    name  = string
+    cidr  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
+    testdev_pri_01a = {
+        name = "testdev_pri_01a"
+        cidr = "10.230.50.0/24"
+        az = "ap-northeast-3a"
+        pub = false
+        }
+    testdev_pri_02a = {
+        name = "testdev_pri_02a"
+        cidr = "10.230.150.0/24"
+        az = "ap-northeast-3a"
+        pub = false
+        }
+    testdev_pri_01c = {
+        name = "testdev_pri_01c"
+        cidr = "10.230.50.0/24"
+        az = "ap-northeast-3c"
+        pub = false
+        }
+    testdev_pri_02c = {
+        name = "testdev_pri_02c"
+        cidr = "10.230.150.0/24"
+        az = "ap-northeast-3c"
+        pub = false
+        }        
+    }
+}
