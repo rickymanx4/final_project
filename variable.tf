@@ -257,21 +257,21 @@ variable "user_dmz_pri_rts" {
   }
 }
 
-variable "dev_dmz_pri_rts" { 
-  description = "dev_dmz_pri_rt" 
-  type        = map(object({
-    name  = string
-    ngw  = string
-  }))
-  default     = {
-    dev_dmz_pri_rt_a = {
-        name = "dev_dmz_pri_rt_a"
-        ngw = "${aws_nat_gateway.dev_dmz_ngw_a.id}"
-    }
-    dev_dmz_pri_rt_c = {
-        name = "dev_dmz_pri_rt_c"
-        ngw = "${aws_nat_gateway.dev_dmz_ngw_c.id}"
-    }
+# variable "dev_dmz_pri_rts" { 
+#   description = "dev_dmz_pri_rt" 
+#   type        = map(object({
+#     name  = string
+#     ngw  = string
+#   }))
+#   default     = {
+#     dev_dmz_pri_rt_a = {
+#         name = "dev_dmz_pri_rt_a"
+#         ngw = "${aws_nat_gateway.dev_dmz_ngw_a.id}"
+#     }
+#     dev_dmz_pri_rt_c = {
+#         name = "dev_dmz_pri_rt_c"
+#         ngw = "${aws_nat_gateway.dev_dmz_ngw_c.id}"
+#     }
 
-  }
-}
+#   }
+# }

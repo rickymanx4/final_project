@@ -41,7 +41,7 @@ resource "aws_route_table" "dev_dmz_pri_rt" {
     nat_gateway_id = "${aws_nat_gateway.dev_dmz_ngw_[*].id}"
   }
   tags = {
-    Name = "${aws_nat_gateway.dev_dmz_ngw[*].name}"
+    Name = "${aws_nat_gateway.dev_dmz_ngw_[*].name}"
   }
 }
 ###
