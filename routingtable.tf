@@ -69,7 +69,7 @@ resource "aws_route_table" "dev_dmz_pri_rt_c" {
 ### 
 resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
   count = length(var.subnet_user_dmz_pub)
-  subnet_id      = aws_subnet.user_dmz_subnet[*].id
+  subnet_id      = aws_subnet.user_dmz_subnet_pub[*].id
   route_table_id = aws_route_table.user_dmz_pub_rt.id
 }
 
