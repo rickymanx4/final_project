@@ -73,7 +73,7 @@ resource "aws_security_group" "user_dmz_elb_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "user_dmz_proxy_sg"
+    Name = "user_dmz_elb_sg"
   }
 }
 
