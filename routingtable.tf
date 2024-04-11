@@ -12,18 +12,26 @@ resource "aws_route_table" "user_dmz_pub_rt" {
   }
 }
 resource "aws_route_table" "user_dmz_pri_rt_a" {
-  count = length(var.az_select)  
   vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = "aws_nat_gateway.user_dmz_ngw_${var.az_select}.id"
+    nat_gateway_id = "aws_nat_gateway.user_dmz_ngw_a.id"
   }
   tags = {
-    Name = "user_dmz_pri_rt_${var.az_select}"
+    Name = "user_dmz_pri_rt_a"
   }
 }
-
-resource "aws_route_table" "dev_dmz_pub_rts" {
+resource "aws_route_table" "user_dmz_pri_rt_c" {
+  vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id 
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = "aws_nat_gateway.user_dmz_ngw_c.id"
+  }
+  tags = {
+    Name = "user_dmz_pri_rt_c"
+  }
+}
+resource "aws_route_table" "dev_dmz_pub_rt" {
   vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id  
   route {
     cidr_block = "0.0.0.0/0"
@@ -33,15 +41,25 @@ resource "aws_route_table" "dev_dmz_pub_rts" {
     Name = "dev_dmz_pub_rt"
   }
 }
-resource "aws_route_table" "dev_dmz_pri_rt" {
-  count = length(var.az_select) 
+resource "aws_route_table" "dev_dmz_pri_rt_a" {   
   vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = "aws_nat_gateway.dev_dmz_ngw_${var.az_select}.id"
+    nat_gateway_id = aws_nat_gateway.dev_dmz_ngw_a.id
   }
   tags = {
-    Name = "dev_dmz_pri_rt_${var.az_select}"
+    Name = "dev_dmz_pri_rt_a"
+  }
+}
+
+resource "aws_route_table" "dev_dmz_pri_rt_c" {   
+  vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id 
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.dev_dmz_ngw_c.id
+  }
+  tags = {
+    Name = "dev_dmz_pri_rt_c"
   }
 }
 ###
