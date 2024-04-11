@@ -5,7 +5,7 @@ variable "region" {
 }
 
 variable "vpc" { 
-  description = "vpc_name" 
+  description = "vpc" 
   type        = map(object({
     name  = string
     cidr  = string
