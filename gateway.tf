@@ -30,7 +30,7 @@ resource "aws_internet_gateway" "dev_dmz_igw" {
 
 resource "aws_nat_gateway" "user_dmz_ngw_a" {
   allocation_id = aws_eip.dmz_eip[0].id
-  subnet_id     = aws_subnet.user_dmz_subnet[user_dmz_pub_01a].id
+  subnet_id     = aws_subnet.user_dmz_subnet["user_dmz_pub_01a"].id
   tags = {
     Name = "user_dmz_nat_a"
  }
@@ -39,7 +39,7 @@ resource "aws_nat_gateway" "user_dmz_ngw_a" {
 
 resource "aws_nat_gateway" "user_dmz_ngw_c" {
   allocation_id = aws_eip.dmz_eip[1].id
-  subnet_id     = aws_subnet.user_dmz_subnet[user_dmz_pub_01c].id
+  subnet_id     = aws_subnet.user_dmz_subnet["user_dmz_pub_01c"].id
   tags = {
     Name = "user_dmz_nat_c"
  }
@@ -48,7 +48,7 @@ resource "aws_nat_gateway" "user_dmz_ngw_c" {
 
 resource "aws_nat_gateway" "dev_dmz_ngw_a" {
   allocation_id = aws_eip.dmz_eip[2].id
-  subnet_id     = aws_subnet.dev_dmz_subnet[dev_dmz_pub_01a].id
+  subnet_id     = aws_subnet.dev_dmz_subnet["dev_dmz_pub_01a"].id
   tags = {
     Name = "dev_dmz_nat_a"
  }
@@ -57,7 +57,7 @@ resource "aws_nat_gateway" "dev_dmz_ngw_a" {
 
 resource "aws_nat_gateway" "dev_dmz_ngw_c" {
   allocation_id = aws_eip.dmz_eip[3].id
-  subnet_id     = aws_subnet.dev_dmz_subnet[dev_dmz_pub_01c].id
+  subnet_id     = aws_subnet.dev_dmz_subnet["dev_dmz_pub_01c"].id
   tags = {
     Name = "dev_dmz_nat_c"
  }
