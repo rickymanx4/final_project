@@ -15,7 +15,7 @@ resource "aws_subnet" "subnet_user_dmz" {
 
 
 resource "aws_subnet" "subnet_dev_dmz" {
-  vpc_id  = "$(aws_vpc.project_vpc[1].id)" 
+  vpc_id  = aws_vpc.project_vpc["dev_dmz_vpc"].id
   for_each = var.subnet_dev_dmz
   cidr_block = each.value.cidr
   availability_zone = each.value.az
@@ -27,7 +27,7 @@ resource "aws_subnet" "subnet_dev_dmz" {
 }
 
 resource "aws_subnet" "subnet_shared" {
-  vpc_id  = "$(aws_vpc.project_vpc[2].id)" 
+  vpc_id  = aws_vpc.project_vpc["shared_vpc"].id
   for_each = var.subnet_shared
   cidr_block = each.value.cidr
   availability_zone = each.value.az
@@ -39,7 +39,7 @@ resource "aws_subnet" "subnet_shared" {
 }
 
 resource "aws_subnet" "subnet_product" {
-  vpc_id  = "$(aws_vpc.project_vpc[3].id)" 
+  vpc_id  = aws_vpc.project_vpc["product_vpc"].id 
   for_each = var.subnet_product
   cidr_block = each.value.cidr
   availability_zone = each.value.az
@@ -51,7 +51,7 @@ resource "aws_subnet" "subnet_product" {
 }
 
 resource "aws_subnet" "subnet_testdev" {
-  vpc_id  = "$(aws_vpc.project_vpc[4].id)" 
+  vpc_id  = aws_vpc.project_vpc["testdev_vpc"].id 
   for_each = var.subnet_testdev
   cidr_block = each.value.cidr
   availability_zone = each.value.az
