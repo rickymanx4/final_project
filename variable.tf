@@ -94,8 +94,8 @@ variable "subnet_user_dmz_pri" {
     }
 }
 
-variable "subnet_dev_dmz" { 
-  description = "subnet_dev_dmz" 
+variable "subnet_dev_dmz_pub" { 
+  description = "subnet_dev_dmz_pub" 
   type        = map(object({
     name  = string
     cidr  = string
@@ -115,12 +115,6 @@ variable "subnet_dev_dmz" {
         az = "ap-northeast-3a"
         pub = true
         }
-    dev_dmz_pri_01a = {
-        name = "dev_dmz_pri_01a"
-        cidr = "10.30.50.0/24"
-        az = "ap-northeast-3a"
-        pub = false
-        }
     dev_dmz_pub_01c = {
         name = "dev_dmz_pub_01c"
         cidr = "10.30.110.0/24"
@@ -132,6 +126,23 @@ variable "subnet_dev_dmz" {
         cidr = "10.30.120.0/24"
         az = "ap-northeast-3c"
         pub = true
+        }
+    }
+}
+variable "subnet_dev_dmz_pri" { 
+  description = "subnet_dev_dmz_pri" 
+  type        = map(object({
+    name  = string
+    cidr  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
+    dev_dmz_pri_01a = {
+        name = "dev_dmz_pri_01a"
+        cidr = "10.30.50.0/24"
+        az = "ap-northeast-3a"
+        pub = false
         }
     dev_dmz_pri_01c = {
         name = "dev_dmz_pri_01c"

@@ -25,9 +25,9 @@ resource "aws_subnet" "user_dmz_pri_subnet" {
   depends_on = [ aws_vpc.project_vpc ]
 }
 
-resource "aws_subnet" "dev_dmz_subnet" {
+resource "aws_subnet" "dev_dmz_pub_subnet" {
   vpc_id  = aws_vpc.project_vpc["dev_dmz_vpc"].id
-  for_each = var.subnet_dev_dmz
+  for_each = var.subnet_dev_dmz_pub
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
@@ -37,6 +37,17 @@ resource "aws_subnet" "dev_dmz_subnet" {
   depends_on = [ aws_vpc.project_vpc ]
 }
 
+resource "aws_subnet" "dev_dmz_pri_subnet" {
+  vpc_id  = aws_vpc.project_vpc["dev_dmz_vpc"].id
+  for_each = var.subnet_dev_dmz_pri
+  cidr_block = each.value.cidr
+  availability_zone = each.value.az
+    tags = {
+    Name = each.value.name
+  }
+  map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
+}
 resource "aws_subnet" "shared_subnet" {
   vpc_id  = aws_vpc.project_vpc["shared_vpc"].id
   for_each = var.subnet_shared
