@@ -2,7 +2,7 @@
 # 1. Public Subnet
 ###
 resource "aws_subnet" "all_subnet" {
-  vpc_id     = aws_vpc.project_vpc.id 
+  vpc_id  = aws_vpc.project_vpc.id 
   for_each = var.subnet
   cidr_block = each.value.cidr
   availability_zone = each.value.az
