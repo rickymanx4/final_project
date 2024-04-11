@@ -69,7 +69,7 @@ resource "aws_route_table" "dev_dmz_pri_rt_c" {
 ### 
 resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
   count = 4 
-  subnet_id      = element(aws_subnet.user_dmz_subnet[count.index].id, count.index) 
+  subnet_id      = element(aws_subnet.user_dmz_subnet[0].id, count.index) 
   route_table_id = aws_route_table.user_dmz_pub_rt.id
 }
 # resource "aws_route_table_association" "web_subnet_asso" {
