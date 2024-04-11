@@ -7,27 +7,27 @@ variable "region" {
 variable "vpc" { 
   description = "vpc" 
   type        = map(string)
-  default     = {
+  default     = [
     {
-        name = user_dmz_vpc
+        name = "user_dmz_vpc"
         cidr = "10.10.0.0/16"
-    }
+    },
     {
-        name = dev_dmz_vpc
+        name = "dev_dmz_vpc"
         cidr = "10.30.0.0/16"
-    }
+    },
     {
-        name = shared_vpc
+        name = "shared_vpc"
         cidr = "10.100.0.0/16"
-    }
+    },
     {
-        name = product_vpc
+        name = "product_vpc"
         cidr = "10.210.0.0/16"
-    }
+    },
     {
-        name = testdev_vpc
+        name = "testdev_vpc"
         cidr = "10.230.0.0/16"
-    }
-  }
+    },
+  ]
 }
 
