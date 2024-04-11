@@ -11,15 +11,15 @@ resource "aws_route_table" "user_dmz_pub_rt" {
     Name = "user_dmz_pub_rt"
   }
 }
-resource "aws_route_table" "user_dmz_pri_rt" {
-  for_each = var.user_dmz_pri_rts
+resource "aws_route_table" "user_dmz_pri_rt_a" {
+  count = lenth(var.az_select)  
   vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = each.value.ngw
+    nat_gateway_id = "aws_nat_gateway.user_dmz_ngw_${count.index}.id"
   }
   tags = {
-    Name = each.value.name
+    Name = "user_dmz_pri_rt_${count.index}"
   }
 }
 

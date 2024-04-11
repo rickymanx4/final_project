@@ -236,26 +236,30 @@ variable "user_dmz_pub_rt" {
   default     = 4
 }
 
-variable "user_dmz_pri_rts" { 
-  description = "user_dmz_pri_rt" 
-  type        = map(object({
-    name  = string
-    ngw  = string
-  }))
-  default     = {
-    user_dmz_pri_rt_a = {
-        name = "user_dmz_pri_rt_a"
-        ngw = "nat-09127912a3680df93"
-        #ngw = "aws_nat_gateway.user_dmz_ngw_a.id"
-    }
-    user_dmz_pri_rt_c = {
-        name = "user_dmz_pri_rt_c"
-        ngw =   "nat-003af5176fa84554c"
-        #ngw = "aws_nat_gateway.user_dmz_ngw_c.id"
-    }
-
-  }
+variable "az_select" {
+    default = ["a", "c"]
 }
+
+# variable "user_dmz_pri_rts" { 
+#   description = "user_dmz_pri_rt" 
+#   type        = map(object({
+#     name  = string
+#     ngw  = string
+#   }))
+#   default     = {
+#     user_dmz_pri_rt_a = {
+#         name = "user_dmz_pri_rt_a"
+#         ngw = "nat-09127912a3680df93"
+#         #ngw = "aws_nat_gateway.user_dmz_ngw_a.id"
+#     }
+#     user_dmz_pri_rt_c = {
+#         name = "user_dmz_pri_rt_c"
+#         ngw =   "nat-003af5176fa84554c"
+#         #ngw = "aws_nat_gateway.user_dmz_ngw_c.id"
+#     }
+
+#   }
+# }
 
 # variable "dev_dmz_pri_rts" { 
 #   description = "dev_dmz_pri_rt" 
