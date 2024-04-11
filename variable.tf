@@ -231,9 +231,4 @@ variable "eip_count" {
   default     = 4
 }
 
-variable "user_dmz_pub_rt" {
-  description = "The number of EIPs to create"
-  default     = 4
-}
-
 
