@@ -76,7 +76,7 @@ resource "aws_route_table" "shared_pri_rt" {
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = var.subnet_shared[each.key]
+    Name = "var.subnet_shared[each.key]"
   }
 }
 
@@ -89,7 +89,7 @@ resource "aws_route_table" "product_pri_rt_a" {
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = var.subnet_product_a[each.key]
+    Name = "var.subnet_product_a[each.key]"
   }
 }
 
@@ -101,7 +101,7 @@ resource "aws_route_table" "product_pri_rt_c" {
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = var.subnet_product_c[each.key]
+    Name = "var.subnet_product_c[each.key]"
   }
 }
 
@@ -114,7 +114,7 @@ resource "aws_route_table" "testdev_pri_rt_a" {
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = var.subnet_testdev_a[each.key]
+    Name = "var.subnet_testdev_a[each.key]"
   }
 }
 
@@ -126,7 +126,7 @@ resource "aws_route_table" "testdev_pri_rt_c" {
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = var.subnet_testdev_c[each.key]
+    Name = "var.subnet_testdev_c[each.key]"
   }
 }
 
@@ -171,12 +171,12 @@ resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
 ################################ c. shared_zone ################################
 resource "aws_route_table_association" "shared_pri_rt_asso1" {  
   subnet_id      = aws_subnet.shared_subnet["shared_pri_01a"].id
-  route_table_id = aws_route_table.shared_rt["shared_pri_01a"].id
+  route_table_id = aws_route_table.shared_pri_rt["shared_pri_01a"].id
 }
 
 resource "aws_route_table_association" "shared_pri_rt_asso2" {  
   subnet_id      = aws_subnet.shared_subnet["shared_pri_01a"].id
-  route_table_id = aws_route_table.shared_rt["shared_pri_01a"].id
+  route_table_id = aws_route_table.shared_pri_rt["shared_pri_01a"].id
 }
 
 ################################ d. product_zone ################################
