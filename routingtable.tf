@@ -16,10 +16,10 @@ resource "aws_route_table" "user_dmz_pri_rt_a" {
   vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = "aws_nat_gateway.user_dmz_ngw_${count.index}.id"
+    nat_gateway_id = "aws_nat_gateway.user_dmz_ngw_${var.az_select}.id"
   }
   tags = {
-    Name = "user_dmz_pri_rt_${count.index}"
+    Name = "user_dmz_pri_rt_${var.az_select}"
   }
 }
 
@@ -38,10 +38,10 @@ resource "aws_route_table" "dev_dmz_pri_rt" {
   vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = "aws_nat_gateway.dev_dmz_ngw_${count.index}.id"
+    nat_gateway_id = "aws_nat_gateway.dev_dmz_ngw_${var.az_select}.id"
   }
   tags = {
-    Name = "dev_dmz_pri_rt_${count.index}"
+    Name = "dev_dmz_pri_rt_${var.az_select}"
   }
 }
 ###
