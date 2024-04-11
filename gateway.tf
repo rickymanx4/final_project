@@ -2,7 +2,7 @@
 # 1. Elastic IP
 ###
 resource "aws_eip" "dmz_eip" {
-  domain = true
+  domain = "vpc"
   count =  var.eip_count
   lifecycle {
     create_before_destroy = true
