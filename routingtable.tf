@@ -174,7 +174,7 @@ resource "aws_route_table_association" "shared_pri_rt_asso1" {
   route_table_id = aws_route_table.shared_rt["shared_pri_01a"].id
 }
 
-resource "aws_route_table_association" "user_dmz_pri_rt_asso2" {  
+resource "aws_route_table_association" "shared_pri_rt_asso2" {  
   subnet_id      = aws_subnet.shared_subnet["shared_pri_01a"].id
   route_table_id = aws_route_table.shared_rt["shared_pri_01a"].id
 }
