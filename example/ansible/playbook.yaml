@@ -1,0 +1,23 @@
+---
+- name: install node_exporter on private
+  hosts: tags_Group_private
+  vars:
+    ansible_ssh_common_args: 
+      -o ProxyCommand="ssh 
+      -o StrictHostKeyChecking=no 
+      -o UserKnownHostsFile=/dev/null
+      -i ~/.ssh/terraform-key
+      -W %h:%p ec2-user@{{ hostvars[groups['tags_Group_bastion'][0]]["public_ip_address"] }}"
+  become: True  
+  gather_facts: yes
+  roles:
+    - role: role/node_exporter
+    
+- name: install prometheus & grafana on bastion
+  hosts: tags_Group_bastion
+  become: True  
+  gather_facts: yes
+  roles: 
+    - role/prometheus
+    - role/grafana
+ 

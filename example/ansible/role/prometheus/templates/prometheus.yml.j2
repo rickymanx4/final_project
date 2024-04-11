@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'ec2'
+    ec2_sd_configs:
+      - region: 'us-west-2'
+        access_key: " #Add Access_Key "
+        secret_key: " #Add Secret_Key "
+        port: 9100
+    relabel_configs:
+      - source_labels: [__meta_ec2_tag_Group]
+        regex: 'private'
+        action: keep

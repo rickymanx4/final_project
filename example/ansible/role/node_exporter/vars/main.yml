@@ -1,0 +1,6 @@
+---
+node_exporter_user: node_exporter
+service_dest_dir: /etc/systemd/system
+node_exporter_download_dir: /tmp/node_exporter-1.7.0.linux-amd64
+node_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
+# vars file for node_exporter
