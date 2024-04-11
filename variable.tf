@@ -279,3 +279,20 @@ variable "eip_count" {
 }
 
 
+variable "egress" {
+  description = "sercurity group for egress"
+  type        = map(object({
+    from_port  = number
+    to_port  = number
+    protocol = string
+    cidr_blocks = string
+  }))  
+  default     = {
+    egress = {
+      from_port     = 0
+      to_port       = 0
+      protocol      = "-1"
+      cidr_blocks   = ["0.0.0.0/0"]
+    }
+  }
+}
