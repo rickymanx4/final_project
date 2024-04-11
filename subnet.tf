@@ -7,7 +7,7 @@ resource "aws_subnet" "subnet_user_dmz" {
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
-    Name = "each.value.name"
+    Name = each.value.name
   }
   map_public_ip_on_launch = each.value.pub
   depends_on = [ aws_vpc.project_vpc ]
@@ -20,7 +20,7 @@ resource "aws_subnet" "subnet_dev_dmz" {
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
-    Name = "each.value.name"
+    Name = each.value.name
   }
   map_public_ip_on_launch = each.value.pub
   depends_on = [ aws_vpc.project_vpc ]
@@ -32,7 +32,7 @@ resource "aws_subnet" "subnet_shared" {
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
-    Name = "each.value.name"
+    Name = each.value.name
   }
   map_public_ip_on_launch = each.value.pub
   depends_on = [ aws_vpc.project_vpc ]
@@ -44,7 +44,7 @@ resource "aws_subnet" "subnet_product" {
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
-    Name = "each.value.name"
+    Name = each.value.name
   }
   map_public_ip_on_launch = each.value.pub
   depends_on = [ aws_vpc.project_vpc ]
@@ -56,7 +56,7 @@ resource "aws_subnet" "subnet_testdev" {
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
-    Name = "each.value.name"
+    Name = each.value.name
   }
   map_public_ip_on_launch = each.value.pub
   depends_on = [ aws_vpc.project_vpc ]
