@@ -86,4 +86,4 @@ resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
 #   count = length(var.db_subnet) 
 #   subnet_id      = element(aws_subnet.db[*].id, count.index) 
 #   route_table_id = aws_route_table.private_rt.id
-}
+# }
