@@ -34,14 +34,14 @@ resource "aws_route_table" "dev_dmz_pub_rts" {
   }
 }
 resource "aws_route_table" "dev_dmz_pri_rt" {
-  #for_each = var.dev_dmz_pri_rts
+  count = length(var.az_select) 
   vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id 
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = "${aws_nat_gateway.dev_dmz_ngw_[*].id}"
+    nat_gateway_id = "aws_nat_gateway.dev_dmz_ngw_${count.index}.id"
   }
   tags = {
-    Name = "${aws_nat_gateway.dev_dmz_ngw_[*].name}"
+    Name = "dev_dmz_pri_rt_${count.index}"
   }
 }
 ###
