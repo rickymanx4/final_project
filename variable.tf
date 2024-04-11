@@ -245,11 +245,11 @@ variable "user_dmz_pri_rt" {
   default     = {
     user_dmz_pri_rt_a = {
         name = "user_dmz_pri_rt_a"
-        ngw = "aws_nat_gateway.user_dmz_nat_a.id"
+        ngw = aws_nat_gateway.user_dmz_nat_a.id
     }
     user_dmz_pri_rt_c = {
         name = "user_dmz_pri_rt_c"
-        ngw = "aws_nat_gateway.user_dmz_nat_c.id"
+        ngw = aws_nat_gateway.user_dmz_nat_c.id
     }
 
   }
