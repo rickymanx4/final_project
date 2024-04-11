@@ -15,7 +15,7 @@ variable "vpc" {
         name = "user_dmz_vpc"
         cidr = "10.10.0.0/16"
     }
-    shared_vpc = {
+    dev_dmz_vpc = {
         name = "shared_vpc"
         cidr = "10.30.0.0/16"
     }
