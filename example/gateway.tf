@@ -2,7 +2,7 @@
 # 1. Elastic IP
 ###
 resource "aws_eip" "project_nat_eip" {
-  vpc = true
+  domain = true
 
   lifecycle {
     create_before_destroy = true

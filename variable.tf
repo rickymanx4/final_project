@@ -225,3 +225,9 @@ variable "subnet_testdev" {
         }        
     }
 }
+
+variable "eip_count" {
+  description = "The number of EIPs to create"
+  default     = 4
+}
+
