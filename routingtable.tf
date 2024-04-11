@@ -76,7 +76,7 @@ resource "aws_route_table" "shared_pri_rt" {
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = var.subnet_shared[each.key]
+    Name = "${var.subnet_shared[each.key]}"
   }
 }
 
