@@ -171,19 +171,19 @@ variable "subnet_product" {
         }
     product_pri_02a = {
         name = "product_pri_02a"
-        cidr = "10.210.150.0/24"
+        cidr = "10.210.60.0/24"
         az = "ap-northeast-3a"
         pub = false
         }
     product_pri_01c = {
         name = "product_pri_01c"
-        cidr = "10.210.50.0/24"
+        cidr = "10.210.150.0/24"
         az = "ap-northeast-3c"
         pub = false
         }
     product_pri_02c = {
         name = "product_pri_02c"
-        cidr = "10.210.150.0/24"
+        cidr = "10.210.160.0/24"
         az = "ap-northeast-3c"
         pub = false
         }        
@@ -207,19 +207,19 @@ variable "subnet_testdev" {
         }
     testdev_pri_02a = {
         name = "testdev_pri_02a"
-        cidr = "10.230.150.0/24"
+        cidr = "10.230.60.0/24"
         az = "ap-northeast-3a"
         pub = false
         }
     testdev_pri_01c = {
         name = "testdev_pri_01c"
-        cidr = "10.230.50.0/24"
+        cidr = "10.230.150.0/24"
         az = "ap-northeast-3c"
         pub = false
         }
     testdev_pri_02c = {
         name = "testdev_pri_02c"
-        cidr = "10.230.150.0/24"
+        cidr = "10.230.160.0/24"
         az = "ap-northeast-3c"
         pub = false
         }        
