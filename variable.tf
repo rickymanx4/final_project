@@ -177,8 +177,8 @@ variable "subnet_shared" {
     }
 }
 
-variable "subnet_product" { 
-  description = "subnet_product" 
+variable "subnet_product_a" { 
+  description = "subnet_product_a" 
   type        = map(object({
     name  = string
     cidr  = string
@@ -197,7 +197,19 @@ variable "subnet_product" {
         cidr = "10.210.60.0/24"
         az = "ap-northeast-3a"
         pub = false
-        }
+        }       
+    }
+}
+
+variable "subnet_product_c" { 
+  description = "subnet_product" 
+  type        = map(object({
+    name  = string
+    cidr  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
     product_pri_01c = {
         name = "product_pri_01c"
         cidr = "10.210.150.0/24"
@@ -213,7 +225,7 @@ variable "subnet_product" {
     }
 }
 
-variable "subnet_testdev" { 
+variable "subnet_testdev_a" { 
   description = "subnet_testdev" 
   type        = map(object({
     name  = string
@@ -233,7 +245,19 @@ variable "subnet_testdev" {
         cidr = "10.230.60.0/24"
         az = "ap-northeast-3a"
         pub = false
-        }
+        }       
+    }
+}
+
+variable "subnet_testdev_c" { 
+  description = "subnet_testdev_c" 
+  type        = map(object({
+    name  = string
+    cidr  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
     testdev_pri_01c = {
         name = "testdev_pri_01c"
         cidr = "10.230.150.0/24"

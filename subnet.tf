@@ -66,9 +66,21 @@ resource "aws_subnet" "shared_subnet" {
 }
 
 ################################ d. product ################################
-resource "aws_subnet" "product_subnet" {
+resource "aws_subnet" "product_subnet_a" {
   vpc_id  = aws_vpc.project_vpc["product_vpc"].id 
-  for_each = var.subnet_product
+  for_each = var.subnet_product_a
+  cidr_block = each.value.cidr
+  availability_zone = each.value.az
+    tags = {
+    Name = each.value.name
+  }
+  map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
+}
+
+resource "aws_subnet" "product_subnet_c" {
+  vpc_id  = aws_vpc.project_vpc["product_vpc"].id 
+  for_each = var.subnet_product_c
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
@@ -79,9 +91,21 @@ resource "aws_subnet" "product_subnet" {
 }
 
 ################################ e. testdev ################################
-resource "aws_subnet" "testdev_subnet" {
+resource "aws_subnet" "testdev_subnet_a" {
   vpc_id  = aws_vpc.project_vpc["testdev_vpc"].id 
-  for_each = var.subnet_testdev
+  for_each = var.subnet_testdev_a
+  cidr_block = each.value.cidr
+  availability_zone = each.value.az
+    tags = {
+    Name = each.value.name
+  }
+  map_public_ip_on_launch = each.value.pub
+  depends_on = [ aws_vpc.project_vpc ]
+}
+
+resource "aws_subnet" "testdev_subnet_c" {
+  vpc_id  = aws_vpc.project_vpc["testdev_vpc"].id 
+  for_each = var.subnet_testdev_c
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
