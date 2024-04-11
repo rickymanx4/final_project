@@ -68,25 +68,25 @@ resource "aws_route_table" "dev_dmz_pri_rt_c" {
 #2. Routing Table Association
 ### 
 resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
-  for_each = var.subnet_user_dmz_pub
+  for_each       = var.subnet_user_dmz_pub
   subnet_id      = aws_subnet.user_dmz_pub_subnet[each.key].id
   route_table_id = aws_route_table.user_dmz_pub_rt.id
 }
 
+resource "aws_route_table_association" "user_dmz_pri_rt_asso" {
+  for_each       = var.subnet_user_dmz_pri
+  subnet_id      = aws_subnet.user_dmz_pri_subnet[each.key].id
+  route_table_id = aws_route_table.user_dmz_pri_rt.id
+}
 
+resource "aws_route_table_association" "dev_dmz_pub_rt_asso" {
+  for_each       = var.subnet_dev_dmz_pub
+  subnet_id      = aws_subnet.dev_dmz_pub_subnet[each.key].id
+  route_table_id = aws_route_table.dev_dmz_pub_rt.id
+}
 
-# resource "aws_route_table_association" "web_subnet_asso" {
-#   count = length(var.web_subnet) 
-#   subnet_id      = element(aws_subnet.web[*].id, count.index) 
-#   route_table_id = aws_route_table.private_rt.id
-# }
-# resource "aws_route_table_association" "app_subnet_asso" {
-#   count = length(var.app_subnet) 
-#   subnet_id      = element(aws_subnet.app[*].id, count.index) 
-#   route_table_id = aws_route_table.private_rt.id
-# }
-# resource "aws_route_table_association" "db_subnet_asso" {
-#   count = length(var.db_subnet) 
-#   subnet_id      = element(aws_subnet.db[*].id, count.index) 
-#   route_table_id = aws_route_table.private_rt.id
-# }
+resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
+  for_each       = var.subnet_dev_dmz_pri
+  subnet_id      = aws_subnet.dev_dmz_pri_subnet[each.key].id
+  route_table_id = aws_route_table.dev_dmz_pri_rt.id
+}
