@@ -1,6 +1,6 @@
-###
-# 1. Elastic IP
-###
+##############################################################################
+################################## 1. Elastic IP##############################
+##############################################################################
 resource "aws_eip" "dmz_eip" {
   #domain = "vpc"
   count =  var.eip_count
@@ -11,9 +11,10 @@ resource "aws_eip" "dmz_eip" {
     Name = "dmz_eip_${count.index + 1}"
   }
 }
-###
-#2. Internet & NAT Gateways
-###
+
+##############################################################################
+#########################2. Internet Gateways#################################
+##############################################################################
 resource "aws_internet_gateway" "user_dmz_igw" {
   vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id   
   tags = {
@@ -27,6 +28,12 @@ resource "aws_internet_gateway" "dev_dmz_igw" {
     Name = "dev_dmz_vpc_IGW"
  }
 }
+
+##############################################################################
+############################3. Nat Gateways###################################
+##############################################################################
+
+################################ a. user_dmz ################################
 
 resource "aws_nat_gateway" "user_dmz_ngw_a" {
   allocation_id = aws_eip.dmz_eip[0].id
@@ -45,6 +52,8 @@ resource "aws_nat_gateway" "user_dmz_ngw_c" {
  }
  depends_on = [aws_internet_gateway.user_dmz_igw]
 }
+
+################################ b. dev_dmz ################################
 
 resource "aws_nat_gateway" "dev_dmz_ngw_a" {
   allocation_id = aws_eip.dmz_eip[2].id

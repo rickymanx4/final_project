@@ -1,6 +1,8 @@
-###
-# 1. Routing Table
-###
+##############################################################################
+################################ 1. Routing Table ############################
+##############################################################################
+
+################################ a. user_dmz ################################
 resource "aws_route_table" "user_dmz_pub_rt" {
   vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id  
   route {
@@ -31,6 +33,8 @@ resource "aws_route_table" "user_dmz_pri_rt_c" {
     Name = "user_dmz_pri_rt_c"
   }
 }
+
+################################ b. dev_dmz ################################
 resource "aws_route_table" "dev_dmz_pub_rt" {
   vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id  
   route {
@@ -64,9 +68,11 @@ resource "aws_route_table" "dev_dmz_pri_rt_c" {
 }
 
 
-###
-#2. Routing Table Association
-### 
+##############################################################################
+############################# 2. Routing Association #########################
+##############################################################################
+
+################################ a. user_dmz ################################
 resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
   for_each       = var.subnet_user_dmz_pub
   subnet_id      = aws_subnet.user_dmz_pub_subnet[each.key].id
@@ -82,6 +88,8 @@ resource "aws_route_table_association" "user_dmz_pri_rt_asso2" {
   subnet_id      = aws_subnet.user_dmz_pri_subnet["user_dmz_pri_01c"].id
   route_table_id = aws_route_table.user_dmz_pri_rt_c.id
 }
+
+################################ b. dev_dmz ################################
 resource "aws_route_table_association" "dev_dmz_pub_rt_asso" {
   for_each       = var.subnet_dev_dmz_pub
   subnet_id      = aws_subnet.dev_dmz_pub_subnet[each.key].id
