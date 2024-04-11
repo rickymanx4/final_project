@@ -231,3 +231,45 @@ variable "eip_count" {
   default     = 4
 }
 
+variable "user_dmz_pub_rt" {
+  description = "The number of EIPs to create"
+  default     = 4
+}
+
+variable "user_dmz_pri_rt" { 
+  description = "user_dmz_pri_rt" 
+  type        = map(object({
+    name  = string
+    ngw  = string
+  }))
+  default     = {
+    user_dmz_pri_rt_a = {
+        name = "user_dmz_pri_rt_a"
+        ngw = "aws_nat_gateway.user_dmz_nat_a.id"
+    }
+    user_dmz_pri_rt_c = {
+        name = "user_dmz_pri_rt_c"
+        ngw = "aws_nat_gateway.user_dmz_nat_c.id"
+    }
+
+  }
+}
+
+variable "dev_dmz_pri_rt" { 
+  description = "dev_dmz_pri_rt" 
+  type        = map(object({
+    name  = string
+    ngw  = string
+  }))
+  default     = {
+    dev_dmz_pri_rt_a = {
+        name = "dev_dmz_pri_rt_a"
+        ngw = "aws_nat_gateway.dev_dmz_nat_a.id"
+    }
+    dev_dmz_pri_rt_c = {
+        name = "dev_dmz_pri_rt_c"
+        ngw = "aws_nat_gateway.dev_dmz_nat_c.id"
+    }
+
+  }
+}

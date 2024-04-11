@@ -1,33 +1,52 @@
-# ###
-# # 1. Routing Table
-# ###
-# resource "aws_route_table" "public_rt" {
-#   vpc_id = aws_vpc.project_vpc.id 
-  
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     gateway_id = aws_internet_gateway.igw.id
-#   }
+###
+# 1. Routing Table
+###
+resource "aws_route_table" "user_dmz_pub_rt" {
+  vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.user_dmz_igw.id
+  }
+  tags = {
+    Name = "user_dmz_pub_rt"
+  }
+}
+resource "aws_route_table" "user_dmz_pri_rt" {
+  for_each = var.user_dmz_pri_rt
+  vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id 
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = each.value.ngw
+  }
+  tags = {
+    Name = each.value.name
+  }
+}
 
-#   tags = {
-#     Name = "Publinc-Route-Table"
-#   }
-# }
-# resource "aws_route_table" "private_rt" {
-#   vpc_id = aws_vpc.project_vpc.id 
-  
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.ngw.id
-#   }
-
-#   tags = {
-#     Name = "Private-Route-Table"
-#   }
-# }
-# ###
-# # 2. Routing Table Association
-# ### 
+resource "aws_route_table" "dev_dmz_pub_rt" {
+  vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.dev_dmz_igw.id
+  }
+  tags = {
+    Name = "dev_dmz_pub_rt"
+  }
+}
+resource "aws_route_table" "dev_dmz_pri_rt" {
+  for_each = var.dev_dmz_pri_rt
+  vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id 
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = each.value.ngw
+  }
+  tags = {
+    Name = each.value.name
+  }
+}
+###
+# 2. Routing Table Association
+### 
 # resource "aws_route_table_association" "public_subnet_asso" {
 #   count = length(var.public_subnet) 
 #   subnet_id      = element(aws_subnet.public[*].id, count.index) 
