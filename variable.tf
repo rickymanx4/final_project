@@ -27,7 +27,7 @@ variable "vpc" {
     {
         name = "testdev_vpc"
         cidr = "10.230.0.0/16"
-    },
+    }
   ]
 }
 
