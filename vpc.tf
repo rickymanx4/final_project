@@ -1,7 +1,3 @@
-# variable "vpc" {
-#   type = list(any)
-# }
-
 resource "aws_vpc" "project_vpc" {
     for_each = var.vpc 
     cidr_block = each.value.cidr

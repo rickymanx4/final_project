@@ -11,30 +11,28 @@ variable "vpc" {
     cidr  = string
   }))
   default     = {
-    vpc1 = {
+    user_dmz_vpc = {
         name = "user_dmz_vpc"
         cidr = "10.10.0.0/16"
     }
-    vpc2 = {
+    dev_dmz_vpc = {
         name = "dev_dmz_vpc"
         cidr = "10.30.0.0/16"
     }
-    vpc3 = {
+    shared_vpc = {
         name = "shared_vpc"
         cidr = "10.100.0.0/16"
     }
-    vpc4 = {
+    product_vpc = {
         name = "product_vpc"
         cidr = "10.210.0.0/16"
     }
-    vpc5 = {
+    testdev_vpc = {
         name = "testdev_vpc"
         cidr = "10.230.0.0/16"
     }
   }
 }
 
-# variable "vpc" {
-#   type = list(any)
-# }
+
 
