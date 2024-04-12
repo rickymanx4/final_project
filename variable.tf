@@ -309,22 +309,14 @@ variable "rds1" {
   type        = map(object({
     name  = string
     sub_group  = string
-    az = string
-    pub = bool
+    sg = string
   }))
   default     = {
     product_rds = {
         name = "product_rds"
         sub_group = "product_subnet_group"
         sg = "ap-southeast-1a"
-        pub = false
-        }        
-    testdev_pri_02c = {
-        name = "testdev_pri_02c"
-        cidr = "10.230.160.0/24"
-        az = "ap-southeast-1c"
-        pub = false
-        }        
+        }               
     }
 }
 variable "rds" {
