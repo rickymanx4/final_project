@@ -6,7 +6,7 @@ variable "region" {
 
 variable "vpc" { 
   description = "vpc" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
   })
@@ -36,7 +36,7 @@ variable "vpc" {
 
 variable "subnet_user_dmz_pub" { 
   description = "subnet_user_dmz_pub" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
     az = string
@@ -68,7 +68,7 @@ variable "subnet_user_dmz_pub" {
 
 variable "subnet_user_dmz_pri" { 
   description = "subnet_user_dmz_pri" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
     az = string
@@ -89,7 +89,7 @@ variable "subnet_user_dmz_pri" {
 
 variable "subnet_dev_dmz_pub" { 
   description = "subnet_dev_dmz_pub" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
     az = string
@@ -119,7 +119,7 @@ variable "subnet_dev_dmz_pub" {
 }
 variable "subnet_dev_dmz_pri" { 
   description = "subnet_dev_dmz_pri" 
-  type        = map({
+  type        =list({
     name  = string
     cidr  = string
     az = string
@@ -140,7 +140,7 @@ variable "subnet_dev_dmz_pri" {
 
 variable "subnet_shared" { 
   description = "subnet_shared" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
     az = string
@@ -161,7 +161,7 @@ variable "subnet_shared" {
 
 variable "subnet_product_01" { 
   description = "subnet_product_01" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
     az = string
@@ -182,7 +182,7 @@ variable "subnet_product_01" {
 
 variable "subnet_product_02" { 
   description = "subnet_product_02" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
     az = string
@@ -203,7 +203,7 @@ variable "subnet_product_02" {
 
 variable "subnet_testdev_01" { 
   description = "subnet_testdev_01" 
-  type        = map({
+  type        = list({
     name  = string
     cidr  = string
     az = string
@@ -225,7 +225,7 @@ variable "subnet_testdev_01" {
 
 variable "subnet_testdev_02" { 
   description = "subnet_testdev_c" 
-  type        = map({
+  type        =list({
     name  = string
     cidr  = string
     az = string
