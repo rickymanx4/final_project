@@ -21,8 +21,8 @@
 resource "aws_db_subnet_group" "product_rds_subnet" {  
   name       = "product-rds-subnet-group"
   subnet_ids = [
-    aws_subnet.product_subnet_01["product_pri_01a"].id,
-    aws_subnet.product_subnet_02["product_pri_02a"].id
+    aws_subnet.product_subnet_01["product_pri_01c"].id,
+    aws_subnet.product_subnet_02["product_pri_02c"].id
   ]
   tags = {
     Name = "product-rds-subnet-group"
@@ -32,8 +32,8 @@ resource "aws_db_subnet_group" "product_rds_subnet" {
 resource "aws_db_subnet_group" "testdev_rds_subnet" {  
   name       = "testdev-rds-subnet-group"
   subnet_ids = [
-    aws_subnet.testdev_subnet_01["testdev_pri_01a"].id,
-    aws_subnet.testdev_subnet_02["testdev_pri_02a"].id
+    aws_subnet.testdev_subnet_01["testdev_pri_01c"].id,
+    aws_subnet.testdev_subnet_02["testdev_pri_02c"].id
   ]
   tags = {
     Name = "testdev-rds-subnet-group"
