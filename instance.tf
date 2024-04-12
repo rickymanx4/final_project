@@ -3,7 +3,7 @@ resource "aws_instance" "user_dmz_proxy" {
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.user_dmz_proxy_sg.id]
-  key_name = ec2_key
+  key_name = "ec2_key"
   subnet_id = aws_subnet.user_dmz_pri_subnet[*].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
