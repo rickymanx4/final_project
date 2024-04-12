@@ -49,7 +49,7 @@ resource "aws_instance" "shared_nexus" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws.security_group.shared_nexus_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws.subnet_shared["shared_pri_01a"].id
+  subnet_id = aws_subnet.subnet_shared["shared_pri_01a"].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -72,7 +72,7 @@ resource "aws_instance" "shared_monitoring" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws.security_group.shared_monitoring_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws.subnet_shared["shared_pri_02a"].id
+  subnet_id = aws_subnet.subnet_shared["shared_pri_02a"].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -94,7 +94,7 @@ resource "aws_instance" "shared_elk" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws.security_group.shared_elk_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws.subnet_shared["shared_pri_02a"].id
+  subnet_id = aws_subnet.subnet_shared["shared_pri_02a"].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
