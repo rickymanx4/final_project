@@ -304,23 +304,8 @@ variable "public_key_location" {
   sensitive = true
 }
 
-variable "rds1" { 
-  description = "product & testdev rds" 
-  type        = map(object({
-    name  = string
-    sub_group  = string
-    sg = string
-  }))
-  default     = {
-    product_rds = {
-        name = "product_rds"
-        sub_group = "product_subnet_group"
-        sg = "ap-southeast-1a"
-        }               
-    }
-}
 variable "user_dmz_target" {
   type        = list(string)
   description = "user_dmz_target_group_name"
-  default     = ["user-dmz-proxy-tg_a", "user-dmz-proxy-tg_c"]
+  default     = ["user-dmz-proxy-tg-a", "user-dmz-proxy-tg-c"]
 }
