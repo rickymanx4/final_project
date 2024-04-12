@@ -3,32 +3,25 @@
 ###
 
 resource "aws_lb_target_group" "user_dmz_proxy_tg" {
-  count = length(var.user_dmz_target)
-  name        = element(var.user_dmz_target, count.index)
+  for_each = var.user_dmz_proxy_tg
+  name        = each.value.name
   port        = 80
-  protocol    = "HTTP"
+  protocol    = "TCP"
   target_type = "instance"
   vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id
-  health_check {
-    matcher = "200,301,302"
-    path = "/"
-    healthy_threshold = 2
-    unhealthy_threshold = 2
-    timeout             = 5   # 5초의 타임아웃
-    interval            = 30  # 30초 간격으로 헬스 체크
-  }
 }
 resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_a" {
-  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[0].arn
-  target_id = aws_instance.user_dmz_proxy["user_dmz_pri_01a"].id
+  for_each = var.user_dmz_proxy_tg
+  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[each.key].arn
+  target_id = aws_instance.user_dmz_proxy[each.value.ec2].id
   port = 80
 }
 
-resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_c" {
-  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[1].arn
-  target_id = aws_instance.user_dmz_proxy["user_dmz_pri_01c"].id
-  port = 80
-}
+# resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_c" {
+#   target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[1].arn
+#   target_id = aws_instance.user_dmz_proxy["user_dmz_pri_01c"].id
+#   port = 80
+# }
 
 
 # resource "aws_alb" "external_lb" {
