@@ -304,11 +304,6 @@ variable "public_key_location" {
   sensitive = true
 }
 
-variable "user_dmz_target" {
-  type        = list(string)
-  description = "user_dmz_target_group_name"
-  default     = ["user-dmz-proxy-tg-a", "user-dmz-proxy-tg-c"]
-}
 
 variable "user_dmz_proxy_tg" { 
   description = "user_dmz_proxy_tg" 
@@ -323,6 +318,24 @@ variable "user_dmz_proxy_tg" {
         }        
     user-dmz-proxy-tg-c = {
         name = "user-dmz-proxy-tg-c"
+        ec2 = "user_dmz_pri_01c"
+        }        
+    }
+}
+
+variable "user_dmz_lb" { 
+  description = "user_dmz_proxy_lb" 
+  type        = map(object({
+    name  = string
+    ec2   = string
+  }))
+  default     = {
+    user-dmz-proxy-tg_a = {
+        name = "user-dmz-lb-a"        
+        ec2 = "user_dmz_pri_01a"
+        }        
+    user-dmz-proxy-tg-c = {
+        name = "user-dmz-lb-c"
         ec2 = "user_dmz_pri_01c"
         }        
     }
