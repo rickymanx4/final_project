@@ -19,8 +19,8 @@ resource "aws_lb_target_group" "user_dmz_proxy_tg" {
   }
 }
 resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
-  for_each =aws_instance.user_dmz_proxy
-  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[*].arn
+  for_each = aws_instance.user_dmz_proxy
+  target_group_arn = "aws_lb_target_group.user_dmz_proxy_tg[*].arn"
   target_id = aws_instance.user_dmz_proxy[each.key].id
   port = 80
 }
