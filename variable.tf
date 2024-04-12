@@ -6,10 +6,7 @@ variable "region" {
 
 variable "vpc" { 
   description = "vpc" 
-  type        = list({
-    name  = string
-    cidr  = string
-  })
+  type        = list(string)
   default     = {
     user_dmz_vpc = {
         name = "user_dmz_vpc"
@@ -36,11 +33,7 @@ variable "vpc" {
 
 variable "subnet_user_dmz_pub" { 
   description = "subnet_user_dmz_pub" 
-  type        = list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     user_dmz_pub_01a = {
         name = "user_dmz_pub_01a"
@@ -68,11 +61,7 @@ variable "subnet_user_dmz_pub" {
 
 variable "subnet_user_dmz_pri" { 
   description = "subnet_user_dmz_pri" 
-  type        = list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     user_dmz_pri_01a = {
         name = "user_dmz_pri_01a"
@@ -89,11 +78,7 @@ variable "subnet_user_dmz_pri" {
 
 variable "subnet_dev_dmz_pub" { 
   description = "subnet_dev_dmz_pub" 
-  type        = list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     dev_dmz_pub_01a = {
         name = "dev_dmz_pub_01a"
@@ -119,11 +104,7 @@ variable "subnet_dev_dmz_pub" {
 }
 variable "subnet_dev_dmz_pri" { 
   description = "subnet_dev_dmz_pri" 
-  type        =list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     dev_dmz_pri_01a = {
         name = "dev_dmz_pri_01a"
@@ -140,11 +121,7 @@ variable "subnet_dev_dmz_pri" {
 
 variable "subnet_shared" { 
   description = "subnet_shared" 
-  type        = list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     shared_pri_01a = {
         name = "shared_pri_01a"
@@ -161,11 +138,7 @@ variable "subnet_shared" {
 
 variable "subnet_product_01" { 
   description = "subnet_product_01" 
-  type        = list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     product_pri_01a = {
         name = "product_pri_01a"
@@ -182,11 +155,7 @@ variable "subnet_product_01" {
 
 variable "subnet_product_02" { 
   description = "subnet_product_02" 
-  type        = list({
-    name  = string
-    cidr  = string
-    az = string
-  }))
+  type        = list(string)
   default     = {
     product_pri_02a = {
         name = "product_pri_02a"
@@ -203,11 +172,7 @@ variable "subnet_product_02" {
 
 variable "subnet_testdev_01" { 
   description = "subnet_testdev_01" 
-  type        = list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     testdev_pri_01a = {
         name = "testdev_pri_01a"
@@ -225,11 +190,7 @@ variable "subnet_testdev_01" {
 
 variable "subnet_testdev_02" { 
   description = "subnet_testdev_c" 
-  type        =list({
-    name  = string
-    cidr  = string
-    az = string
-  })
+  type        = list(string)
   default     = {
     testdev_pri_02a = {
         name = "testdev_pri_02a"
