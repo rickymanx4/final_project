@@ -7,7 +7,7 @@ variable "region" {
 variable "vpc" { 
   description = "vpc" 
   type        = map(list(string))
-  default     = {
+  default     = [
     user_dmz_vpc = {
         name = "user_dmz_vpc"
         cidr = "10.10.0.0/16"
@@ -28,7 +28,7 @@ variable "vpc" {
         name = "testdev_vpc"
         cidr = "10.230.0.0/16"
     }
-  }
+  ]
 }
 
 variable "subnet_user_dmz_pub" { 
