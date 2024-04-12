@@ -7,6 +7,7 @@ resource "aws_lb_target_group" "user_dmz_proxy_tg" {
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
+  vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id
   health_check {
     matcher = "200,301,302"
     path = "/"
