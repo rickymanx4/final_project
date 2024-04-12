@@ -288,4 +288,15 @@ variable "proxy_ec2" {
   default     = ["user_dmz_proxy_a", "user_dmz_proxy_c"]
 }
 
-
+variable "key_name" {
+  description = "Name of the key pair"
+  type        = string
+  default     = "ec2_key"
+  sensitive = true
+}
+variable "public_key_location" {
+  description = "Location of the Public key"
+  type        = string
+  default     = "~/.ssh/ec2_key.pub"
+  sensitive = true
+}
