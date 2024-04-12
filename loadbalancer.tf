@@ -18,10 +18,15 @@ resource "aws_lb_target_group" "user_dmz_proxy_tg" {
     interval            = 30  # 30초 간격으로 헬스 체크
   }
 }
-resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
-  for_each = aws_instance.user_dmz_proxy
-  target_group_arn = "aws_lb_target_group.user_dmz_proxy_tg[*].arn"
-  target_id = aws_instance.user_dmz_proxy[each.key].id
+resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_a" {
+  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[0].arn
+  target_id = aws_instance.user_dmz_proxy["user_dmz_pri_01a"].id
+  port = 80
+}
+
+resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_c" {
+  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[1].arn
+  target_id = aws_instance.user_dmz_proxy["user_dmz_pri_01c"].id
   port = 80
 }
 
