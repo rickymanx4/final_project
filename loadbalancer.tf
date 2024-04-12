@@ -3,7 +3,8 @@
 ###
 
 resource "aws_lb_target_group" "user_dmz_proxy_tg" {
-  name        = "user-dmz-proxy-tg"
+  count = length(var.user_dmz_target)
+  name        = element(var.user_dmz_target, count.indext)
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
@@ -18,11 +19,12 @@ resource "aws_lb_target_group" "user_dmz_proxy_tg" {
   }
 }
 resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
-    for_each = aws_instance.user_dmz_proxy
-    target_group_arn = aws_lb_target_group.user_dmz_proxy_tg.arn
-    target_id = each.value.id
-    port = 80
+  for_each =aws_instance.user_dmz_proxy
+  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[*].arn
+  target_id = aws_instance.user_dmz_proxy[each.key]
+  port = 80
 }
+
 
 # resource "aws_alb" "external_lb" {
 #   name               = "ext-lb"

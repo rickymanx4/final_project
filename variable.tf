@@ -319,8 +319,8 @@ variable "rds1" {
         }               
     }
 }
-variable "rds" {
+variable "user_dmz_target" {
   type        = list(string)
-  description = "product & testdev rds"
-  default     = ["product_rds", "testdev_rds"]
+  description = "user_dmz_target_group_name"
+  default     = ["user-dmz-proxy-tg_a", "user-dmz-proxy-tg_c"]
 }
