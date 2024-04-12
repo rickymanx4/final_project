@@ -252,6 +252,12 @@ resource "aws_security_group" "product_eks_sg" {
   protocol      = "tcp"
   cidr_blocks   = ["0.0.0.0/0"]
   }
+  ingress {
+  from_port     = 9100
+  to_port       = 9100
+  protocol      = "tcp"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }  
 
   egress {
   from_port     = 0
@@ -303,7 +309,12 @@ resource "aws_security_group" "testdev_eks_sg" {
   protocol      = "tcp"
   cidr_blocks   = ["0.0.0.0/0"]
   }
-
+  ingress {
+  from_port     = 9100
+  to_port       = 9100
+  protocol      = "tcp"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }  
   egress {
   from_port     = 0
   to_port       = 0
