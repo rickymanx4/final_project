@@ -139,6 +139,7 @@ variable "subnet_dev_dmz_pri" {
     cidr  = string
     az = string
     pub = bool
+    tag = string
   }))
   default     = {
     dev_dmz_pri_01a = {
@@ -146,12 +147,14 @@ variable "subnet_dev_dmz_pri" {
         cidr = "10.30.50.0/24"
         az = "ap-southeast-1a"
         pub = false
+        tag = "dev_dmz_a"
         }
     dev_dmz_pri_01c = {
         name = "dev_dmz_pri_01c"
         cidr = "10.30.150.0/24"
         az = "ap-southeast-1c"
         pub = false
+        tag = "dev_dmz_a"        
         }
     }
 }
@@ -282,10 +285,10 @@ variable "eip_count" {
   default     = 4
 }
 
-variable "proxy_ec2" {
+variable "monitoring_ec2" {
   type        = list(string)
-  description = "user_dmz_proxy_ec2"
-  default     = ["user_dmz_proxy_a", "user_dmz_proxy_c"]
+  description = "shared_monitoring_ec2"
+  default     = ["shared_prometheus", "shared_grafana"]
 }
 
 variable "key_name" {
@@ -299,4 +302,40 @@ variable "public_key_location" {
   type        = string
   default     = "~/.ssh/ec2_key.pub"
   sensitive = true
+}
+
+variable "shared_instance" { 
+  description = "shared_instance" 
+  type        = map(object({
+    name  = string
+    subnet  = string
+    sg = string
+  }))
+  default     = {
+    nexus_ec2 = {
+        name = "shared_nexus_ec2"
+        subnet = aws_subnet.shared_subnet["shared_pri_01a"].id
+        sg = aws_security_group.shared_nexus_sg.id        
+        }        
+    prometheus_ec2 = {
+        name = "shared_prometheus_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_monitoring_sg.id        
+        }        
+    grafana_ec2 = {
+        name = "shared_grafana_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_monitoring_sg.id        
+        }        
+    elk_ec2 = {
+        name = "shared_elk_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_elk_sg.id        
+        }
+    eks_ec2 = {
+        name = "shared_eks_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_eks_sg.id        
+        }                 
+    }
 }
