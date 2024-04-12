@@ -21,6 +21,10 @@ data "aws_ami" "amazon_linux_2023" {
     values = ["hvm"]
   }
 }
+
+data "aws_key_pair" "default" {
+  key_name = "ec2_key"
+}
 ###
 # 2. test:
 ###
