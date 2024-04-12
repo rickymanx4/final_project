@@ -47,7 +47,7 @@ resource "aws_instance" "dev_dmz_proxy" {
 resource "aws_instance" "shared_nexus" {
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws.security_groups.shared_nexus_sg.id]
+  vpc_security_group_ids = [aws.security_group.shared_nexus_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
   subnet_id = aws.subnet_shared["shared_pri_01a"]
   associate_public_ip_address = false
@@ -67,10 +67,10 @@ resource "aws_instance" "shared_nexus" {
 }
 
 resource "aws_instance" "shared_monitoring" {
-  for_each = var.monitoring_ec2
+  count = length(var.monitoring_ec2)
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws.security_groups.shared_monitoring_sg.id]
+  vpc_security_group_ids = [aws.security_group.shared_monitoring_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
   subnet_id = aws.subnet_shared["shared_pri_02a"]
   associate_public_ip_address = false
@@ -85,14 +85,14 @@ resource "aws_instance" "shared_monitoring" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "${each.key}_ec2"
+    Name = "element(var.monitoring_ec2, count.index)_ec2"
   }
 }
 
 resource "aws_instance" "shared_elk" {  
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws.security_groups.shared_elk_sg.id]
+  vpc_security_group_ids = [aws.security_group.shared_elk_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
   subnet_id = aws.subnet_shared["shared_pri_02a"]
   associate_public_ip_address = false
