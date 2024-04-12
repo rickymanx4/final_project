@@ -304,38 +304,31 @@ variable "public_key_location" {
   sensitive = true
 }
 
-# variable "shared_instance" { 
-#   description = "shared_instance" 
-#   type        = map(object({
-#     name  = string
-#     subnet  = string
-#     sg = string
-#   }))
-#   default     = {
-#     nexus_ec2 = {
-#         name = "shared_nexus_ec2"
-#         subnet = aws_subnet.shared_subnet["shared_pri_01a"].id
-#         sg = aws_security_group.shared_nexus_sg.id        
-#         }        
-#     prometheus_ec2 = {
-#         name = "shared_prometheus_ec2"
-#         subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
-#         sg = aws_security_group.shared_monitoring_sg.id        
-#         }        
-#     grafana_ec2 = {
-#         name = "shared_grafana_ec2"
-#         subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
-#         sg = aws_security_group.shared_monitoring_sg.id        
-#         }        
-#     elk_ec2 = {
-#         name = "shared_elk_ec2"
-#         subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
-#         sg = aws_security_group.shared_elk_sg.id        
-#         }
-#     eks_ec2 = {
-#         name = "shared_eks_ec2"
-#         subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
-#         sg = aws_security_group.shared_eks_sg.id        
-#         }                 
-#     }
-# }
+variable "rds1" { 
+  description = "product & testdev rds" 
+  type        = map(object({
+    name  = string
+    sub_group  = string
+    az = string
+    pub = bool
+  }))
+  default     = {
+    product_rds = {
+        name = "product_rds"
+        sub_group = "product_subnet_group"
+        sg = "ap-southeast-1a"
+        pub = false
+        }        
+    testdev_pri_02c = {
+        name = "testdev_pri_02c"
+        cidr = "10.230.160.0/24"
+        az = "ap-southeast-1c"
+        pub = false
+        }        
+    }
+}
+variable "rds" {
+  type        = list(string)
+  description = "product & testdev rds"
+  default     = ["product_rds", "testdev_rds"]
+}
