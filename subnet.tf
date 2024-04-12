@@ -66,9 +66,9 @@ resource "aws_subnet" "shared_subnet" {
 }
 
 ################################ d. product ################################
-resource "aws_subnet" "product_subnet_a" {
+resource "aws_subnet" "product_subnet_01" {
   vpc_id  = aws_vpc.project_vpc["product_vpc"].id 
-  for_each = var.subnet_product_a
+  for_each = var.subnet_product_01
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
@@ -78,9 +78,9 @@ resource "aws_subnet" "product_subnet_a" {
   depends_on = [ aws_vpc.project_vpc ]
 }
 
-resource "aws_subnet" "product_subnet_c" {
+resource "aws_subnet" "product_subnet_02" {
   vpc_id  = aws_vpc.project_vpc["product_vpc"].id 
-  for_each = var.subnet_product_c
+  for_each = var.subnet_product_02
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
@@ -91,9 +91,9 @@ resource "aws_subnet" "product_subnet_c" {
 }
 
 ################################ e. testdev ################################
-resource "aws_subnet" "testdev_subnet_a" {
+resource "aws_subnet" "testdev_subnet_01" {
   vpc_id  = aws_vpc.project_vpc["testdev_vpc"].id 
-  for_each = var.subnet_testdev_a
+  for_each = var.subnet_testdev_01
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {
@@ -103,9 +103,9 @@ resource "aws_subnet" "testdev_subnet_a" {
   depends_on = [ aws_vpc.project_vpc ]
 }
 
-resource "aws_subnet" "testdev_subnet_c" {
+resource "aws_subnet" "testdev_subnet_02" {
   vpc_id  = aws_vpc.project_vpc["testdev_vpc"].id 
-  for_each = var.subnet_testdev_c
+  for_each = var.subnet_testdev_02
   cidr_block = each.value.cidr
   availability_zone = each.value.az
     tags = {

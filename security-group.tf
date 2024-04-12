@@ -49,7 +49,7 @@ resource "aws_security_group" "user_dmz_elb_sg" {
   to_port       = 0
   protocol      = "-1"
   cidr_blocks   = ["0.0.0.0/0"]
-  }
+  } 
   tags = {
     Name = "user_dmz_elb_sg"
   }
@@ -106,9 +106,6 @@ resource "aws_security_group" "dev_dmz_elb_sg" {
     Name = "dev_dmz_elb_sg"
   }
 }
-
-
-
 
 resource "aws_security_group" "shared_nexus_sg" { 
   name = "shared_nexus_sg" 
