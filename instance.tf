@@ -44,6 +44,41 @@ resource "aws_instance" "dev_dmz_proxy" {
   }
 }
 
+variable "shared_instance" { 
+  description = "shared_instance" 
+  type        = map(object({
+    name  = string
+    subnet  = string
+    sg = string
+  }))
+  default     = {
+    nexus_ec2 = {
+        name = "shared_nexus_ec2"
+        subnet = aws_subnet.shared_subnet["shared_pri_01a"].id
+        sg = aws_security_group.shared_nexus_sg.id        
+        }        
+    prometheus_ec2 = {
+        name = "shared_prometheus_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_monitoring_sg.id        
+        }        
+    grafana_ec2 = {
+        name = "shared_grafana_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_monitoring_sg.id        
+        }        
+    elk_ec2 = {
+        name = "shared_elk_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_elk_sg.id        
+        }
+    eks_ec2 = {
+        name = "shared_eks_ec2"
+        subnet = aws_subnet.shared_pri_subnet["shared_pri_02a"].id
+        sg = aws_security_group.shared_eks_sg.id        
+        }                 
+    }
+}
 resource "aws_instance" "shared_nexus" {
   for_each = var.shared_instance
   ami = data.aws_ami.amazon_linux_2023.id
