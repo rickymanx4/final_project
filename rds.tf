@@ -29,7 +29,7 @@ resource "aws_db_instance" "project_rds" {
   instance_class = "db.t3.micro"
   db_name  = "nadrie" # Initial database name
   username = "adminuser"
-  password = "adm1np@ssword#"
+  password = "adm1np$ssword#"
   multi_az = true
   publicly_accessible = false
   skip_final_snapshot = true
