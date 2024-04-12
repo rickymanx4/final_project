@@ -1,5 +1,6 @@
 resource "aws_instance" "user_dmz_proxy" {
   count = length(var.proxy_ec2)
+  for_each = var.subnet_user_dmz_pri
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.user_dmz_proxy_sg.id]
