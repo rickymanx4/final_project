@@ -21,7 +21,7 @@ resource "aws_db_subnet_group" "testdev_rds_subnet" {
 }
 
 resource "aws_db_instance" "project_rds" {  
-  identifier = "product_rds"
+  identifier = "product-rds"
   allocated_storage = 50 
   max_allocated_storage = 100
   engine = "mysql"
@@ -36,7 +36,7 @@ resource "aws_db_instance" "project_rds" {
   db_subnet_group_name  = aws_db_subnet_group.product_rds_subnet.name
   vpc_security_group_ids = [ aws_security_group.product_rds_sg.id ]
   tags = {
-      Name = "product_rds"
+      Name = "product-rds"
   }
 }
 
