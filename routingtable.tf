@@ -81,48 +81,48 @@ resource "aws_route_table" "shared_pri_rt" {
 }
 
 ################################ d. product_zone ################################
-resource "aws_route_table" "product_pri_rt_a" {
+resource "aws_route_table" "product_pri_rt_01" {
   vpc_id = aws_vpc.project_vpc["product_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "product_rt_a"
+    Name = "product_rt_01"
   }
 }
 
-resource "aws_route_table" "product_pri_rt_c" {  
+resource "aws_route_table" "product_pri_rt_02" {  
   vpc_id = aws_vpc.project_vpc["product_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "product_rt_c"
+    Name = "product_rt_02"
   }
 }
 
 ################################ e. testdev_zone ################################
-resource "aws_route_table" "testdev_pri_rt_a" {
+resource "aws_route_table" "testdev_pri_rt_01" {
   vpc_id = aws_vpc.project_vpc["testdev_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "testdev_rt_a"
+    Name = "testdev_rt_01"
   }
 }
 
-resource "aws_route_table" "testdev_pri_rt_c" {  
+resource "aws_route_table" "testdev_pri_rt_02" {  
   vpc_id = aws_vpc.project_vpc["testdev_vpc"].id  
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
   # }
   tags = {
-    Name = "testdev_rt_c"
+    Name = "testdev_rt_02"
   }
 }
 
@@ -178,25 +178,25 @@ resource "aws_route_table_association" "shared_pri_rt_asso2" {
 ################################ d. product_zone ################################
 resource "aws_route_table_association" "product_rt_asso_01" {
   for_each       = var.subnet_product_01
-  subnet_id      = aws_subnet.product_subnet_a[each.key].id
+  subnet_id      = aws_subnet.product_subnet_01[each.key].id
   route_table_id = aws_route_table.product_pri_rt_01.id
 }
 
 resource "aws_route_table_association" "product_rt_asso_02" {
   for_each       = var.subnet_product_02
-  subnet_id      = aws_subnet.product_subnet_c[each.key].id
+  subnet_id      = aws_subnet.product_subnet_02[each.key].id
   route_table_id = aws_route_table.product_pri_rt_02.id
 }
 
 ################################ e. testdev_zone ################################
 resource "aws_route_table_association" "testdev_rt_asso_01" {
   for_each       = var.subnet_testdev_01
-  subnet_id      = aws_subnet.testdev_subnet_a[each.key].id
+  subnet_id      = aws_subnet.testdev_subnet_01[each.key].id
   route_table_id = aws_route_table.testdev_pri_rt_01.id
 }
 
 resource "aws_route_table_association" "testdev_rt_asso_02" {
   for_each       = var.subnet_testdev_02
-  subnet_id      = aws_subnet.testdev_subnet_c[each.key].id
+  subnet_id      = aws_subnet.testdev_subnet_02[each.key].id
   route_table_id = aws_route_table.testdev_pri_rt_02.id
 }
