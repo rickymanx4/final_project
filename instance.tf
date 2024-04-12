@@ -47,9 +47,9 @@ resource "aws_instance" "dev_dmz_proxy" {
 resource "aws_instance" "shared_nexus" {
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws.security_group.shared_nexus_sg.id]
+  vpc_security_group_ids = [aws_security_group.security_group.shared_nexus_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.subnet_shared["shared_pri_01a"].id
+  subnet_id = aws_subnet.shared_subnet["shared_pri_01a"].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -70,9 +70,9 @@ resource "aws_instance" "shared_monitoring" {
   count = length(var.monitoring_ec2)
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws.security_group.shared_monitoring_sg.id]
+  vpc_security_group_ids = [aws_security_group.security_group.shared_monitoring_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.subnet_shared["shared_pri_02a"].id
+  subnet_id = aws_subnet.shared_subnet["shared_pri_02a"].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -92,9 +92,9 @@ resource "aws_instance" "shared_monitoring" {
 resource "aws_instance" "shared_elk" {  
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws.security_group.shared_elk_sg.id]
+  vpc_security_group_ids = [aws_security_group.security_group.shared_elk_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.subnet_shared["shared_pri_02a"].id
+  subnet_id = aws_subnet.shared_subnet["shared_pri_02a"].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
