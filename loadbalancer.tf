@@ -4,7 +4,7 @@
 
 resource "aws_lb_target_group" "user_dmz_proxy_tg" {
   count = length(var.user_dmz_target)
-  name        = element(var.user_dmz_target, count.indext)
+  name        = element(var.user_dmz_target, count.index)
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
