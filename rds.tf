@@ -30,7 +30,10 @@ resource "aws_db_subnet_group" "product_rds_subnet" {
 resource "aws_db_subnet_group" "testdev_rds_subnet" { 
   for_each =  var.subnet_testdev_02
   name       = "testdev-rds-subnet-group"
-  subnet_ids = aws_subnet.testdev_subnet_02[each.key].id
+  subnet_ids = [
+    aws_subnet.testdev_subnet_02["testdev_pri_02a"].id,
+    aws_subnet.testdev_subnet_02["testdev_pri_02c"].id
+  ]
   tags = {
     Name = "testdev-rds-subnet-group"
   }
