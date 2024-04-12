@@ -1,10 +1,10 @@
 resource "aws_instance" "user_dmz_proxy" {
-  count = length(var.proxy_ec2)
+  for_each = var.subnet_user_dmz_pri
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.user_dmz_proxy_sg.id]
   key_name = "ec2_key"
-  subnet_id = "${element(tolist(var.subnet_user_dmz_pri), count.index)}"
+  subnet_id = aws_subnet.user_dmz_pri_subnet[each.key].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -17,7 +17,7 @@ resource "aws_instance" "user_dmz_proxy" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "${element(var.proxy_ec2, count.index)}"
+    Name = "${each.value.tag}_proxy"
   }
 }
 
