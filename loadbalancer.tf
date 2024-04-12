@@ -3,7 +3,7 @@
 ###
 
 resource "aws_lb_target_group" "user_dmz_proxy_tg" {
-  name        = "user_dmz_proxy_tg"
+  name        = "user-dmz-proxy-tg"
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
