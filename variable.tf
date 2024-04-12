@@ -58,13 +58,13 @@ variable "subnet_user_dmz_pub" {
     user_dmz_pub_01c = {
         name = "user_dmz_pub_01c"
         cidr = "10.10.110.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = true
         }
     user_dmz_pub_02c = {
         name = "user_dmz_pub_02c"
         cidr = "10.10.120.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = true
         }
     }
@@ -83,14 +83,14 @@ variable "subnet_user_dmz_pri" {
     user_dmz_pri_01a = {
         name = "user_dmz_pri_01a"
         cidr = "10.10.50.0/24"
-        az = "ap-northeast-3a"
+        az = "ap-northeast-3b"
         pub = false
         tag = "user_dmz_a"
         }
     user_dmz_pri_01c = {
         name = "user_dmz_pri_01c"
         cidr = "10.10.150.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = false
         tag = "user_dmz_c"
         }
@@ -121,13 +121,13 @@ variable "subnet_dev_dmz_pub" {
     dev_dmz_pub_01c = {
         name = "dev_dmz_pub_01c"
         cidr = "10.30.110.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = true
         }
     dev_dmz_pub_02c = {
         name = "dev_dmz_pub_02c"
         cidr = "10.30.120.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = true
         }
     }
@@ -150,7 +150,7 @@ variable "subnet_dev_dmz_pri" {
     dev_dmz_pri_01c = {
         name = "dev_dmz_pri_01c"
         cidr = "10.30.150.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = false
         }
     }
@@ -198,7 +198,7 @@ variable "subnet_product_01" {
     product_pri_01c = {
         name = "product_pri_01c"
         cidr = "10.210.150.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = false
         }     
     }
@@ -222,7 +222,7 @@ variable "subnet_product_02" {
     product_pri_02c = {
         name = "product_pri_02c"
         cidr = "10.210.160.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = false
         }        
     }
@@ -246,7 +246,7 @@ variable "subnet_testdev_01" {
     testdev_pri_01c = {
         name = "testdev_pri_01c"
         cidr = "10.230.150.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = false
         }        
        
@@ -271,7 +271,7 @@ variable "subnet_testdev_02" {
     testdev_pri_02c = {
         name = "testdev_pri_02c"
         cidr = "10.230.160.0/24"
-        az = "ap-northeast-3c"
+        az = "ap-northeast-3b"
         pub = false
         }        
     }
