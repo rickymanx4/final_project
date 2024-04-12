@@ -17,7 +17,7 @@ resource "aws_instance" "user_dmz_proxy" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = var.proxy_ec2[*]
+    Name = "var.proxy_ec2[*]"
   }
 }
 
