@@ -288,7 +288,7 @@ variable "eip_count" {
 variable "monitoring_ec2" {
   type        = list(string)
   description = "shared_monitoring_ec2"
-  default     = ["shared_prometheus", "shared_grafana"]
+  default     = ["shared_prometheus_ec2", "shared_grafana_ec2"]
 }
 
 variable "key_name" {

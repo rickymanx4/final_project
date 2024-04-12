@@ -85,7 +85,7 @@ resource "aws_instance" "shared_monitoring" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "element(var.monitoring_ec2, count.index)_ec2"
+    Name = element(var.monitoring_ec2, count.index)
   }
 }
 
