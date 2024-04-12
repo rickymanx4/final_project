@@ -279,21 +279,10 @@ variable "eip_count" {
   default     = 4
 }
 
+variable "proxy_ec2" {
+  type        = list(string)
+  description = "user_dmz_proxy_ec2"
+  default     = ["user_dmz_proxy_a", "user_dmz_proxy_c"]
+}
 
-# variable "egress" {
-#   description = "sercurity group for egress"
-#   type        = map(object({
-#     from_port  = number
-#     to_port  = number
-#     protocol = string
-#     cidr_blocks = string
-#   }))  
-#   default     = {
-#     egress = {
-#       from_port     = 0
-#       to_port       = 0
-#       protocol      = "-1"
-#       cidr_blocks   = ["0.0.0.0/0"]
-#     }
-#   }
-# }
+
