@@ -11,7 +11,7 @@ resource "aws_subnet" "user_dmz_pub_subnet" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = true
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -23,7 +23,7 @@ resource "aws_subnet" "user_dmz_pri_subnet" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = false
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -36,7 +36,7 @@ resource "aws_subnet" "dev_dmz_pub_subnet" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = true
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -48,7 +48,7 @@ resource "aws_subnet" "dev_dmz_pri_subnet" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = false
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -61,7 +61,7 @@ resource "aws_subnet" "shared_subnet" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = false
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -74,7 +74,7 @@ resource "aws_subnet" "product_subnet_01" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = false
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -86,7 +86,7 @@ resource "aws_subnet" "product_subnet_02" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = false
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -99,7 +99,7 @@ resource "aws_subnet" "testdev_subnet_01" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = false
   depends_on = [ aws_vpc.project_vpc ]
 }
 
@@ -111,6 +111,6 @@ resource "aws_subnet" "testdev_subnet_02" {
     tags = {
     Name = each.value.name
   }
-  map_public_ip_on_launch = each.value.pub
+  map_public_ip_on_launch = false
   depends_on = [ aws_vpc.project_vpc ]
 }
