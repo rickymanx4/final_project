@@ -6,10 +6,7 @@ variable "region" {
 
 variable "vpc" { 
   description = "vpc" 
-  type        = map({
-    name  = string
-    cidr  = string
-  })
+  type        = map(list(string))
   default     = {
     user_dmz_vpc = {
         name = "user_dmz_vpc"
