@@ -322,5 +322,5 @@ variable "rds1" {
 variable "rds" {
   type        = list(string)
   description = "product & testdev rds"
-  default     = ["rds_primary", "testdev_rds"]
+  default     = ["product_rds", "testdev_rds"]
 }

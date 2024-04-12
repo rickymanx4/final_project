@@ -263,6 +263,27 @@ resource "aws_security_group" "product_eks_sg" {
     Name = "product_eks_sg"
   }
 }
+resource "aws_security_group" "product_rds_sg" { 
+  name = "product_rds_sg" 
+  description = "Security Group for product_rds" 
+  vpc_id = aws_vpc.project_vpc["product_vpc"].id
+
+  ingress {
+  from_port     = 3306
+  to_port       = 3306
+  protocol      = "tcp"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  egress {
+  from_port     = 0
+  to_port       = 0
+  protocol      = "-1"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "product_rds_sg"
+  }
+}
 
 resource "aws_security_group" "testdev_eks_sg" { 
   name = "testdev_eks_sg" 
@@ -291,5 +312,27 @@ resource "aws_security_group" "testdev_eks_sg" {
   }
   tags = {
     Name = "product_eks_sg"
+  }
+}
+
+resource "aws_security_group" "testdev_rds_sg" { 
+  name = "testdev_rds_sg" 
+  description = "Security Group for testdev_rds" 
+  vpc_id = aws_vpc.project_vpc["testdev_vpc"].id
+
+  ingress {
+  from_port     = 3306
+  to_port       = 3306
+  protocol      = "tcp"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  egress {
+  from_port     = 0
+  to_port       = 0
+  protocol      = "-1"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "product_rds_sg"
   }
 }
