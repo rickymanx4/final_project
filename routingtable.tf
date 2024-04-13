@@ -162,13 +162,13 @@ resource "aws_route_table_association" "shared_pri_rt_asso" {
 resource "aws_route_table_association" "product_pri_rt_asso_01" {
   count = 2
   subnet_id      = aws_subnet.product_pri_01_subnet[count.index].id
-  route_table_id = aws_route_table.product_rt[0].id
+  route_table_id = aws_route_table.product_pri_rt[0].id
 }
 
 resource "aws_route_table_association" "product_pri_rt_asso_02" {
   count = 2
   subnet_id      = aws_subnet.product_pri_02_subnet[count.index].id
-  route_table_id = aws_route_table.product_rt[1].id
+  route_table_id = aws_route_table.product_pri_rt[1].id
 }
 
 # resource "aws_route_table_association" "product_rt_asso_01" {
@@ -188,13 +188,13 @@ resource "aws_route_table_association" "product_pri_rt_asso_02" {
 resource "aws_route_table_association" "testdev_pri_rt_asso_01" {
   count = 2
   subnet_id      = aws_subnet.testdev_pri_01_subnet[count.index].id
-  route_table_id = aws_route_table.testdev_rt[0].id
+  route_table_id = aws_route_table.testdev_pri_rt[0].id
 }
 
 resource "aws_route_table_association" "testdev_pri_rt_asso_02" {
   count = 2
   subnet_id      = aws_subnet.testdev_pri_02_subnet[count.index].id
-  route_table_id = aws_route_table.testdev_rt[1].id
+  route_table_id = aws_route_table.testdev_pri_rt[1].id
 }
 
 # resource "aws_route_table_association" "testdev_rt_asso_01" {
