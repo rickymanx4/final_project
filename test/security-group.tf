@@ -5,7 +5,7 @@
 resource "aws_security_group" "user_dmz_proxy_sg" {
   name = "user_dmz_proxy_sg" 
   description = "Security Group for ngninx_proxy_instance in user_dmz" 
-  vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id
+  vpc_id = aws_vpc.project_vpc[0].id
 
   ingress {
   from_port     = 80
@@ -28,7 +28,7 @@ resource "aws_security_group" "user_dmz_proxy_sg" {
 resource "aws_security_group" "user_dmz_elb_sg" {
   name = "user_dmz_elb_sg" 
   description = "Security Group for load_balancer in user_dmz" 
-  vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id
+  vpc_id = aws_vpc.project_vpc[0].id
 
   ingress {
   from_port     = 80
@@ -58,7 +58,7 @@ resource "aws_security_group" "user_dmz_elb_sg" {
 resource "aws_security_group" "dev_dmz_proxy_sg" {
   name = "dev_dmz_proxy_sg" 
   description = "Security Group for ngninx_proxy_instance in dev_dmz" 
-  vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id
+  vpc_id = aws_vpc.project_vpc[1].id
 
   ingress {
   from_port     = 80
@@ -81,7 +81,7 @@ resource "aws_security_group" "dev_dmz_proxy_sg" {
 resource "aws_security_group" "dev_dmz_elb_sg" {
   name = "dev_dmz_elb_sg" 
   description = "Security Group for load_balancer in dev_dmz" 
-  vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id
+  vpc_id = aws_vpc.project_vpc[1].id
 
   ingress {
   from_port     = 80
@@ -110,7 +110,7 @@ resource "aws_security_group" "dev_dmz_elb_sg" {
 resource "aws_security_group" "shared_nexus_sg" { 
   name = "shared_nexus_sg" 
   description = "Security Group for shared_nexus" 
-  vpc_id = aws_vpc.project_vpc["shared_vpc"].id
+  vpc_id = aws_vpc.project_vpc[2].id
 
   ingress {
   from_port     = 22
@@ -140,7 +140,7 @@ resource "aws_security_group" "shared_nexus_sg" {
 resource "aws_security_group" "shared_monitoring_sg" { 
   name = "shared_monitoring_sg" 
   description = "Security Group for shared_monitoring" 
-  vpc_id = aws_vpc.project_vpc["shared_vpc"].id
+  vpc_id = aws_vpc.project_vpc[2].id
 
   ingress {
   from_port     = 9090
@@ -170,7 +170,7 @@ resource "aws_security_group" "shared_monitoring_sg" {
 resource "aws_security_group" "shared_elk_sg" { 
   name = "shared_elk_sg" 
   description = "Security Group for shared_elk" 
-  vpc_id = aws_vpc.project_vpc["shared_vpc"].id
+  vpc_id = aws_vpc.project_vpc[2].id
 
   ingress {
   from_port     = 5044
@@ -205,7 +205,7 @@ resource "aws_security_group" "shared_elk_sg" {
 resource "aws_security_group" "shared_eks_sg" { 
   name = "shared_eks_sg" 
   description = "Security Group for shared_eks" 
-  vpc_id = aws_vpc.project_vpc["shared_vpc"].id
+  vpc_id = aws_vpc.project_vpc[2].id
 
   ingress {
   from_port     = 80
@@ -237,7 +237,7 @@ resource "aws_security_group" "shared_eks_sg" {
 resource "aws_security_group" "product_eks_sg" { 
   name = "product_eks_sg" 
   description = "Security Group for product_eks" 
-  vpc_id = aws_vpc.project_vpc["product_vpc"].id
+  vpc_id = aws_vpc.project_vpc[3].id
 
   ingress {
   from_port     = 80
@@ -272,7 +272,7 @@ resource "aws_security_group" "product_eks_sg" {
 resource "aws_security_group" "product_rds_sg" { 
   name = "product_rds_sg" 
   description = "Security Group for product_rds" 
-  vpc_id = aws_vpc.project_vpc["product_vpc"].id
+  vpc_id = aws_vpc.project_vpc[3].id
 
   ingress {
   from_port     = 3306
@@ -294,7 +294,7 @@ resource "aws_security_group" "product_rds_sg" {
 resource "aws_security_group" "testdev_eks_sg" { 
   name = "testdev_eks_sg" 
   description = "Security Group for testdev_eks" 
-  vpc_id = aws_vpc.project_vpc["testdev_vpc"].id
+  vpc_id = aws_vpc.project_vpc[4].id
 
   ingress {
   from_port     = 80
@@ -329,7 +329,7 @@ resource "aws_security_group" "testdev_eks_sg" {
 resource "aws_security_group" "testdev_rds_sg" { 
   name = "testdev_rds_sg" 
   description = "Security Group for testdev_rds" 
-  vpc_id = aws_vpc.project_vpc["testdev_vpc"].id
+  vpc_id = aws_vpc.project_vpc[4].id
 
   ingress {
   from_port     = 3306

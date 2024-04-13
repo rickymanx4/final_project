@@ -3,10 +3,10 @@
 ##############################################################################
 
 resource "aws_vpc" "project_vpc" {
-    for_each = var.vpc 
-    cidr_block = each.value.cidr
+    count = length(var.vpc) 
+    cidr_block = element(var.vpc, count.index)
     tags = { 
-        Name = each.value.name
+        Name = "${var.name[count.index]}_vpc"
     }
     enable_dns_hostnames      = true
     enable_dns_support        = true

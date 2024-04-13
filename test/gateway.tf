@@ -15,17 +15,26 @@ resource "aws_eip" "dmz_eip" {
 ##############################################################################
 #########################2. Internet Gateways#################################
 ##############################################################################
-resource "aws_internet_gateway" "user_dmz_igw" {
-  vpc_id = aws_vpc.project_vpc["user_dmz_vpc"].id   
-  tags = {
-    Name = "user_dmz_vpc_IGW"
- }
-}
+# resource "aws_internet_gateway" "user_dmz_igw" {
+#   vpc_id = aws_vpc.project_vpc[0].id   
+#   tags = {
+#     Name = "${local.names[0]}_vpc_IGW"
+#  }
+# }
+
+# resource "aws_internet_gateway" "dev_dmz_igw" {
+#   vpc_id = aws_vpc.project_vpc[1].id   
+#   tags = {
+#     Name = "${local.names[1]}_vpc_IGW"
+#  }
+# }
 
 resource "aws_internet_gateway" "dev_dmz_igw" {
-  vpc_id = aws_vpc.project_vpc["dev_dmz_vpc"].id   
+  count = 2
+  vpc_id = slice(aws_vpc.project_vpc.id, 0, 1)   
+  
   tags = {
-    Name = "dev_dmz_vpc_IGW"
+    Name = "${slice(local.names, 0, 1)}_vpc_IGW"
  }
 }
 
@@ -37,18 +46,18 @@ resource "aws_internet_gateway" "dev_dmz_igw" {
 
 resource "aws_nat_gateway" "user_dmz_ngw_a" {
   allocation_id = aws_eip.dmz_eip[0].id
-  subnet_id     = aws_subnet.user_dmz_pub_subnet["user_dmz_pub_01a"].id
+  subnet_id     = aws_subnet.user_dmz_pub_subnet[0].id
   tags = {
-    Name = "user_dmz_ngw_a"
+    Name = "user_dmz_ngw_${local.az_ac[0]}"
  }
  depends_on = [aws_internet_gateway.user_dmz_igw]
 }
 
 resource "aws_nat_gateway" "user_dmz_ngw_c" {
   allocation_id = aws_eip.dmz_eip[1].id
-  subnet_id     = aws_subnet.user_dmz_pub_subnet["user_dmz_pub_01c"].id
+  subnet_id     = aws_subnet.user_dmz_pub_subnet[2].id
   tags = {
-    Name = "user_dmz_ngw_c"
+    Name = "user_dmz_ngw_${local.az_ac[1]}"
  }
  depends_on = [aws_internet_gateway.user_dmz_igw]
 }
@@ -56,19 +65,19 @@ resource "aws_nat_gateway" "user_dmz_ngw_c" {
 ################################ b. dev_dmz ################################
 
 resource "aws_nat_gateway" "dev_dmz_ngw_a" {
-  allocation_id = aws_eip.dmz_eip[2].id
-  subnet_id     = aws_subnet.dev_dmz_pub_subnet["dev_dmz_pub_01a"].id
+  allocation_id = aws_eip.dmz_eip[0].id
+  subnet_id     = aws_subnet.dev_dmz_pub_subnet[0].id
   tags = {
-    Name = "dev_dmz_ngw_a"
+    Name = "dev_dmz_ngw_${local.az_ac[0]}"
  }
- depends_on = [aws_internet_gateway.dev_dmz_igw]
+ depends_on = [aws_internet_gateway.user_dmz_igw]
 }
 
-resource "aws_nat_gateway" "dev_dmz_ngw_c" {
-  allocation_id = aws_eip.dmz_eip[3].id
-  subnet_id     = aws_subnet.dev_dmz_pub_subnet["dev_dmz_pub_01c"].id
+resource "aws_nat_gateway" "dev_dmz_ngw_a" {
+  allocation_id = aws_eip.dmz_eip[1].id
+  subnet_id     = aws_subnet.dev_dmz_pub_subnet[2].id
   tags = {
-    Name = "dev_dmz_ngw_c"
+    Name = "dev_dmz_ngw_${local.az_ac[1]}"
  }
- depends_on = [aws_internet_gateway.dev_dmz_igw]
+ depends_on = [aws_internet_gateway.user_dmz_igw]
 }
