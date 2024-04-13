@@ -292,11 +292,11 @@ variable "name" {
 #     }
 # }
 
-variable "monitoring_ec2" {
-  type        = list(string)
-  description = "shared_monitoring_ec2"
-  default     = ["shared_prometheus_ec2", "shared_grafana_ec2"]
-}
+# variable "monitoring_ec2" {
+#   type        = list(string)
+#   description = "shared_monitoring_ec2"
+#   default     = ["shared_prometheus_ec2", "shared_grafana_ec2"]
+# }
 
 variable "eip_count" {
   description = "The number of EIPs to create"
