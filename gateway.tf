@@ -38,7 +38,7 @@ resource "aws_nat_gateway" "gw_user_nat" {
   tags = {
     Name = "${local.names[0]}_ngw_${local.az_ac[count.index]}"
  }
- depends_on = [aws_internet_gateway.dmz_igw]
+ depends_on = [aws_internet_gateway.gw_internet]
 }
 
 # ################################ b. dev_dmz ################################
@@ -50,5 +50,5 @@ resource "aws_nat_gateway" "gw_dev_nat" {
   tags = {
     Name = "${local.names[1]}_ngw_${local.az_ac[count.index]}"
  }
- depends_on = [aws_internet_gateway.dmz_igw]
+ depends_on = [aws_internet_gateway.gw_internet]
 }
