@@ -31,7 +31,7 @@ resource "aws_eip" "dmz_eip" {
 
 resource "aws_internet_gateway" "dmz_igw" {
   count = length(local.dmz_vpc)
-  vpc_id = local.dmz_vpc.*.id
+  vpc_id = local.dmz_vpc[count.index]
   
   tags = {
     Name = element(var.name, count.index)
