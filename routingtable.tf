@@ -2,7 +2,8 @@
 ################################ 1. Routing Table ############################
 ##############################################################################
 
-################################ a. user_dmz ################################
+################################ a. dmz_public ################################
+
 resource "aws_route_table" "dmz_pub_rt" {
   count = 2
   vpc_id = local.dmz_vpc[count.index]
@@ -15,6 +16,8 @@ resource "aws_route_table" "dmz_pub_rt" {
   }
 }
 
+################################ b. user_dmz ################################
+
 resource "aws_route_table" "user_dmz_rt" {
   count = 2
   vpc_id = local.dmz_vpc[0]
@@ -26,28 +29,8 @@ resource "aws_route_table" "user_dmz_rt" {
     Name = "${local.dmz_vpc[0]}_pri_rt_${local.az_ac[count.index]}"
   }
 }
-# resource "aws_route_table" "user_dmz_pri_rt_a" {
-#   vpc_id = aws_vpc.project_vpc[0].id 
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.user_dmz_ngw_a.id
-#   }
-#   tags = {
-#     Name = "user_dmz_pri_rt_a"
-#   }
-# }
-# resource "aws_route_table" "user_dmz_pri_rt_c" {
-#   vpc_id = aws_vpc.project_vpc[0].id 
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.user_dmz_ngw_c.id
-#   }
-#   tags = {
-#     Name = "user_dmz_pri_rt_c"
-#   }
-# }
 
-################################ b. dev_dmz ################################
+################################ c. dev_dmz ################################
 
 resource "aws_route_table" "dev_dmz_rt" {
   count = 2
@@ -61,109 +44,36 @@ resource "aws_route_table" "dev_dmz_rt" {
   }
 }
 
-# resource "aws_route_table" "dev_dmz_rt" {
-#   for_each = var.dev_dmz_rt
-#   vpc_id = aws_vpc.project_vpc[1].id  
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     gateway_id = aws_internet_gateway.user_dmz_[each.valus.gw].id
-#   }
-#   tags = {
-#     Name = var.user_dmz_rt[each.key]
-#   }
-# }
+# ################################ d. shared_zone ################################
 
-# resource "aws_route_table" "dev_dmz_pub_rt" {
-#   vpc_id = aws_vpc.project_vpc[1].id  
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     gateway_id = aws_internet_gateway.dev_dmz_igw.id
-#   }
-#   tags = {
-#     Name = "dev_dmz_pub_rt"
-#   }
-# }
-# resource "aws_route_table" "dev_dmz_pri_rt_a" {   
-#   count = lenght(local.az_ac)
-#   vpc_id = aws_vpc.project_vpc[1].id 
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.dev_dmz_ngw_${local.az_ac[*]}.id
-#   }
-#   tags = {
-#     Name = "dev_dmz_pri_rt_a"
-#   }
-# }
-
-# resource "aws_route_table" "dev_dmz_pri_rt_c" {   
-#   vpc_id = aws_vpc.project_vpc[1].id 
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.dev_dmz_ngw_c.id
-#   }
-#   tags = {
-#     Name = "dev_dmz_pri_rt_c"
-#   }
-# }
-
-# ################################ c. shared_zone ################################
-# resource "aws_route_table" "shared_pri_rt" {
-#   count = 2
-#   vpc_id = aws_vpc.project_vpc[2].id  
-#   # route {
-#   #   cidr_block = "0.0.0.0/0"
-#   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
-#   # }
-#   tags = {
-#     Name = ""
-#   }
-# }
+resource "aws_route_table" "shared_pri_rt" {
+  count = 2
+  vpc_id = local.dmz_vpc[2]
+  tags = {
+    Name = "${local.dmz_vpc[2]}_pri_rt_${count_index}"
+  }
+}
 
 # ################################ d. product_zone ################################
-# resource "aws_route_table" "product_pri_rt_01" {
-#   vpc_id = aws_vpc.project_vpc[3].id  
-#   # route {
-#   #   cidr_block = "0.0.0.0/0"
-#   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
-#   # }
-#   tags = {
-#     Name = "product_rt_01"
-#   }
-# }
 
-# resource "aws_route_table" "product_pri_rt_02" {  
-#   vpc_id = aws_vpc.project_vpc[3].id  
-#   # route {
-#   #   cidr_block = "0.0.0.0/0"
-#   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
-#   # }
-#   tags = {
-#     Name = "product_rt_02"
-#   }
-# }
+resource "aws_route_table" "product_pri_rt" {
+  count = 2
+  vpc_id = local.dmz_vpc[3]
+  tags = {
+    Name = "${local.dmz_vpc[3]}_pri_rt_${count_index}"
+  }
+}
 
 # ################################ e. testdev_zone ################################
-# resource "aws_route_table" "testdev_pri_rt_01" {
-#   vpc_id = aws_vpc.project_vpc[4].id  
-#   # route {
-#   #   cidr_block = "0.0.0.0/0"
-#   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
-#   # }
-#   tags = {
-#     Name = "testdev_rt_01"
-#   }
-# }
 
-# resource "aws_route_table" "testdev_pri_rt_02" {  
-#   vpc_id = aws_vpc.project_vpc[4].id  
-#   # route {
-#   #   cidr_block = "0.0.0.0/0"
-#   #   gateway_id = aws_internet_gateway.dev_dmz_igw.id
-#   # }
-#   tags = {
-#     Name = "testdev_rt_02"
-#   }
-# }
+resource "aws_route_table" "testdev_pri_rt" {
+  count = 2
+  vpc_id = local.dmz_vpc[4]
+  tags = {
+    Name = "${local.dmz_vpc[4]}_pri_rt_${count_index}"
+  }
+}
+
 
 # ##############################################################################
 # ############################# 2. Routing Association #########################
