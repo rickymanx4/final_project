@@ -16,30 +16,6 @@ variable "name" {
   default     = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
 }
 
-variable "user_dmz_rt" { 
-  description = "user_dmz_rt" 
-  type        = map(object({
-    name  = string
-    gw   = string
-  }))
-  default     = {
-    user-dmz-rt-pub = {
-        name = "user-dmz-pub-rt"        
-        gw = "internet"
-        }
-
-    user-dmz-rt-a = {
-        name = "user-dmz-pri-rt-a"        
-        gw = "user_nat"
-        }
-
-    user-dmz-rt-c = {
-        name = "user-dmz-pri-rt-c"        
-        gw = "dev_nat"
-        }                
-       
-    }
-}
 
 variable "monitoring_ec2" {
   type        = list(string)

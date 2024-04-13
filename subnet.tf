@@ -57,7 +57,7 @@ resource "aws_subnet" "dev_dmz_pri_subnet" {
 
 ################################ c. shared ################################
 
-resource "aws_subnet" "shared_dmz_pri_subnet" {
+resource "aws_subnet" "shared_pri_subnet" {
   count               = length(local.shared_pri_subnet)
   vpc_id              = aws_vpc.project_vpc[2].id
   cidr_block          = element(local.shared_pri_subnet, count.index)
