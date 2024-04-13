@@ -20,7 +20,7 @@ resource "aws_route_table" "dmz_pub_rt" {
 
 resource "aws_route_table" "user_dmz_rt" {
   count = 2
-  vpc_id = local.dmz_vpc[0].id
+  vpc_id = aws_vpc.project_vpc[0].id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
@@ -34,7 +34,7 @@ resource "aws_route_table" "user_dmz_rt" {
 
 resource "aws_route_table" "dev_dmz_rt" {
   count = 2
-  vpc_id = local.dmz_vpc[1].id
+  vpc_id = aws_vpc.project_vpc[1].idd
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
@@ -48,7 +48,7 @@ resource "aws_route_table" "dev_dmz_rt" {
 
 resource "aws_route_table" "shared_pri_rt" {
   count = 2
-  vpc_id = local.dmz_vpc[2].id
+  vpc_id = aws_vpc.project_vpc[2].id
   tags = {
     Name = "${local.dmz_vpc[2]}_pri_rt_${count.index}"
   }
@@ -58,7 +58,7 @@ resource "aws_route_table" "shared_pri_rt" {
 
 resource "aws_route_table" "product_pri_rt" {
   count = 2
-  vpc_id = local.dmz_vpc[3].id
+  vpc_id = aws_vpc.project_vpc[3].id
   tags = {
     Name = "${local.dmz_vpc[3]}_pri_rt_${count.index}"
   }
@@ -68,7 +68,7 @@ resource "aws_route_table" "product_pri_rt" {
 
 resource "aws_route_table" "testdev_pri_rt" {
   count = 2
-  vpc_id = local.dmz_vpc[4].id
+  vpc_id = aws_vpc.project_vpc[4].id
   tags = {
     Name = "${local.dmz_vpc[4]}_pri_rt_${count.index}"
   }
