@@ -1,10 +1,10 @@
 resource "aws_instance" "user_dmz_proxy" {
-  for_each = var.subnet_user_dmz_pri
+  count = 2
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.user_dmz_proxy_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.user_dmz_pri_subnet[each.key].id
+  subnet_id = aws_subnet.user_dmz_pub_subnet[count.index].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -17,17 +17,17 @@ resource "aws_instance" "user_dmz_proxy" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "${each.value.tag}_proxy"
+    Name = "${local.names[0]}_proxy_${local.az_ac[count.index]}"
   }
 }
 
 resource "aws_instance" "dev_dmz_proxy" {
-  for_each = var.subnet_dev_dmz_pri
+  count = 2
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.dev_dmz_proxy_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.dev_dmz_pri_subnet[each.key].id
+  subnet_id = aws_subnet.dev_dmz_pub_subnet[count.index].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -40,7 +40,7 @@ resource "aws_instance" "dev_dmz_proxy" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "${each.value.tag}_proxy"
+    Name = "${local.names[1]}_proxy_${local.az_ac[count.index]}"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_instance" "shared_nexus" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.shared_nexus_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.shared_subnet["shared_pri_01a"].id
+  subnet_id = aws_subnet.shared_pri_subnet[0].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -62,17 +62,17 @@ resource "aws_instance" "shared_nexus" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "shared_nexus_ec2"
+    Name = "${local.names[2]}_nexus_ec2"
   }
 }
 
 resource "aws_instance" "shared_monitoring" {
-  count = length(var.monitoring_ec2)
+  count = 2
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.shared_monitoring_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.shared_subnet["shared_pri_02a"].id
+  subnet_id = aws_subnet.shared_pri_subnet[2].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -94,7 +94,7 @@ resource "aws_instance" "shared_elk" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.shared_elk_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.shared_subnet["shared_pri_02a"].id
+  subnet_id = aws_subnet.shared_pri_subnet[2].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -107,6 +107,6 @@ resource "aws_instance" "shared_elk" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "shared_elk_ec2"
+    Name = "${local.names[2]}_elk_ec2"
   }
 }
