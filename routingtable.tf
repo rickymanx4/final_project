@@ -12,7 +12,7 @@ resource "aws_route_table" "dmz_pub_rt" {
     gateway_id = aws_internet_gateway.gw_internet[count.index].id
   }
   tags = {
-    Name = "${local.dmz_vpc[count.index]}_pub_rt"
+    Name = "${local.names[count.index]}_pub_rt"
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_route_table" "user_dmz_rt" {
     gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
   }
   tags = {
-    Name = "${local.dmz_vpc[0]}_pri_rt_${local.az_ac[count.index]}"
+    Name = "${local.names[0]}_pri_rt_${local.az_ac[count.index]}"
   }
 }
 
@@ -40,7 +40,7 @@ resource "aws_route_table" "dev_dmz_rt" {
     gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
   }
   tags = {
-    Name = "${local.dmz_vpc[1]}_pri_rt_${local.az_ac[count.index]}"
+    Name = "${local.names[1]}_pri_rt_${local.az_ac[count.index]}"
   }
 }
 
@@ -50,7 +50,7 @@ resource "aws_route_table" "shared_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[2].id
   tags = {
-    Name = "${local.dmz_vpc[2]}_pri_rt_${count.index}"
+    Name = "${local.names[2]}_pri_rt_${count.index}"
   }
 }
 
@@ -60,7 +60,7 @@ resource "aws_route_table" "product_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[3].id
   tags = {
-    Name = "${local.dmz_vpc[3]}_pri_rt_${count.index}"
+    Name = "${local.names[3]}_pri_rt_${count.index}"
   }
 }
 
@@ -70,7 +70,7 @@ resource "aws_route_table" "testdev_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[4].id
   tags = {
-    Name = "${local.dmz_vpc[4]}_pri_rt_${count.index}"
+    Name = "${local.names[4]}_pri_rt_${count.index}"
   }
 }
 
