@@ -20,7 +20,7 @@ resource "aws_route_table" "user_dmz_rt" {
   vpc_id = local.dmz_vpc[0]
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw_user_nat[count.index].id
+    gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
   }
   tags = {
     Name = "${local.dmz_vpc[0]}_pri_rt_${local.az_ac[count.index]}"
@@ -54,7 +54,7 @@ resource "aws_route_table" "dev_dmz_rt" {
   vpc_id = local.dmz_vpc[1]
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw_dev_nat[count.index].id
+    gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
   }
   tags = {
     Name = "${local.dmz_vpc[1]}_pri_rt_${local.az_ac[count.index]}"
