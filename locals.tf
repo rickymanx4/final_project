@@ -28,6 +28,8 @@ locals {
     dmz_vpc                 = tolist(slice(aws_vpc.project_vpc[*].id, 0, 2))
     user_sub                = tolist(slice(aws_subnet.user_dmz_pub_subnet[*].id, 0, 2))
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
+    dev_sub                 = tolist(slice(aws_subnet.dev_dmz_pub_subnet[*].id, 0, 2))
+    dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
     num_01234                   = ["0", "1", "2", "3", "4"]
 

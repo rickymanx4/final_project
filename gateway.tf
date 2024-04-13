@@ -31,30 +31,12 @@ resource "aws_internet_gateway" "dmz_igw" {
 
 ################################ a. user_dmz ################################
 
-# resource "aws_nat_gateway" "user_dmz_ngw_a" {
-#   allocation_id = aws_eip.dmz_eip[0].id
-#   subnet_id     = aws_subnet.user_dmz_pub_subnet[0].id 10
-#   tags = {
-#     Name = "user_dmz_ngw_${local.az_ac[0]}"
-#  }
-#  depends_on = [aws_internet_gateway.dmz_igw]
-# }
-
-# resource "aws_nat_gateway" "user_dmz_ngw_c" {
-#   allocation_id = aws_eip.dmz_eip[1].id
-#   subnet_id     = aws_subnet.user_dmz_pub_subnet[2].id 110
-#   tags = {
-#     Name = "user_dmz_ngw_${local.az_ac[1]}"
-#  }
-#  depends_on = [aws_internet_gateway.dmz_igw]
-# }
-
 resource "aws_nat_gateway" "dmz_ngw" {
   count = 2
   allocation_id = local.user_eip[count.index]
   subnet_id     = local.user_sub[count.index]
   tags = {
-    Name = "${local.names[count.index]}_ngw_${local.az_ac[count.index]}"
+    Name = "${local.names[0]}_ngw_${local.az_ac[count.index]}"
  }
  depends_on = [aws_internet_gateway.dmz_igw]
 }
@@ -78,3 +60,13 @@ resource "aws_nat_gateway" "dmz_ngw" {
 #  }
 #  depends_on = [aws_internet_gateway.dmz_igw]
 # }
+
+resource "aws_nat_gateway" "dmz_ngw" {
+  count = 2
+  allocation_id = local.dev_eip[count.index]
+  subnet_id     = local.dev_sub[count.index]
+  tags = {
+    Name = "${local.names[1]}_ngw_${local.az_ac[count.index]}"
+ }
+ depends_on = [aws_internet_gateway.dmz_igw]
+}
