@@ -23,28 +23,22 @@ variable "user_dmz_rt" {
     gw   = string
   }))
   default     = {
-
     user-dmz-rt-pub = {
         name = "user-dmz-pub-rt"        
-        gw = "igw"
+        gw = "internet"
         }
 
     user-dmz-rt-a = {
         name = "user-dmz-pri-rt-a"        
-        gw = "ngw_a"
+        gw = "user_nat"
         }
 
     user-dmz-rt-c = {
         name = "user-dmz-pri-rt-c"        
-        gw = "ngw_c"
+        gw = "dev_nat"
         }                
        
     }
-}
-
-variable "eip_count" {
-  description = "The number of EIPs to create"
-  default     = 4
 }
 
 variable "monitoring_ec2" {
