@@ -34,7 +34,7 @@ resource "aws_internet_gateway" "dmz_igw" {
   vpc_id = slice(aws_vpc.project_vpc[count.index].id, 0, 1)   
   
   tags = {
-    Name = "${slice(local.names, 0, 1)}_vpc_IGW"
+    Name = "${slice(var.name, 0, 1)}_vpc_IGW"
  }
 }
 
