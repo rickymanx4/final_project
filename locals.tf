@@ -9,6 +9,7 @@ locals {
     prod_vpc_cidr           = "10.210.0.0/16"
     testdev_vpc_cidr        = "10.230.0.0/16"
     
+    names                   = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
 
     user_dmz_pub_subnet     = ["10.10.10.0/24", "10.10.110.0/24", "10.10.20.0/24", "10.10.120.0/24"]
     user_dmz_pri_subnet     = ["10.10.50.0/24", "10.10.150.0/24"]

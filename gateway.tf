@@ -54,7 +54,7 @@ resource "aws_nat_gateway" "dmz_ngw" {
   allocation_id = local.user_eip[count.index]
   subnet_id     = local.user_sub[count.index]
   tags = {
-    Name = "element(var.name, count.index)_ngw_${local.az_ac[count.index]}"
+    Name = "${local.names[count.index]}_ngw_${local.az_ac[count.index]}"
  }
  depends_on = [aws_internet_gateway.dmz_igw]
 }
