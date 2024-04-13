@@ -31,7 +31,7 @@ resource "aws_internet_gateway" "dmz_igw" {
 
 ################################ a. user_dmz ################################
 
-resource "aws_nat_gateway" "dmz_ngw" {
+resource "aws_nat_gateway" "user_dmz_ngw" {
   count = 2
   allocation_id = local.user_eip[count.index]
   subnet_id     = local.user_sub[count.index]
@@ -61,7 +61,7 @@ resource "aws_nat_gateway" "dmz_ngw" {
 #  depends_on = [aws_internet_gateway.dmz_igw]
 # }
 
-resource "aws_nat_gateway" "dmz_ngw" {
+resource "aws_nat_gateway" "dev_dmz_ngw" {
   count = 2
   allocation_id = local.dev_eip[count.index]
   subnet_id     = local.dev_sub[count.index]
