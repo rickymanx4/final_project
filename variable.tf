@@ -16,257 +16,31 @@ variable "name" {
   default     = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
 }
 
-# variable "subnet_user_dmz_pub" { 
-#   description = "subnet_user_dmz_pub" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#   }))
-#   default     = {
-#     user_dmz_pub_01a = {
-#         name = "user_dmz_pub_01a"
-#         cidr = "10.10.10.0/24"
-#         az = "ap-southeast-1a"
-#         pub = true
-#         }
-#     user_dmz_pub_02a = {
-#         name = "user_dmz_pub_02a"
-#         cidr = "10.10.20.0/24"
-#         az = "ap-southeast-1a"
-#         pub = true
-#         }
-#     user_dmz_pub_01c = {
-#         name = "user_dmz_pub_01c"
-#         cidr = "10.10.110.0/24"
-#         az = "ap-southeast-1c"
-#         pub = true
-#         }
-#     user_dmz_pub_02c = {
-#         name = "user_dmz_pub_02c"
-#         cidr = "10.10.120.0/24"
-#         az = "ap-southeast-1c"
-#         pub = true
-#         }
-#     }
-# }
+variable "user_dmz_rt" { 
+  description = "user_dmz_rt" 
+  type        = map(object({
+    name  = string
+    gw   = string
+  }))
+  default     = {
 
-# variable "subnet_user_dmz_pri" { 
-#   description = "subnet_user_dmz_pri" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#     tag = string
-#   }))
-#   default     = {
-#     user_dmz_pri_01a = {
-#         name = "user_dmz_pri_01a"
-#         cidr = "10.10.50.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         tag = "user_dmz_a"
-#         }
-#     user_dmz_pri_01c = {
-#         name = "user_dmz_pri_01c"
-#         cidr = "10.10.150.0/24"
-#         az = "ap-southeast-1c"
-#         pub = false
-#         tag = "user_dmz_c"
-#         }
-#     }
-# }
+    user-dmz-rt-pub = {
+        name = "user-dmz-pub-rt"        
+        gw = "igw"
+        }
 
-# variable "subnet_dev_dmz_pub" { 
-#   description = "subnet_dev_dmz_pub" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#   }))
-#   default     = {
-#     dev_dmz_pub_01a = {
-#         name = "dev_dmz_pub_01a"
-#         cidr = "10.30.10.0/24"
-#         az = "ap-southeast-1a"
-#         pub = true
-#         }
-#     dev_dmz_pub_02a = {
-#         name = "dev_dmz_pub_02a"
-#         cidr = "10.30.20.0/24"
-#         az = "ap-southeast-1a"
-#         pub = true
-#         }
-#     dev_dmz_pub_01c = {
-#         name = "dev_dmz_pub_01c"
-#         cidr = "10.30.110.0/24"
-#         az = "ap-southeast-1c"
-#         pub = true
-#         }
-#     dev_dmz_pub_02c = {
-#         name = "dev_dmz_pub_02c"
-#         cidr = "10.30.120.0/24"
-#         az = "ap-southeast-1c"
-#         pub = true
-#         }
-#     }
-# }
-# variable "subnet_dev_dmz_pri" { 
-#   description = "subnet_dev_dmz_pri" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#     tag = string
-#   }))
-#   default     = {
-#     dev_dmz_pri_01a = {
-#         name = "dev_dmz_pri_01a"
-#         cidr = "10.30.50.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         tag = "dev_dmz_a"
-#         }
-#     dev_dmz_pri_01c = {
-#         name = "dev_dmz_pri_01c"
-#         cidr = "10.30.150.0/24"
-#         az = "ap-southeast-1c"
-#         pub = false
-#         tag = "dev_dmz_a"        
-#         }
-#     }
-# }
+    user-dmz-rt-a = {
+        name = "user-dmz-pri-rt-a"        
+        gw = "ngw_a"
+        }
 
-# variable "subnet_shared" { 
-#   description = "subnet_shared" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#   }))
-#   default     = {
-#     shared_pri_01a = {
-#         name = "shared_pri_01a"
-#         cidr = "10.100.50.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         }
-#     shared_pri_02a = {
-#         name = "shared_pri_02a"
-#         cidr = "10.100.150.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         }
-#     }
-# }
-
-# variable "subnet_product_01" { 
-#   description = "subnet_product_01" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#   }))
-#   default     = {
-#     product_pri_01a = {
-#         name = "product_pri_01a"
-#         cidr = "10.210.50.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         }
-#     product_pri_01c = {
-#         name = "product_pri_01c"
-#         cidr = "10.210.150.0/24"
-#         az = "ap-southeast-1c"
-#         pub = false
-#         }     
-#     }
-# }
-
-# variable "subnet_product_02" { 
-#   description = "subnet_product_02" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#   }))
-#   default     = {
-#     product_pri_02a = {
-#         name = "product_pri_02a"
-#         cidr = "10.210.60.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         }          
-#     product_pri_02c = {
-#         name = "product_pri_02c"
-#         cidr = "10.210.160.0/24"
-#         az = "ap-southeast-1c"
-#         pub = false
-#         }        
-#     }
-# }
-
-# variable "subnet_testdev_01" { 
-#   description = "subnet_testdev_01" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#   }))
-#   default     = {
-#     testdev_pri_01a = {
-#         name = "testdev_pri_01a"
-#         cidr = "10.230.50.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         }
-#     testdev_pri_01c = {
-#         name = "testdev_pri_01c"
-#         cidr = "10.230.150.0/24"
-#         az = "ap-southeast-1c"
-#         pub = false
-#         }        
+    user-dmz-rt-c = {
+        name = "user-dmz-pri-rt-c"        
+        gw = "ngw_c"
+        }                
        
-#     }
-# }
-
-# variable "subnet_testdev_02" { 
-#   description = "subnet_testdev_c" 
-#   type        = map(object({
-#     name  = string
-#     cidr  = string
-#     az = string
-#     pub = bool
-#   }))
-#   default     = {
-#     testdev_pri_02a = {
-#         name = "testdev_pri_02a"
-#         cidr = "10.230.60.0/24"
-#         az = "ap-southeast-1a"
-#         pub = false
-#         }        
-#     testdev_pri_02c = {
-#         name = "testdev_pri_02c"
-#         cidr = "10.230.160.0/24"
-#         az = "ap-southeast-1c"
-#         pub = false
-#         }        
-#     }
-# }
-
-# variable "monitoring_ec2" {
-#   type        = list(string)
-#   description = "shared_monitoring_ec2"
-#   default     = ["shared_prometheus_ec2", "shared_grafana_ec2"]
-# }
+    }
+}
 
 variable "eip_count" {
   description = "The number of EIPs to create"

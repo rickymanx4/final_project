@@ -3,38 +3,52 @@
 ##############################################################################
 
 ################################ a. user_dmz ################################
-resource "aws_route_table" "user_dmz_pub_rt" {
+resource "aws_route_table" "user_dmz_rt" {
+  for_each = var.user_dmz_rt
   vpc_id = aws_vpc.project_vpc[0].id  
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.user_dmz_igw.id
+    gateway_id = aws_internet_gateway.user_dmz_[each.valus.gw].id
   }
   tags = {
-    Name = "user_dmz_pub_rt"
+    Name = var.user_dmz_rt[each.key]
   }
 }
-resource "aws_route_table" "user_dmz_pri_rt_a" {
-  vpc_id = aws_vpc.project_vpc[0].id 
+# resource "aws_route_table" "user_dmz_pri_rt_a" {
+#   vpc_id = aws_vpc.project_vpc[0].id 
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.user_dmz_ngw_a.id
+#   }
+#   tags = {
+#     Name = "user_dmz_pri_rt_a"
+#   }
+# }
+# resource "aws_route_table" "user_dmz_pri_rt_c" {
+#   vpc_id = aws_vpc.project_vpc[0].id 
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.user_dmz_ngw_c.id
+#   }
+#   tags = {
+#     Name = "user_dmz_pri_rt_c"
+#   }
+# }
+
+################################ b. dev_dmz ################################
+
+resource "aws_route_table" "dev_dmz_rt" {
+  for_each = var.dev_dmz_rt
+  vpc_id = aws_vpc.project_vpc[1].id  
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.user_dmz_ngw_a.id
+    gateway_id = aws_internet_gateway.user_dmz_[each.valus.gw].id
   }
   tags = {
-    Name = "user_dmz_pri_rt_a"
-  }
-}
-resource "aws_route_table" "user_dmz_pri_rt_c" {
-  vpc_id = aws_vpc.project_vpc[0].id 
-  route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.user_dmz_ngw_c.id
-  }
-  tags = {
-    Name = "user_dmz_pri_rt_c"
+    Name = var.user_dmz_rt[each.key]
   }
 }
 
-################################ b. dev_dmz ################################
 resource "aws_route_table" "dev_dmz_pub_rt" {
   vpc_id = aws_vpc.project_vpc[1].id  
   route {
