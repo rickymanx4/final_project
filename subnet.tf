@@ -99,7 +99,7 @@ resource "aws_subnet" "product_pri_02_subnet" {
 
 resource "aws_subnet" "testdev_pri_01_subnet" {
   count               = length(local.testdev_01_subnet)
-  vpc_id              = aws_vpc.project_vpc[3].id
+  vpc_id              = aws_vpc.project_vpc[4].id
   cidr_block          = element(local.testdev_01_subnet, count.index)
   availability_zone   = element(local.azs_2, count.index)
 
@@ -111,7 +111,7 @@ resource "aws_subnet" "testdev_pri_01_subnet" {
 
 resource "aws_subnet" "testdev_pri_02_subnet" {
   count               = length(local.testdev_02_subnet)
-  vpc_id              = aws_vpc.project_vpc[3].id
+  vpc_id              = aws_vpc.project_vpc[4].id
   cidr_block          = element(local.testdev_02_subnet, count.index)
   availability_zone   = element(local.azs_2, count.index)
 
