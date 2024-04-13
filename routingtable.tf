@@ -50,7 +50,7 @@ resource "aws_route_table" "shared_pri_rt" {
   count = 2
   vpc_id = local.dmz_vpc[2]
   tags = {
-    Name = "${local.dmz_vpc[2]}_pri_rt_${count_index}"
+    Name = "${local.dmz_vpc[2]}_pri_rt_${count.index}"
   }
 }
 
@@ -60,7 +60,7 @@ resource "aws_route_table" "product_pri_rt" {
   count = 2
   vpc_id = local.dmz_vpc[3]
   tags = {
-    Name = "${local.dmz_vpc[3]}_pri_rt_${count_index}"
+    Name = "${local.dmz_vpc[3]}_pri_rt_${count.index}"
   }
 }
 
@@ -70,7 +70,7 @@ resource "aws_route_table" "testdev_pri_rt" {
   count = 2
   vpc_id = local.dmz_vpc[4]
   tags = {
-    Name = "${local.dmz_vpc[4]}_pri_rt_${count_index}"
+    Name = "${local.dmz_vpc[4]}_pri_rt_${count.index}"
   }
 }
 
