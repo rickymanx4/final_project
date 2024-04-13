@@ -73,7 +73,7 @@ resource "aws_nat_gateway" "dev_dmz_ngw_a" {
  depends_on = [aws_internet_gateway.user_dmz_igw]
 }
 
-resource "aws_nat_gateway" "dev_dmz_ngw_a" {
+resource "aws_nat_gateway" "dev_dmz_ngw_c" {
   allocation_id = aws_eip.dmz_eip[1].id
   subnet_id     = aws_subnet.dev_dmz_pub_subnet[2].id
   tags = {
