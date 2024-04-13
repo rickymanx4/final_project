@@ -29,9 +29,9 @@ resource "aws_eip" "dmz_eip" {
 #  }
 # }
 
-resource "aws_internet_gateway" "dev_dmz_igw" {
+resource "aws_internet_gateway" "dmz_igw" {
   count = 2
-  vpc_id = slice(aws_vpc.project_vpc.id, 0, 1)   
+  vpc_id = slice(aws_vpc.project_vpc[count.index].id, 0, 1)   
   
   tags = {
     Name = "${slice(local.names, 0, 1)}_vpc_IGW"
@@ -50,7 +50,7 @@ resource "aws_nat_gateway" "user_dmz_ngw_a" {
   tags = {
     Name = "user_dmz_ngw_${local.az_ac[0]}"
  }
- depends_on = [aws_internet_gateway.user_dmz_igw]
+ depends_on = [aws_internet_gateway.dmz_igw]
 }
 
 resource "aws_nat_gateway" "user_dmz_ngw_c" {
@@ -59,7 +59,7 @@ resource "aws_nat_gateway" "user_dmz_ngw_c" {
   tags = {
     Name = "user_dmz_ngw_${local.az_ac[1]}"
  }
- depends_on = [aws_internet_gateway.user_dmz_igw]
+ depends_on = [aws_internet_gateway.dmz_igw]
 }
 
 ################################ b. dev_dmz ################################
@@ -70,7 +70,7 @@ resource "aws_nat_gateway" "dev_dmz_ngw_a" {
   tags = {
     Name = "dev_dmz_ngw_${local.az_ac[0]}"
  }
- depends_on = [aws_internet_gateway.user_dmz_igw]
+ depends_on = [aws_internet_gateway.dmz_igw]
 }
 
 resource "aws_nat_gateway" "dev_dmz_ngw_c" {
@@ -79,5 +79,5 @@ resource "aws_nat_gateway" "dev_dmz_ngw_c" {
   tags = {
     Name = "dev_dmz_ngw_${local.az_ac[1]}"
  }
- depends_on = [aws_internet_gateway.user_dmz_igw]
+ depends_on = [aws_internet_gateway.dmz_igw]
 }
