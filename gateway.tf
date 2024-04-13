@@ -31,7 +31,7 @@ resource "aws_eip" "dmz_eip" {
 
 resource "aws_internet_gateway" "dmz_igw" {
   count = 2
-  vpc_id = slice(aws_vpc.project_vpc[count.index].id, 0, 1)   
+  vpc_id = slice(tolist(aws_vpc.project_vpc[count.index].id), 0, 1)   
   
   tags = {
     Name = "${slice(var.name, 0, 1)}_vpc_IGW"
