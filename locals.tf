@@ -30,5 +30,9 @@ locals {
     azs_4                   = ["ap-southeast-1a", "ap-southeast-1a", "ap-southeast-1c", "ap-southeast-1c"]
     az_ac                   = ["a", "c"]
 
+    dmz_vpc                 = slice(aws_vpc.project_vpc, 0, 1)
+    dmz_name                = ["user_dmz", "dev_dmz"]
+
+    num_01234                   = ["0", "1", "2", "3", "4"]
 
 }

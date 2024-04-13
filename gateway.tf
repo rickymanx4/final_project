@@ -30,11 +30,11 @@ resource "aws_eip" "dmz_eip" {
 # }
 
 resource "aws_internet_gateway" "dmz_igw" {
-  count = 2
-  vpc_id = tolist(slice(aws_vpc.project_vpc[count.index].id, 0, 1))   
+  count = length(local.dmz_vpc)
+  vpc_id = local.dmz_vpc.*.id
   
   tags = {
-    Name = "${slice(var.name, 0, 1)}_vpc_IGW"
+    Name = element(var.name, count.index)
  }
 }
 
