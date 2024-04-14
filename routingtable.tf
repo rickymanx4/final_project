@@ -6,7 +6,7 @@
 
 resource "aws_route_table" "dmz_pub_rt" {
   count = 2
-  vpc_id = local.user_dev[count.index]
+  vpc_id = local.user_dev_vpc[count.index]
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw_internet[count.index].id
