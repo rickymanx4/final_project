@@ -2,39 +2,39 @@
 # 1. External-Loadb-Balancer
 ###
 
-resource "aws_lb_target_group" "user_dmz_proxy_tg" {
-  count       = 2
-  name        = "${local.names[0]}-target-group-${local.az_ac[count.index]}"
-  port        = 80
-  protocol    = "TCP"
-  target_type = "instance"
-  vpc_id = aws_vpc.project_vpc[0].id
-}
-resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
-  count            = 2
-  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
-  target_id        = aws_instance.user_dmz_proxy[count.index].id
-  port = 80
-}
+# resource "aws_lb_target_group" "user_dmz_proxy_tg" {
+#   count       = 2
+#   name        = "${local.names[0]}-target-group-${local.az_ac[count.index]}"
+#   port        = 80
+#   protocol    = "TCP"
+#   target_type = "instance"
+#   vpc_id = aws_vpc.project_vpc[0].id
+# }
+# resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
+#   count            = 2
+#   target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
+#   target_id        = aws_instance.user_dmz_proxy[count.index].id
+#   port = 80
+# }
 
-resource "aws_lb" "user_dmz_proxy_lb" {
-  count              = 2
-  name               = "user_dmz_proxy_lb"
-  load_balancer_type = "network"
-  internal = false
-  subnets = aws_subnet.user_dmz_pri_subnet[count.index]
-  security_groups = [aws_security_group.project_ext-lb.id]
-}
-resource "aws_lb_listener" "ext_listener" {
-  count             = 2
-  load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
-  port              = "80"
-  protocol          = "HTTP"
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
-  }
-}
+# resource "aws_lb" "user_dmz_proxy_lb" {
+#   count              = 2
+#   name               = "user_dmz_proxy_lb"
+#   load_balancer_type = "network"
+#   internal = false
+#   subnets = aws_subnet.user_dmz_pri_subnet[count.index]
+#   security_groups = [aws_security_group.user_dmz_proxy_sg.id]
+# }
+# resource "aws_lb_listener" "ext_listener" {
+#   count             = 2
+#   load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
+#   port              = "80"
+#   protocol          = "HTTP"
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
+#   }
+# }
 
 # resource "aws_lb_target_group" "dev_dmz_proxy_tg" {
 #   count       = 2
