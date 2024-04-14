@@ -22,7 +22,7 @@ resource "aws_lb" "user_dmz_proxy_lb" {
   name               = "user_dmz_proxy_lb"
   load_balancer_type = "network"
   internal = false
-  subnets = aws_subnet.user_dmz_pri_subent[count.index]
+  subnets = aws_subnet.user_dmz_pri_subnet[count.index]
   security_groups = [aws_security_group.project_ext-lb.id]
 }
 resource "aws_lb_listener" "ext_listener" {
