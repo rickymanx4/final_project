@@ -228,8 +228,8 @@ resource "aws_security_group" "shared_ext_lb_sg" {
   vpc_id = aws_vpc.project_vpc[2].id
 
   ingress {
-  from_port     = 5000
-  to_port       = 5000
+  from_port     = 5555
+  to_port       = 5555
   protocol      = "tcp"
   cidr_blocks = [var.vpc[0]]
   }
@@ -296,6 +296,7 @@ resource "aws_security_group" "eks_sg" {
   protocol      = "tcp"
   cidr_blocks   = ["0.0.0.0/0"]
   }
+
   ingress {
   from_port     = 9100
   to_port       = 9100

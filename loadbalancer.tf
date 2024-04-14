@@ -127,7 +127,42 @@ resource "aws_lb_listener" "dev_nexus_lb_listener" {
   }
 }
 
+################################################################################
+resource "aws_lb_target_group" "nexus_tg" {
+  name        = "shared-nexus-ext-lb-tg"
+  port        = 22
+  protocol    = "TCP"
+  vpc_id      = aws_vpc.project_vpc[2].id
+}
+resource "aws_lb_target_group_attachment" "nexus_tg_att" {
+    target_group_arn = aws_lb_target_group.nexus_tg.arn
+    target_id = aws_instance.shared_nexus.id
+    port = 22
+}
 
+resource "aws_lb" "shared_ext_lb" {
+  name                = "shared-ext-lb"
+  internal            = true
+  load_balancer_type  = "network"
+  subnets             = aws_subnet.shared_pri_subnet[0].id
+  security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
+
+  tags = {  
+    Name = "$(local.names[2])_ext_lb"
+    }
+}
+resource "aws_lb_listener" "nexus_listener" {
+  load_balancer_arn = aws_lb.shared_ext_lb.arn
+  port              = "5555"
+  protocol          = "TCP"
+  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+  # alpn_policy       = "HTTP2Preferred"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.nexus_tg.arn
+  }
+}
 
 
 
