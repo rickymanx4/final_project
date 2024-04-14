@@ -76,7 +76,7 @@ resource "aws_security_group" "shared_nexus_sg" {
   from_port     = 22
   to_port       = 22
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_ext_lb_sg.id]
   }
 
   ingress {
@@ -103,6 +103,13 @@ resource "aws_security_group" "shared_monitoring_sg" {
   name = "shared_monitoring_sg" 
   description = "Security Group for shared_monitoring" 
   vpc_id = aws_vpc.project_vpc[2].id
+
+  ingress {
+  from_port     = 22
+  to_port       = 22
+  protocol      = "tcp"
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
+  }
 
   ingress {
   from_port     = 9090
@@ -135,6 +142,13 @@ resource "aws_security_group" "shared_elk_sg" {
   name = "shared_elk_sg" 
   description = "Security Group for shared_elk" 
   vpc_id = aws_vpc.project_vpc[2].id
+
+  ingress {
+  from_port     = 22
+  to_port       = 22
+  protocol      = "tcp"
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
+  }
 
   ingress {
   from_port     = 5044
@@ -173,6 +187,13 @@ resource "aws_security_group" "shared_eks_sg" {
   name = "shared_eks_sg" 
   description = "Security Group for shared_eks" 
   vpc_id = aws_vpc.project_vpc[2].id
+  
+  ingress {
+  from_port     = 22
+  to_port       = 22
+  protocol      = "tcp"
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
+  }
 
   ingress {
   from_port     = 80
@@ -197,6 +218,57 @@ resource "aws_security_group" "shared_eks_sg" {
   tags = {
     Name = "shared_eks_sg"
   }
+}
+
+################################ e. loadbalancer_sg ################################
+
+resource "aws_security_group" "shared_ext_lb_sg" { 
+  name = "shared_ext_lb_sg" 
+  description = "Security Group for shared_ext_lb_sg" 
+  vpc_id = aws_vpc.project_vpc[2].id
+
+  ingress {
+  from_port     = 5000
+  to_port       = 5000
+  protocol      = "tcp"
+  cidr_blocks = [var.vpc[0]]
+  }
+
+  egress {
+  from_port     = 0
+  to_port       = 0
+  protocol      = "-1"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "shared_ext_lb_sg"
+  }
+}
+
+resource "aws_security_group" "shared_int_lb_sg" { 
+  name = "shared_int_lb_sg" 
+  description = "Security Group for shared_int_lb_sg" 
+  vpc_id = aws_vpc.project_vpc[2].id
+
+  egress {
+  from_port     = 0
+  to_port       = 0
+  protocol      = "-1"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "shared_int_lb_sg"
+  }
+}
+
+resource "aws_security_group_rule" "shared_int_lb" {
+  security_group_id = aws_security_group.shared_int_lb_sg.id
+  type = "ingress"
+  count = 4
+  source_security_group_id = aws_security_group.shared_nexus_sg.id
+  protocol = "tcp"
+  from_port = local.shared_ports[count.index]
+  to_port = local.shared_ports[count.index]
 }
 
 ##############################################################################

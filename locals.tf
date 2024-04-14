@@ -29,7 +29,7 @@ locals {
     user_dev                = tolist(slice(var.name[*], 0, 2))
     prod_test               = tolist(slice(var.name[*], 3, 5))
 
-
+    shared_ports            = [1111, 2222, 3333, 4444]             
 
     num_01234                   = ["0", "1", "2", "3", "4"]
 
