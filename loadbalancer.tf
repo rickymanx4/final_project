@@ -190,7 +190,7 @@ resource "aws_lb" "shared_int" {
   name                = "shared-int-lb"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = aws_subnet.shared_pri_subnet[0].id
+  subnets             = [aws_subnet.shared_pri_subnet[0].id]
   security_groups     = [ aws_security_group.shared_int_lb_sg.id ]
 
   tags = {
