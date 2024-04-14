@@ -35,7 +35,7 @@ resource "aws_lb" "user_dmz_proxy_lb" {
   name               = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
-  subnets = [aws_subnet.user_dmz_pri_subnet[count.index].id]
+  subnets = [aws_subnet.subnet_user_dmz_pri[count.index].id]
   security_groups = [aws_security_group.dmz_elb_sg[0].id]
 }
 
@@ -98,7 +98,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
   name               = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
-  subnets = [aws_subnet.dev_dmz_pri_subnet[count.index].id]
+  subnets = [aws_subnet.subnet_dev_dmz_pri[count.index].id]
   security_groups = [aws_security_group.dmz_elb_sg[1].id]
 }
 
@@ -169,7 +169,7 @@ resource "aws_lb" "shared_ext_lb" {
   name                = "shared-ext-lb"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = [aws_subnet.shared_pri_subnet[0].id]
+  subnets             = [aws_subnet.subnet_shared_pri[0].id]
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
@@ -193,7 +193,7 @@ resource "aws_lb" "shared_int" {
   name                = "shared-int-lb"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = [aws_subnet.shared_pri_subnet[0].id]
+  subnets             = [aws_subnet.subnet_shared_pri[0].id]
   security_groups     = [ aws_security_group.shared_int_lb_sg.id ]
 
   tags = {

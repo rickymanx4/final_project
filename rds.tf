@@ -5,7 +5,7 @@
 # resource "aws_db_subnet_group" "product_rds_subnet" {  
 #   count = 2
 #   name       = "${local.names[3]}-subnetgroup"
-#   subnet_ids = [aws_subnet.product_subnet_02[count.index].id]
+#   subnet_ids = [aws_subnet.subnet_product_pri_02[count.index].id]
 #   tags = {
 #     Name = "${local.names[3]}-subnetgroup"
 # }
@@ -13,7 +13,7 @@
 # resource "aws_db_subnet_group" "testdev_rds_subnet" { 
 #   count      = 2
 #   name       = "${local.names[4]}-subnetgroup"
-#   subnet_ids = [aws_subnet.testdev_subnet_02[count.index].id]
+#   subnet_ids = [aws_subnet.subnet_testdev_pri_02[count.index].id]
 #   tags = {
 #     Name = "${local.names[4]}-subnetgroup"
 #   }

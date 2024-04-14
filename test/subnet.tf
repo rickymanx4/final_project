@@ -4,7 +4,7 @@
 
 ################################ a. user_dmz ################################
 
-resource "aws_subnet" "subnet_user_dmz_pub" {
+resource "aws_subnet" "user_dmz_pub_subnet" {
   count               = length(local.user_dmz_pub_subnet)
   vpc_id              = aws_vpc.project_vpc[0].id
   cidr_block          = element(local.user_dmz_pub_subnet, count.index)
@@ -32,7 +32,7 @@ resource "aws_subnet" "user_dmz_pri_subnet" {
 ################################ b. dev_dmz ################################
 
 
-resource "aws_subnet" "subnet_dev_dmz_pub" {
+resource "aws_subnet" "dev_dmz_pub_subnet" {
   count               = length(local.dev_dmz_pub_subnet)
   vpc_id              = aws_vpc.project_vpc[1].id
   cidr_block          = element(local.dev_dmz_pub_subnet, count.index)
@@ -43,7 +43,7 @@ resource "aws_subnet" "subnet_dev_dmz_pub" {
   }
   map_public_ip_on_launch = true
 }
-resource "aws_subnet" "subnet_dev_dmz_pri" {
+resource "aws_subnet" "dev_dmz_pri_subnet" {
   count               = length(local.dev_dmz_pri_subnet)
   vpc_id              = aws_vpc.project_vpc[1].id
   cidr_block          = element(local.dev_dmz_pri_subnet, count.index)
@@ -57,7 +57,7 @@ resource "aws_subnet" "subnet_dev_dmz_pri" {
 
 ################################ c. shared ################################
 
-resource "aws_subnet" "subnet_shared_pri" {
+resource "aws_subnet" "shared_pri_subnet" {
   count               = length(local.shared_pri_subnet)
   vpc_id              = aws_vpc.project_vpc[2].id
   cidr_block          = element(local.shared_pri_subnet, count.index)
@@ -71,7 +71,7 @@ resource "aws_subnet" "subnet_shared_pri" {
 
 ################################ d. product ################################
 
-resource "aws_subnet" "subnet_product_pri_01" {
+resource "aws_subnet" "product_pri_01_subnet" {
   count               = length(local.product_01_subnet)
   vpc_id              = aws_vpc.project_vpc[3].id
   cidr_block          = element(local.product_01_subnet, count.index)
@@ -83,7 +83,7 @@ resource "aws_subnet" "subnet_product_pri_01" {
   map_public_ip_on_launch = false
 }
 
-resource "aws_subnet" "subnet_product_pri_02" {
+resource "aws_subnet" "product_pri_02_subnet" {
   count               = length(local.product_02_subnet)
   vpc_id              = aws_vpc.project_vpc[3].id
   cidr_block          = element(local.product_02_subnet, count.index)
@@ -97,7 +97,7 @@ resource "aws_subnet" "subnet_product_pri_02" {
 
 ################################ e. testdev ################################
 
-resource "aws_subnet" "subnet_testdev_pri_01" {
+resource "aws_subnet" "testdev_pri_01_subnet" {
   count               = length(local.testdev_01_subnet)
   vpc_id              = aws_vpc.project_vpc[4].id
   cidr_block          = element(local.testdev_01_subnet, count.index)
@@ -109,7 +109,7 @@ resource "aws_subnet" "subnet_testdev_pri_01" {
   map_public_ip_on_launch = false
 }
 
-resource "aws_subnet" "subnet_testdev_pri_02" {
+resource "aws_subnet" "testdev_pri_02_subnet" {
   count               = length(local.testdev_02_subnet)
   vpc_id              = aws_vpc.project_vpc[4].id
   cidr_block          = element(local.testdev_02_subnet, count.index)

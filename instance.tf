@@ -8,7 +8,7 @@ resource "aws_instance" "user_dmz_proxy" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.dmz_proxy_sg[0].id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.user_dmz_pub_subnet[count.index].id
+  subnet_id = aws_subnet.subnet_user_dmz_pub[count.index].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -35,7 +35,7 @@ resource "aws_instance" "dev_dmz_proxy" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.dmz_proxy_sg[1].id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.dev_dmz_pub_subnet[count.index].id
+  subnet_id = aws_subnet.subnet_dev_dmz_pub[count.index].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -63,7 +63,7 @@ resource "aws_instance" "shared_nexus" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.shared_nexus_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.shared_pri_subnet[0].id
+  subnet_id = aws_subnet.subnet_shared_pri[0].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -88,7 +88,7 @@ resource "aws_instance" "shared_monitoring" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.shared_monitoring_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.shared_pri_subnet[1].id
+  subnet_id = aws_subnet.subnet_shared_pri[1].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
@@ -112,7 +112,7 @@ resource "aws_instance" "shared_elk" {
   instance_type = "t2.small" 
   vpc_security_group_ids = [aws_security_group.shared_elk_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
-  subnet_id = aws_subnet.shared_pri_subnet[1].id
+  subnet_id = aws_subnet.subnet_shared_pri[1].id
   associate_public_ip_address = false
   #iam_instance_profile = aws_iam_instance_profile.testbed_cloudwatch_profile.name
   # depends_on=[
