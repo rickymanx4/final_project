@@ -3,12 +3,6 @@ locals {
 
     region                  = "ap-southeast-1"
 
-    user_dmz_vpc_cidr       = "10.10.0.0/16"
-    dev_dmz_vpc_cidr        = "10.30.0.0/16"
-    shared_vpc_cidr         = "10.100.0.0/16"
-    prod_vpc_cidr           = "10.210.0.0/16"
-    testdev_vpc_cidr        = "10.230.0.0/16"
-    
     names                   = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
 
     user_dmz_pub_subnet     = ["10.10.10.0/24", "10.10.110.0/24", "10.10.20.0/24", "10.10.120.0/24"]
@@ -26,9 +20,9 @@ locals {
     az_ac                   = ["a", "c"]
 
     dmz_vpc                 = tolist(slice(aws_vpc.project_vpc[*].id, 0, 2))
-    user_sub                = tolist(slice(aws_subnet.user_dmz_pub_subnet[*].id, 0, 2))
+    user_pub_sub            = tolist(slice(aws_subnet.user_dmz_pub_subnet[*].id, 0, 2))
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
-    dev_sub                 = tolist(slice(aws_subnet.dev_dmz_pub_subnet[*].id, 0, 2))
+    dev_pub_sub                 = tolist(slice(aws_subnet.dev_dmz_pub_subnet[*].id, 0, 2))
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
     prod_test               = tolist(slice(var.name[*], 4, 6))
