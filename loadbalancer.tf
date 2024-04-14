@@ -59,7 +59,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
   subnets = aws_subnet.dev_dmz_pri_subnet[count.index]
   security_groups = [aws_security_group.dmz_elb_sg[0].id]
 }
-resource "aws_lb_listener" "user_proxy_lb_listener" {
+resource "aws_lb_listener" "dev_proxy_lb_listener" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
   port              = "80"
