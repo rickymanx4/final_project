@@ -1,3 +1,7 @@
+##############################################################################
+#################################### 1.user_dmz_ec2 ##########################
+##############################################################################
+
 resource "aws_instance" "user_dmz_proxy" {
   count = 2
   ami = data.aws_ami.amazon_linux_2023.id
@@ -20,6 +24,10 @@ resource "aws_instance" "user_dmz_proxy" {
     Name = "${local.names[0]}_proxy_${local.az_ac[count.index]}"
   }
 }
+
+##############################################################################
+#################################### 2.dev_dmz_ec2 ###########################
+##############################################################################
 
 resource "aws_instance" "dev_dmz_proxy" {
   count = 2
@@ -44,6 +52,12 @@ resource "aws_instance" "dev_dmz_proxy" {
   }
 }
 
+##############################################################################
+#################################### 3.shared_ec2 ############################
+##############################################################################
+
+################################ a. nexus_ec2 ################################
+
 resource "aws_instance" "shared_nexus" {
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
@@ -65,6 +79,8 @@ resource "aws_instance" "shared_nexus" {
     Name = "${local.names[2]}_nexus_ec2"
   }
 }
+
+################################ b. monitoring_ec2 ################################
 
 resource "aws_instance" "shared_monitoring" {
   count = 2
@@ -88,6 +104,8 @@ resource "aws_instance" "shared_monitoring" {
     Name = element(var.monitoring_ec2, count.index)
   }
 }
+
+################################ c. elk_ec2 ################################
 
 resource "aws_instance" "shared_elk" {  
   ami = data.aws_ami.amazon_linux_2023.id
