@@ -16,10 +16,12 @@ resource "aws_ec2_transit_gateway" "tgw_main" {
 ###
 # 2. transit gateway attachment
 ###
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_user_dmz" {  
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach" {  
+  for_each            = var.tgw_vpc_attach    
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
-  vpc_id              = aws_vpc.project_vpc[0].id
-  subnet_ids          = [aws_subnet.user_dmz_pub_subnet[0].id, aws_subnet.user_dmz_pub_subnet[2].id]
+  vpc_id              = aws_vpc.project_vpc[each.value.vpc_num].id
+  subnet_ids          = [aws_subnet.[each.value.subnet1].id, aws_subnet.[each.value.subnet2].id]
 
   tags = {
     Name = "${local.names[0]}_tgw_attache"
@@ -27,49 +29,64 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_user_dmz" {
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_dev_dmz" {  
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
-  vpc_id              = aws_vpc.project_vpc[1].id
-  subnet_ids          = [aws_subnet.dev_dmz_pub_subnet[0].id, aws_subnet.dev_dmz_pub_subnet[2].id]
+# resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_user_dmz" {  
+#   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
+#   vpc_id              = aws_vpc.project_vpc[0].id
+#   subnet_ids          = [aws_subnet.user_dmz_pub_subnet[0].id, aws_subnet.user_dmz_pub_subnet[2].id]
 
-  tags = {
-    Name = "${local.names[1]}_tgw_attache"
-  }
-  depends_on = [ aws_ec2_transit_gateway.tgw_main ]
-}
+#   tags = {
+#     Name = "${local.names[0]}_tgw_attache"
+#   }
+#   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
+# }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_shared" {  
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
-  vpc_id              = aws_vpc.project_vpc[2].id
-  subnet_ids          = [aws_subnet.shared_pri_subnet[0].id]
+# resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_dev_dmz" {  
+#   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
+#   vpc_id              = aws_vpc.project_vpc[1].id
+#   subnet_ids          = [aws_subnet.dev_dmz_pub_subnet[0].id, aws_subnet.dev_dmz_pub_subnet[2].id]
 
-  tags = {
-    Name = "${local.names[2]}_tgw_attache"
-  }
-  depends_on = [ aws_ec2_transit_gateway.tgw_main ]
-}
+#   tags = {
+#     Name = "${local.names[1]}_tgw_attache"
+#   }
+#   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
+# }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_product" {  
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
-  vpc_id              = aws_vpc.project_vpc[3].id
-  subnet_ids          = aws_subnet.product_pri_01_subnet[*].id
+# resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_shared" {  
+#   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
+#   vpc_id              = aws_vpc.project_vpc[2].id
+#   subnet_ids          = [aws_subnet.shared_pri_subnet[0].id]
 
-  tags = {
-    Name = "${local.names[3]}_tgw_attache"
-  }
-  depends_on = [ aws_ec2_transit_gateway.tgw_main ]
-}
+#   tags = {
+#     Name = "${local.names[2]}_tgw_attache"
+#   }
+#   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
+# }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_testdev" {  
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
-  vpc_id              = aws_vpc.project_vpc[4].id
-  subnet_ids          = aws_subnet.testdev_pri_01_subnet[*].id
+# resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_product" {  
+#   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
+#   vpc_id              = aws_vpc.project_vpc[3].id
+#   subnet_ids          = aws_subnet.product_pri_01_subnet[*].id
 
-  tags = {
-    Name = "${local.names[4]}_tgw_attache"
-  }
-  depends_on = [ aws_ec2_transit_gateway.tgw_main ]
-}
+#   tags = {
+#     Name = "${local.names[3]}_tgw_attache"
+#   }
+#   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
+# }
+
+# resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_testdev" {  
+#   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
+#   vpc_id              = aws_vpc.project_vpc[4].id
+#   subnet_ids          = aws_subnet.testdev_pri_01_subnet[*].id
+
+#   tags = {
+#     Name = "${local.names[4]}_tgw_attache"
+#   }
+#   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
+# }
+
+
+
+
 # resource "aws_ec2_transit_gateway_vpc_attachment" "shared" {
 #   transit_gateway_id = aws_ec2_transit_gateway.main.id
 #   vpc_id = aws_vpc.shared.id
