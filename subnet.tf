@@ -16,7 +16,7 @@ resource "aws_subnet" "subnet_user_dmz_pub" {
   map_public_ip_on_launch = true
 }
 
-resource "aws_subnet" "user_dmz_pri_subnet" {
+resource "aws_subnet" "subnet_user_dmz_pri" {
   count               = length(local.user_dmz_pri_subnet)
   vpc_id              = aws_vpc.project_vpc[0].id
   cidr_block          = element(local.user_dmz_pri_subnet, count.index)
