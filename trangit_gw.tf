@@ -105,7 +105,7 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_rt" {
 # # The Route Tables Associations do not represent the actual routes the packets are routed to.
 # # These are defined in the Route Tables Propagations section below.
 # ###
-resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-dev_dmz-assoc" {
+resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-user_dmz-assoc" {
   count                           = 5
   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
