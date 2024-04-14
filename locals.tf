@@ -19,7 +19,7 @@ locals {
     azs_4                   = ["ap-southeast-1a", "ap-southeast-1a", "ap-southeast-1c", "ap-southeast-1c"]
     az_ac                   = ["a", "c"]
 
-   
+    dmz_vpc                = tolist(slice(var.name[*], 0, 2))
     user_pub_sub            = tolist(slice(aws_subnet.user_dmz_pub_subnet[*].id, 0, 2))
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_pub_sub                 = tolist(slice(aws_subnet.dev_dmz_pub_subnet[*].id, 0, 2))
