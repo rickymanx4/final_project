@@ -30,6 +30,7 @@ locals {
     prod_test               = tolist(slice(var.name[*], 3, 5))
 
     shared_ports            = [1111, 2222, 3333, 4444]             
+    shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
 
     num_01234                   = ["0", "1", "2", "3", "4"]
 
