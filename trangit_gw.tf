@@ -24,7 +24,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach" {
   subnet_ids          = [ each.value.subnet1, each.value.subnet2 ]
 
   tags = {
-    Name = "${local.names[0]}_tgw_attache"
+    Name = "${local.names[*]}_tgw_attache"
   }
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
