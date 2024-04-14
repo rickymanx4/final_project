@@ -1,7 +1,8 @@
-###
-# 1. Instance
-### 
+##############################################################################
+################################## 1.(user/dev)_dmz_sg #######################
+##############################################################################
 
+################################ a. dmz_proxy ################################
 resource "aws_security_group" "dmz_proxy_sg" {
   count       = 2
   name        = "${local.names[count.index]}_proxy_sg" 
@@ -26,6 +27,8 @@ resource "aws_security_group" "dmz_proxy_sg" {
   }
   depends_on = [ aws_security_group.dmz_elb_sg ]
 }
+
+################################ b. dmz_elb ################################
 
 resource "aws_security_group" "dmz_elb_sg" {
   count       = 2
@@ -58,6 +61,11 @@ resource "aws_security_group" "dmz_elb_sg" {
   }
 }
 
+##############################################################################
+################################## 2. shared_sg ##############################
+##############################################################################
+
+################################ a. nexus_ec2 ################################
 
 resource "aws_security_group" "shared_nexus_sg" { 
   name = "shared_nexus_sg" 
@@ -89,6 +97,8 @@ resource "aws_security_group" "shared_nexus_sg" {
   }
 }
 
+################################ b. monitoring_ec2 ################################
+
 resource "aws_security_group" "shared_monitoring_sg" { 
   name = "shared_monitoring_sg" 
   description = "Security Group for shared_monitoring" 
@@ -118,6 +128,8 @@ resource "aws_security_group" "shared_monitoring_sg" {
     Name = "shared_monitoring_sg"
   }
 }
+
+################################ c. elk_ec2 ################################
 
 resource "aws_security_group" "shared_elk_sg" { 
   name = "shared_elk_sg" 
@@ -154,6 +166,9 @@ resource "aws_security_group" "shared_elk_sg" {
     Name = "shared_elk_sg"
   }
 }
+
+################################ d. eks_ec2 ################################
+
 resource "aws_security_group" "shared_eks_sg" { 
   name = "shared_eks_sg" 
   description = "Security Group for shared_eks" 
@@ -184,7 +199,11 @@ resource "aws_security_group" "shared_eks_sg" {
   }
 }
 
+##############################################################################
+########################### 3. (produc/testdev)_zone_sg#######################
+##############################################################################
 
+################################ a. eks_ec2 ################################
 
 resource "aws_security_group" "eks_sg" { 
   count       = 2  
@@ -222,6 +241,8 @@ resource "aws_security_group" "eks_sg" {
     Name = "${local.prod_test[count.index]}_eks_sg"
   }
 }
+
+################################ b. rds_ec2 ################################
 
 resource "aws_security_group" "rds_sg" { 
   count       = 2
