@@ -61,7 +61,7 @@ resource "aws_instance" "dev_dmz_proxy" {
 resource "aws_instance" "shared_nexus" {
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws_security_group.shared_nexus_sg.id, aws_security_group.shared_int_lb_sg.id]
+  vpc_security_group_ids = [aws_security_group.shared_nexus_sg.id]
   key_name = aws_key_pair.ec2_key.key_name
   subnet_id = aws_subnet.shared_pri_subnet[0].id
   associate_public_ip_address = false
