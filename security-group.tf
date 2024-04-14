@@ -54,7 +54,7 @@ resource "aws_security_group" "dmz_elb_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   } 
   tags = {
-    Name = "${user_dev[count.index]}_elb_sg"
+    Name = "${local.user_dev[count.index]}_elb_sg"
   }
 }
 

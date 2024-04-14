@@ -2,7 +2,7 @@ resource "aws_instance" "user_dmz_proxy" {
   count = 2
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws_security_group.user_dmz_proxy_sg[0].id]
+  vpc_security_group_ids = [aws_security_group.dmz_proxy_sg[0].id]
   key_name = aws_key_pair.ec2_key.key_name
   subnet_id = aws_subnet.user_dmz_pub_subnet[count.index].id
   associate_public_ip_address = false
@@ -25,7 +25,7 @@ resource "aws_instance" "dev_dmz_proxy" {
   count = 2
   ami = data.aws_ami.amazon_linux_2023.id
   instance_type = "t2.small" 
-  vpc_security_group_ids = [aws_security_group.dev_dmz_proxy_sg[1].id]
+  vpc_security_group_ids = [aws_security_group.dmz_proxy_sg[1].id]
   key_name = aws_key_pair.ec2_key.key_name
   subnet_id = aws_subnet.dev_dmz_pub_subnet[count.index].id
   associate_public_ip_address = false
