@@ -19,7 +19,7 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
 
 resource "aws_lb" "user_dmz_proxy_lb" {
   count              = 2
-  name               = "${local.names[0]}-proxy-lb"
+  name               = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
   subnets = aws_subnet.user_dmz_pri_subnet[count.index]
@@ -53,7 +53,7 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att" {
 
 resource "aws_lb" "dev_dmz_proxy_lb" {
   count              = 2
-  name               = "${local.names[1]}-proxy-lb"
+  name               = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
   subnets = aws_subnet.dev_dmz_pri_subnet[count.index]
