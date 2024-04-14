@@ -53,6 +53,10 @@ resource "aws_route_table" "dev_dmz_rt" {
 resource "aws_route_table" "shared_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[2].id
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
   tags = {
     Name = "${local.names[2]}_pri_rt_${count.index}"
   }
@@ -63,6 +67,10 @@ resource "aws_route_table" "shared_pri_rt" {
 resource "aws_route_table" "product_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[3].id
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
   tags = {
     Name = "${local.names[3]}_pri_rt_${count.index}"
   }
@@ -73,6 +81,10 @@ resource "aws_route_table" "product_pri_rt" {
 resource "aws_route_table" "testdev_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[4].id
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
   tags = {
     Name = "${local.names[4]}_pri_rt_${count.index}"
   }
