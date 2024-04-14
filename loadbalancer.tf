@@ -167,7 +167,7 @@ resource "aws_lb_listener" "nexus_listener" {
 
 resource "aws_lb_target_group" "shared_int_tg" {
   count       = length(local.shared_ec2_name)
-  name        = local.shared_ec2_name[*]
+  name        = local.shared_ec2_name[count.index]
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -220,6 +220,6 @@ resource "aws_lb_listener" "shared_int_listen02" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.shared_shared_tg[2].arn
+    target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
   }
 }  
