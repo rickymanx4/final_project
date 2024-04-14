@@ -11,6 +11,10 @@ resource "aws_route_table" "dmz_pub_rt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw_internet[count.index].id
   }
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }
   tags = {
     Name = "${local.names[count.index]}_pub_rt"
   }
