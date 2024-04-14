@@ -4,7 +4,7 @@
 
 resource "aws_lb_target_group" "user_dmz_proxy_tg" {
   count       = 2
-  name        = "${local.names[0]}-target-group-${local.az_ac[count.index]}"
+  name        = "user-dmz-target-group-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
   target_type = "instance"
@@ -22,7 +22,7 @@ resource "aws_lb" "user_dmz_proxy_lb" {
   name               = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
-  subnets = aws_subnet.user_dmz_pri_subnet[count.index]
+  subnets = aws_subnet.user_dmz_pri_subnet[count.index].id
   security_groups = [aws_security_group.dmz_elb_sg[0].id]
 }
 resource "aws_lb_listener" "user_proxy_lb_listener" {
@@ -38,7 +38,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener" {
 
 resource "aws_lb_target_group" "dev_dmz_proxy_tg" {
   count       = 2
-  name        = "${local.names[1]}-target-group-${local.az_ac[count.index]}"
+  name        = "dev-dmz-target-group-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
   target_type = "instance"
@@ -56,7 +56,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
   name               = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
-  subnets = aws_subnet.dev_dmz_pri_subnet[count.index]
+  subnets = aws_subnet.dev_dmz_pri_subnet[count.index].id
   security_groups = [aws_security_group.dmz_elb_sg[0].id]
 }
 resource "aws_lb_listener" "dev_proxy_lb_listener" {
