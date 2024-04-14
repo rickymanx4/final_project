@@ -1,5 +1,5 @@
 locals {
-    tgw_name                = "final-vpc-tgw"
+    tgw_name                = "project-tgw"
 
     region                  = "ap-southeast-1"
 
