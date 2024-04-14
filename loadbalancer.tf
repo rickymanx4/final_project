@@ -141,7 +141,7 @@ resource "aws_lb_target_group_attachment" "nexus_tg_att" {
 }
 
 resource "aws_lb" "shared_ext_lb" {
-  name                = "$(local.names[2])-ext-lb"
+  name                = "shared-ext-lb"
   internal            = true
   load_balancer_type  = "network"
   subnets             = [aws_subnet.shared_pri_subnet[0].id]
