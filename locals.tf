@@ -26,12 +26,13 @@ locals {
     dev_pub_sub             = tolist(slice(aws_subnet.dev_dmz_pub_subnet[*].id, 0, 2))
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
-    user_dev                = tolist(slice(var.name[*], 0, 2))
-    prod_test               = tolist(slice(var.name[*], 3, 5))
-
+    #user_dev                = tolist(slice(var.name[*], 0, 2))
+    #prod_test               = tolist(slice(var.name[*], 3, 5))
+    
     shared_ports            = [1111, 2222, 3333, 4444]             
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
 
-    num_01234                   = ["0", "1", "2", "3", "4"]
+
+
 
 }

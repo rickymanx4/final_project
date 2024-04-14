@@ -19,10 +19,10 @@ resource "aws_ec2_transit_gateway" "tgw_main" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_user_dmz" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[0].id
-  subnet_ids          = local.user_pub_sub
+  subnet_ids          = [aws_subnet.user_dmz_pub_subnet[0].id, aws_subnet.user_dmz_pub_subnet[2].id]
 
   tags = {
-    Name = "$(local.names[0])_tgw_attache"
+    Name = "${local.names[0]}_tgw_attache"
   }
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
@@ -30,10 +30,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_user_dmz" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_dev_dmz" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[1].id
-  subnet_ids          = local.dev_pub_sub
+  subnet_ids          = [aws_subnet.dev_dmz_pub_subnet[0].id, aws_subnet.dev_dmz_pub_subnet[2].id]
 
   tags = {
-    Name = "$(local.names[1])_tgw_attache"
+    Name = "${local.names[1]}_tgw_attache"
   }
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
@@ -44,7 +44,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_shared" {
   subnet_ids          = [aws_subnet.shared_pri_subnet[0].id]
 
   tags = {
-    Name = "$(local.names[2])_tgw_attache"
+    Name = "${local.names[2]}_tgw_attache"
   }
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
@@ -55,7 +55,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_product" {
   subnet_ids          = aws_subnet.product_pri_01_subnet[*].id
 
   tags = {
-    Name = "$(local.names[3])_tgw_attache"
+    Name = "${local.names[3]}_tgw_attache"
   }
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
@@ -66,7 +66,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_testdev" {
   subnet_ids          = aws_subnet.testdev_pri_01_subnet[*].id
 
   tags = {
-    Name = "$(local.names[4])_tgw_attache"
+    Name = "${local.names[4]}_tgw_attache"
   }
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
