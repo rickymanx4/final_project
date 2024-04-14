@@ -47,31 +47,31 @@ variable "tgw_vpc_attach" {
   }))
   default     = {
     user_dmz  = {
-      name    = user_dmz
+      name    = "user_dmz"
       vpc_num = 0
       subnet1 = 0
       subnet2 = 2
     }
     dev_dmz   = {
-      name    = dev_dmz
+      name    = "dev_dmz"
       vpc_num = 1
       subnet1 = 0
       subnet2 = 2
     }  
     shared    = {
-      name    = shared
+      name    = "shared"
       vpc_num = 2
       subnet1 = 0
       subnet2 = 1
     }    
     product   = {
-      name    = prodcut
+      name    = "prodcut"
       vpc_num = 3
       subnet1 = 0
       subnet2 = 1
     }      
     testdev    = {
-      name    = testdev
+      name    = "testdev"
       vpc_num = 4
       subnet1 = 0
       subnet2 = 1
