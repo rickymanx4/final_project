@@ -62,6 +62,7 @@ variable "tgw_vpc_attach" {
       name    = "shared"
       vpc_num = 2
       subnet1 = "shared_pri[0]"
+      subnet2 = "shared_pri[1]"
 
     },    
     product   = {
