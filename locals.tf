@@ -21,7 +21,7 @@ locals {
 
     dmz_vpc                 = tolist(slice(aws_vpc.project_vpc[*].id, 0, 2))
     user_dev_vpc            = tolist(slice(aws_vpc.project_vpc[*].id, 0, 2))
-    prod_test_vpc           = tolist(slice(aws_vpc.project_vpc[*].id, 4, 5))
+    prod_test_vpc           = tolist(slice(aws_vpc.project_vpc[*].id, 3, 5))
     user_pub_sub            = tolist(slice(aws_subnet.user_dmz_pub_subnet[*].id, 0, 2))
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_pub_sub             = tolist(slice(aws_subnet.dev_dmz_pub_subnet[*].id, 0, 2))
@@ -30,7 +30,7 @@ locals {
     user_dev                = tolist(slice(var.name[*], 0, 2))
     prod_test               = tolist(slice(var.name[*], 3, 5))
 
-    
+
 
     num_01234                   = ["0", "1", "2", "3", "4"]
 
