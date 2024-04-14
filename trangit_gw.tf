@@ -90,11 +90,11 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "testdev" {
 ###
 resource "aws_ec2_transit_gateway_route_table" "tgw_rt" {
   count              = 5
-  transit_gateway_id = aws_ec2_transit_gateway.main.id
+  transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   tags               = {
     Name             = "${local.names[count.index]}-tgw-rt"
   }
-  depends_on = [ aws_ec2_transit_gateway.main ]
+  depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 }
 
 
