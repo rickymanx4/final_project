@@ -23,7 +23,7 @@ resource "aws_lb_target_group" "user_dmz_nexus_tg" {
   port        = 5000
   protocol    = "TCP"
   target_type = "ip"
-  vpc_id = local.user_dev_vpc[0].id
+  vpc_id = local.user_dev_vpc[0]
 }
 
 resource "aws_lb_target_group_attachment" "user_dmz_to_nexus_att" {
@@ -85,7 +85,7 @@ resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   port        = 5000
   protocol    = "TCP"
   target_type = "ip"
-  vpc_id = local.user_dev_vpc[1].id
+  vpc_id = local.user_dev_vpc[1]
 }
 
 resource "aws_lb_target_group_attachment" "dev_dmz_to_nexus_att" {
