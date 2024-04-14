@@ -24,7 +24,7 @@ locals {
     user_pub_sub            = tolist(slice(aws_subnet.user_dmz_pub_subnet[*].id, 0, 2))
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_pub_sub             = tolist(slice(aws_subnet.dev_dmz_pub_subnet[*].id, 0, 2))
-    dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 1, 3))
+    dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 1, 4))
 
     user_dev                = tolist(slice(var.name[*], 0, 2))
     prod_test               = tolist(slice(var.name[*], 3, 5))
