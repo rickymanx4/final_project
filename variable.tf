@@ -37,3 +37,44 @@ variable "public_key_location" {
   sensitive = true
 }
 
+variable "tgw_vpc_attach" {
+  description = "tgw_vpc_attach"
+  type        = map(object({
+    name      = string
+    vpc_num   = number
+    subnet1   = string
+    subnet2   = string
+  }))
+  default     = {
+    user_dmz  = {
+      name    = user_dmz
+      vpc_num = 0
+      subnet1 = 0
+      subnet2 = 2
+    }
+    dev_dmz   = {
+      name    = dev_dmz
+      vpc_num = 1
+      subnet1 = 0
+      subnet2 = 2
+    }  
+    shared    = {
+      name    = shared
+      vpc_num = 2
+      subnet1 = 0
+      subnet2 = 1
+    }    
+    product   = {
+      name    = prodcut
+      vpc_num = 3
+      subnet1 = 0
+      subnet2 = 1
+    }      
+    testdev    = {
+      name    = testdev
+      vpc_num = 4
+      subnet1 = 0
+      subnet2 = 1
+    }  
+  }
+}
