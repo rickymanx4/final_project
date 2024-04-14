@@ -41,39 +41,39 @@ variable "tgw_vpc_attach" {
   description = "tgw_vpc_attach"
   type        = map(object({
     name      = string
-    vpc_num   = number
+    vpc   = string
     subnet1   = string
     subnet2   = string
   }))
   default     = {
     user_dmz  = {
       name    = "user_dmz_tgw_attach"
-      vpc_num = 0
+      vpc     = "aws_vpc.project_vpc[0]"
       subnet1 = "aws_subnet.subnet_user_dmz_pub[0].id"
       subnet2 = "aws_subnet.subnet_user_dmz_pub[2].id"
     },
     dev_dmz   = {
       name    = "dev_dmz_tgw_attach"
-      vpc_num = 1
+      vpc     = "aws_vpc.project_vpc[1]"
       subnet1 = "aws_subnet.subnet_dev_dmz_pub[0].id"
       subnet2 = "aws_subnet.subnet_dev_dmz_pub[2].id"
     },
     shared    = {
       name    = "shared_tgw_attach"
-      vpc_num = 2
+      vpc     = "aws_vpc.project_vpc[2]"
       subnet1 = "aws_subnet.subnet_shared_pri[0].id"
       subnet2 = "aws_subnet.subnet_shared_pri[1].id"
 
     },    
     product   = {
       name    = "prodcut_tgw_attach"
-      vpc_num = 3
+      vpc     = "aws_vpc.project_vpc[3]"
       subnet1 = "aws_subnet.subnet_product_pri[0].id"
       subnet2 = "aws_subnet.subnet_product_pri[1].id"
     },      
     testdev    = {
       name    = "testdev_tgw_attach"
-      vpc_num = 4
+      vpc     = "aws_vpc.project_vpc[4]"
       subnet1 = "aws_subnet.subnet_testdev_pri[0].id"
       subnet2 = "aws_subnet.subnet_testdev_pri[1].id"
     }  

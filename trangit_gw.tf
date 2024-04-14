@@ -19,7 +19,7 @@ resource "aws_ec2_transit_gateway" "tgw_main" {
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach" {  
   for_each            = var.tgw_vpc_attach    
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
+  transit_gateway_id  = each.value.vpc
   vpc_id              = aws_vpc.project_vpc[each.value.vpc_num].id
   subnet_ids          = [ each.value.subnet1, each.value.subnet2 ]
 
@@ -84,9 +84,6 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach" {
 #   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
 # }
 
-
-
-
 # resource "aws_ec2_transit_gateway_vpc_attachment" "shared" {
 #   transit_gateway_id = aws_ec2_transit_gateway.main.id
 #   vpc_id = aws_vpc.shared.id
@@ -107,6 +104,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach" {
 #   }
 #   depends_on = [ aws_ec2_transit_gateway.main ]
 # }
+
+
 ###
 # 3. transit gateway routing table
 ###
