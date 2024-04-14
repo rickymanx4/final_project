@@ -26,12 +26,12 @@ resource "aws_lb_target_group" "user_dmz_nexus_tg" {
   vpc_id = local.user_dev_vpc[0]
 }
 
-resource "aws_lb_target_group_attachment" "user_dmz_to_nexus_att" {
-  count            = 2
-  target_group_arn = aws_lb_target_group.user_dmz_nexus_tg[count.index].arn
-  target_id        = aws_instance.user_dmz_proxy[count.index].id
-  port = 80
-}
+# resource "aws_lb_target_group_attachment" "user_dmz_to_nexus_att" {
+#   count            = 2
+#   target_group_arn = aws_lb_target_group.user_dmz_nexus_tg[count.index].arn
+#   target_id        = aws_instance.user_dmz_proxy[count.index].id
+#   port = 80
+# }
 
 resource "aws_lb" "user_dmz_proxy_lb" {
   count              = 2
@@ -88,12 +88,12 @@ resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   vpc_id = local.user_dev_vpc[1]
 }
 
-resource "aws_lb_target_group_attachment" "dev_dmz_to_nexus_att" {
-  count            = 2
-  target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
-  target_id        = aws_instance.dev_dmz_proxy[count.index].id
-  port = 80
-}
+# resource "aws_lb_target_group_attachment" "dev_dmz_to_nexus_att" {
+#   count            = 2
+#   target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
+#   target_id        = aws_instance.dev_dmz_proxy[count.index].id
+#   port = 80
+# }
 
 
 resource "aws_lb" "dev_dmz_proxy_lb" {
