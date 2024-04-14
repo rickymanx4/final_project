@@ -37,11 +37,3 @@ variable "public_key_location" {
   sensitive = true
 }
 
-variable "transit_vpc_attach" {
-  description = "transit_vpc_attach"
-  type        = map(object({
-    
-  }))
-  default     = "~/.ssh/ec2_key.pub"
-  sensitive = true
-}
