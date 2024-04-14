@@ -2,16 +2,17 @@
 # 1. Instance
 ### 
 
-resource "aws_security_group" "user_dmz_proxy_sg" {
-  name = "user_dmz_proxy_sg" 
-  description = "Security Group for ngninx_proxy_instance in user_dmz" 
-  vpc_id = aws_vpc.project_vpc[0].id
+resource "aws_security_group" "dmz_proxy_sg" {
+  count       = 2
+  name        = "${local.names[count.index]}_proxy_sg" 
+  description = "Security Group for ngninx_proxy_instance in dmz" 
+  vpc_id      = local.user_dev[count.index].id
 
   ingress {
   from_port     = 80
   to_port       = 80
   protocol      = "tcp"
-  security_groups   = [aws_security_group.user_dmz_elb_sg.id]
+  security_groups   = [aws_security_group.dmz_elb_sg[count.index].id]
   }
   
   egress {
@@ -23,12 +24,14 @@ resource "aws_security_group" "user_dmz_proxy_sg" {
   tags = {
     Name = "user_dmz_proxy_sg"
   }
+  depends_on = [ aws_security_group.dmz_elb_sg ]
 }
 
-resource "aws_security_group" "user_dmz_elb_sg" {
-  name = "user_dmz_elb_sg" 
-  description = "Security Group for load_balancer in user_dmz" 
-  vpc_id = aws_vpc.project_vpc[0].id
+resource "aws_security_group" "dmz_elb_sg" {
+  count       = 2
+  name        = "${local.names[count.index]}_elb_sg" 
+  description = "Security Group for load_balancer in dmz" 
+  vpc_id      = local.user_dev[count.index].id
 
   ingress {
   from_port     = 80
@@ -51,61 +54,61 @@ resource "aws_security_group" "user_dmz_elb_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   } 
   tags = {
-    Name = "user_dmz_elb_sg"
+    Name = "${user_dev[count.index]}_elb_sg"
   }
 }
 
-resource "aws_security_group" "dev_dmz_proxy_sg" {
-  name = "dev_dmz_proxy_sg" 
-  description = "Security Group for ngninx_proxy_instance in dev_dmz" 
-  vpc_id = aws_vpc.project_vpc[1].id
+# resource "aws_security_group" "dev_dmz_proxy_sg" {
+#   name = "dev_dmz_proxy_sg" 
+#   description = "Security Group for ngninx_proxy_instance in dev_dmz" 
+#   vpc_id = aws_vpc.project_vpc[1].id
 
-  ingress {
-  from_port     = 80
-  to_port       = 80
-  protocol      = "tcp"
-  security_groups   = [aws_security_group.dev_dmz_elb_sg.id]
-  }
+#   ingress {
+#   from_port     = 80
+#   to_port       = 80
+#   protocol      = "tcp"
+#   security_groups   = [aws_security_group.dev_dmz_elb_sg.id]
+#   }
   
-  egress {
-  from_port     = 0
-  to_port       = 0
-  protocol      = "-1"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "dev_dmz_proxy_sg"
-  }
-}
+#   egress {
+#   from_port     = 0
+#   to_port       = 0
+#   protocol      = "-1"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
+#   tags = {
+#     Name = "dev_dmz_proxy_sg"
+#   }
+# }
 
-resource "aws_security_group" "dev_dmz_elb_sg" {
-  name = "dev_dmz_elb_sg" 
-  description = "Security Group for load_balancer in dev_dmz" 
-  vpc_id = aws_vpc.project_vpc[1].id
+# resource "aws_security_group" "dev_dmz_elb_sg" {
+#   name = "dev_dmz_elb_sg" 
+#   description = "Security Group for load_balancer in dev_dmz" 
+#   vpc_id = aws_vpc.project_vpc[1].id
 
-  ingress {
-  from_port     = 80
-  to_port       = 80
-  protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  ingress {
-  from_port     = 8888
-  to_port       = 8888
-  protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }  
+#   ingress {
+#   from_port     = 80
+#   to_port       = 80
+#   protocol      = "tcp"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
+#   ingress {
+#   from_port     = 8888
+#   to_port       = 8888
+#   protocol      = "tcp"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }  
   
-  egress {
-  from_port     = 0
-  to_port       = 0
-  protocol      = "-1"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "dev_dmz_elb_sg"
-  }
-}
+#   egress {
+#   from_port     = 0
+#   to_port       = 0
+#   protocol      = "-1"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
+#   tags = {
+#     Name = "dev_dmz_elb_sg"
+#   }
+# }
 
 resource "aws_security_group" "shared_nexus_sg" { 
   name = "shared_nexus_sg" 
@@ -234,10 +237,11 @@ resource "aws_security_group" "shared_eks_sg" {
 
 
 
-resource "aws_security_group" "product_eks_sg" { 
-  name = "product_eks_sg" 
-  description = "Security Group for product_eks" 
-  vpc_id = aws_vpc.project_vpc[3].id
+resource "aws_security_group" "eks_sg" { 
+  count       = 2  
+  name        = "${local.prod_test[count.index]}_eks_sg" 
+  description = "Security Group for eks" 
+  vpc_id = local.prod_test[count.index].id
 
   ingress {
   from_port     = 80
@@ -266,13 +270,15 @@ resource "aws_security_group" "product_eks_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "product_eks_sg"
+    Name = "${local.prod_test[count.index]}_eks_sg"
   }
 }
-resource "aws_security_group" "product_rds_sg" { 
-  name = "product_rds_sg" 
-  description = "Security Group for product_rds" 
-  vpc_id = aws_vpc.project_vpc[3].id
+
+resource "aws_security_group" "rds_sg" { 
+  count       = 2
+  name        = "${local.prod_test[count.index]}_rds_sg" 
+  description = "Security Group for rds" 
+  vpc_id = local.prod_test[count.index].id
 
   ingress {
   from_port     = 3306
@@ -291,59 +297,59 @@ resource "aws_security_group" "product_rds_sg" {
   }
 }
 
-resource "aws_security_group" "testdev_eks_sg" { 
-  name = "testdev_eks_sg" 
-  description = "Security Group for testdev_eks" 
-  vpc_id = aws_vpc.project_vpc[4].id
+# resource "aws_security_group" "testdev_eks_sg" { 
+#   name = "testdev_eks_sg" 
+#   description = "Security Group for testdev_eks" 
+#   vpc_id = aws_vpc.project_vpc[4].id
 
-  ingress {
-  from_port     = 80
-  to_port       = 80
-  protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
+#   ingress {
+#   from_port     = 80
+#   to_port       = 80
+#   protocol      = "tcp"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
 
-  ingress {
-  from_port     = 6000
-  to_port       = 6000
-  protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  ingress {
-  from_port     = 9100
-  to_port       = 9100
-  protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }  
-  egress {
-  from_port     = 0
-  to_port       = 0
-  protocol      = "-1"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "product_eks_sg"
-  }
-}
+#   ingress {
+#   from_port     = 6000
+#   to_port       = 6000
+#   protocol      = "tcp"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
+#   ingress {
+#   from_port     = 9100
+#   to_port       = 9100
+#   protocol      = "tcp"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }  
+#   egress {
+#   from_port     = 0
+#   to_port       = 0
+#   protocol      = "-1"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
+#   tags = {
+#     Name = "product_eks_sg"
+#   }
+# }
 
-resource "aws_security_group" "testdev_rds_sg" { 
-  name = "testdev_rds_sg" 
-  description = "Security Group for testdev_rds" 
-  vpc_id = aws_vpc.project_vpc[4].id
+# resource "aws_security_group" "testdev_rds_sg" { 
+#   name = "testdev_rds_sg" 
+#   description = "Security Group for testdev_rds" 
+#   vpc_id = aws_vpc.project_vpc[4].id
 
-  ingress {
-  from_port     = 3306
-  to_port       = 3306
-  protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  egress {
-  from_port     = 0
-  to_port       = 0
-  protocol      = "-1"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "product_rds_sg"
-  }
-}
+#   ingress {
+#   from_port     = 3306
+#   to_port       = 3306
+#   protocol      = "tcp"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
+#   egress {
+#   from_port     = 0
+#   to_port       = 0
+#   protocol      = "-1"
+#   cidr_blocks   = ["0.0.0.0/0"]
+#   }
+#   tags = {
+#     Name = "product_rds_sg"
+#   }
+# }
