@@ -148,7 +148,7 @@ resource "aws_lb" "shared_ext_lb" {
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
-    Name = "$(local.names[2])-ext-lb"
+    Name = "shared-ext-lb"
     }
 }
 resource "aws_lb_listener" "nexus_listener" {
