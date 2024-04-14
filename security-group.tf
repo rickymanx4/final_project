@@ -6,7 +6,7 @@ resource "aws_security_group" "dmz_proxy_sg" {
   count       = 2
   name        = "${local.names[count.index]}_proxy_sg" 
   description = "Security Group for ngninx_proxy_instance in dmz" 
-  vpc_id      = local.user_dev[count.index].id
+  vpc_id      = local.user_dev_vpc[count.index]
 
   ingress {
   from_port     = 80
@@ -31,7 +31,7 @@ resource "aws_security_group" "dmz_elb_sg" {
   count       = 2
   name        = "${local.names[count.index]}_elb_sg" 
   description = "Security Group for load_balancer in dmz" 
-  vpc_id      = local.user_dev[count.index].id
+  vpc_id      = local.user_dev_vpc[count.index]
 
   ingress {
   from_port     = 80
@@ -241,7 +241,7 @@ resource "aws_security_group" "eks_sg" {
   count       = 2  
   name        = "${local.prod_test[count.index]}_eks_sg" 
   description = "Security Group for eks" 
-  vpc_id = local.prod_test[count.index].id
+  vpc_id = local.prod_test_vpc[count.index]
 
   ingress {
   from_port     = 80
@@ -278,7 +278,7 @@ resource "aws_security_group" "rds_sg" {
   count       = 2
   name        = "${local.prod_test[count.index]}_rds_sg" 
   description = "Security Group for rds" 
-  vpc_id = local.prod_test[count.index].id
+  vpc_id = local.prod_test_vpc[count.index]
 
   ingress {
   from_port     = 3306
