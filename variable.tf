@@ -49,33 +49,33 @@ variable "tgw_vpc_attach" {
     user_dmz  = {
       name    = "user_dmz"
       vpc_num = 0
-      subnet1 = "user_dmz_pub[0]"
-      subnet2 = "user_dmz_pub[2]"
+      subnet1 = "aws_subnet.subnet_user_dmz_pub[0].id"
+      subnet2 = "aws_subnet.subnet_user_dmz_pub[2].id"
     },
     dev_dmz   = {
       name    = "dev_dmz"
       vpc_num = 1
-      subnet1 = "dev_dmz_pub[0]"
-      subnet2 = "dev_dmz_pub[2]"
+      subnet1 = "aws_subnet.subnet_dev_dmz_pub[0].id"
+      subnet2 = "aws_subnet.subnet_dev_dmz_pub[2].id"
     },
     shared    = {
       name    = "shared"
       vpc_num = 2
-      subnet1 = "shared_pri[0]"
-      subnet2 = "shared_pri[1]"
+      subnet1 = "aws_subnet.subnet_shared_pri[0].id"
+      subnet2 = "aws_subnet.subnet_shared_pri[1].id"
 
     },    
     product   = {
       name    = "prodcut"
       vpc_num = 3
-      subnet1 = "product_pri[0]"
-      subnet2 = "product_pri[1]"
+      subnet1 = "aws_subnet.subnet_product_pri[0].id"
+      subnet2 = "aws_subnet.subnet_product_pri[1].id"
     },      
     testdev    = {
       name    = "testdev"
       vpc_num = 4
-      subnet1 = "testdev_pri[0]"
-      subnet2 = "testdev_pri[1]"
+      subnet1 = "aws_subnet.subnet_testdev_pri[0].id"
+      subnet2 = "aws_subnet.subnet_testdev_pri[1].id"
     }  
   }
 }

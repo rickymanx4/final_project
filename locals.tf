@@ -32,7 +32,7 @@ locals {
     shared_ports            = [1111, 2222, 3333, 4444]             
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
 
-
+    
 
 
 }
