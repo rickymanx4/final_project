@@ -54,7 +54,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "dev_dmz" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "shared" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[2].id
-  subnet_ids          = [aws_subnet.subnet_shared_pri[0].id]
+  subnet_ids          = [local.shared_nex_sub[*]]
 
   tags = {
     Name = "${local.names[2]}_tgw_attache"
@@ -88,14 +88,14 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "testdev" {
 ###
 # 3. transit gateway routing table
 ###
-# resource "aws_ec2_transit_gateway_route_table" "tgw_rt" {
-#   count              = 5
-#   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-#   tags               = {
-#     Name             = "${local.names[count.index]}-tgw-rt"
-#   }
-#   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
-# }
+resource "aws_ec2_transit_gateway_route_table" "tgw_rt" {
+  count              = 3
+  transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  tags               = {
+    Name             = "${local.names[count.index]}-tgw-rt"
+  }
+  depends_on = [ aws_ec2_transit_gateway.tgw_main ]
+}
 
 
 # ###
@@ -105,10 +105,22 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "testdev" {
 # # The Route Tables Associations do not represent the actual routes the packets are routed to.
 # # These are defined in the Route Tables Propagations section below.
 # ###
+resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-user_dmz-assoc" {
+  count                           = 3
+  transit_gateway_attachment_id   = local.tgw_rt_asso[count.index]
+  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
+}
+
 # resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-user_dmz-assoc" {
 #   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
+#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
 # }
+
+# resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-user_dmz-assoc" {
+#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
+#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[3].id
+# }
+
 # resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-dev_dmz-assoc" {
 #   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
 #   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[1].id

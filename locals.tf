@@ -34,7 +34,11 @@ locals {
     shared_ports            = [1111, 2222, 3333, 4444]             
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
 
-    
+    tgw_rt_asso             = [
+                              "aws_ec2_transit_gateway_vpc_attachment.user_dmz.id",
+                              "aws_ec2_transit_gateway_vpc_attachment.shared.id",
+                              "aws_ec2_transit_gateway_vpc_attachment.product.id"
+                              ]
 
 
 }
