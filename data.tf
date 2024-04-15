@@ -35,19 +35,23 @@ count = 2
   }
 }
 
-data "aws_subnet" "shared_nexus" {
-  count    = 2
-  filter {
-    name   = "tag:Name"
-    values = ["shared-subnet-pri-01", "shared-subnet-pri-03"]
-  }
-}
+# data "aws_subnet" "shared_nexus" {
+#   count    = 2
+#   filter {
+#     name   = "tag:Name"
+#     values = ["shared-subnet-pri-*"]
+#   }
+#     filter {
+#     name   = "tag:Name"
+#     values = ["${count.index}"]
+#   }
+# }
 
 
-data "aws_subnet" "shared_control" {
-  count    = 2
-  filter {
-    name   = "tag:Name"
-    values = ["shared-subnet-pri-02", "shared-subnet-pri-04"]
-  }
-}
+# data "aws_subnet" "shared_control" {
+#   count    = 2
+#   filter {
+#     name   = "tag:Name"
+#     values = ["shared-subnet-pri-02", "shared-subnet-pri-04"]
+#   }
+# }

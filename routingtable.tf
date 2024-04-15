@@ -105,7 +105,7 @@ resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
 
 resource "aws_route_table_association" "user_dmz_pri_rt_asso" {
   count = 2
-  subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index].id
+  subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index + 2].id
   route_table_id = aws_route_table.user_dmz_rt[count.index].id
 }
 
@@ -119,7 +119,7 @@ resource "aws_route_table_association" "dev_dmz_pub_rt_asso" {
 
 resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
   count = 2
-  subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index].id
+  subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index + 2 ].id
   route_table_id = aws_route_table.dev_dmz_rt[count.index].id
 }
 
