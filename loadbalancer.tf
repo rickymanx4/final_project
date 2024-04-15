@@ -28,12 +28,12 @@ resource "aws_lb_target_group" "user_dmz_nexus_tg" {
   vpc_id = local.user_dev_vpc[0]
 }
 
-resource "aws_lb_target_group_attachment" "user_to_nexus_att" {
-    count            = 2 
-    target_group_arn = aws_lb_target_group.user_dmz_nexus_tg[count.index].arn
-    target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
-    port             = 22 
-}
+# resource "aws_lb_target_group_attachment" "user_to_nexus_att" {
+#     count            = 2 
+#     target_group_arn = aws_lb_target_group.user_dmz_nexus_tg[count.index].arn
+#     target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
+#     port             = 22 
+# }
 
 ######################### b. load_balancer ####################################
 
@@ -98,12 +98,12 @@ resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   vpc_id = local.user_dev_vpc[1]
 }
 
-resource "aws_lb_target_group_attachment" "dev_to_nexus_att" {
-    count            = 2 
-    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
-    target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
-    port             = 22 
-}
+# resource "aws_lb_target_group_attachment" "dev_to_nexus_att" {
+#     count            = 2 
+#     target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
+#     target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
+#     port             = 22 
+# }
 
 ######################### b. load_balancer ####################################
 
@@ -252,3 +252,6 @@ resource "aws_lb_listener" "shared_int_listen02" {
   }
 }  
 
+output "aws_lb_network_interface_ips" {
+  value = "${flatten([data.aws_network_interface.lb_ni.*.private_ips])}"
+}
