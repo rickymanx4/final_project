@@ -24,8 +24,8 @@ locals {
     user_pub_sub            = tolist(slice(aws_subnet.subnet_user_dmz_pub[*].id, 0, 2))
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_pub_sub             = tolist(slice(aws_subnet.subnet_dev_dmz_pub[*].id, 0, 2))
-    shared_nex_sub          = tolist(slice(aws_subnet.subnet_subnet_shared_pri[*].id, 0, 2))
-    shared_src_sub          = tolist(slice(aws_subnet.subnet_subnet_shared_pri[*].id, 2, 4))
+    shared_nex_sub          = tolist(slice(aws_subnet.subnet_shared_pri[*].id, 0, 2))
+    shared_src_sub          = tolist(slice(aws_subnet.subnet_shared_pri[*].id, 2, 4))
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
     #user_dev                = tolist(slice(var.name[*], 0, 2))

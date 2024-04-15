@@ -152,13 +152,19 @@ resource "aws_lb_target_group" "shared_int_tg" {
   vpc_id      = aws_vpc.project_vpc[2].id
 }
 
-resource "aws_lb_target_group_attachment" "shared_monitoring_att" {
+resource "aws_lb_target_group_attachment" "shared_prometheus_att" {
     count            = 2 
     target_group_arn = aws_lb_target_group.shared_int_tg[count.index].arn
-    target_id        = aws_instance.shared_monitoring[count.index].id
+    target_id        = aws_instance.shared_prometheus[count.index].id
     port             = 22 
 }
 
+resource "aws_lb_target_group_attachment" "shared_grafana_att" {
+    count            = 2 
+    target_group_arn = aws_lb_target_group.shared_int_tg[count.index].arn
+    target_id        = aws_instance.shared_grafana[count.index].id
+    port             = 22 
+}
 resource "aws_lb_target_group_attachment" "shared_elk_att" { 
     target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
     target_id        = aws_instance.shared_elk.id
