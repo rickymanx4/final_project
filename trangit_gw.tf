@@ -17,18 +17,6 @@ resource "aws_ec2_transit_gateway" "tgw_main" {
 # 2. transit gateway attachment
 ###
 
-# resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach" {  
-#   for_each            = var.tgw_vpc_attach    
-#   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
-#   vpc_id              = each.value.vpc
-#   subnet_ids          = [each.value.subnet1, each.value.subnet2]
-
-#   tags = {
-#     Name = each.value.name
-#   }
-#   depends_on = [ aws_ec2_transit_gateway.tgw_main ]
-# }
-
 resource "aws_ec2_transit_gateway_vpc_attachment" "user_dmz" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[0].id
