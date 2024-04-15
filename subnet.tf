@@ -61,7 +61,7 @@ resource "aws_subnet" "subnet_shared_pri" {
   count               = length(local.shared_pri_subnet)
   vpc_id              = aws_vpc.project_vpc[2].id
   cidr_block          = element(local.shared_pri_subnet, count.index)
-  availability_zone   = element(local.azs_2, count.index)
+  availability_zone   = element(local.azs_4, count.index)
 
   tags = {
     Name = "${local.names[2]}-subnet-pri-0${count.index+1}"

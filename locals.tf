@@ -9,7 +9,7 @@ locals {
     user_dmz_pri_subnet     = ["10.10.50.0/24", "10.10.150.0/24"]
     dev_dmz_pub_subnet      = ["10.30.10.0/24", "10.30.110.0/24", "10.30.20.0/24", "10.30.120.0/24"]
     dev_dmz_pri_subnet      = ["10.30.50.0/24", "10.30.150.0/24"]    
-    shared_pri_subnet       = ["10.100.50.0/24","10.100.150.0/24"]  
+    shared_pri_subnet       = ["10.100.10.0/24","10.100.110.0/24", "10.20.0.0/24", "10.120.0.0/24"]  
     product_01_subnet       = ["10.210.50.0/24", "10.210.150.0/24"]
     product_02_subnet       = ["10.210.60.0/24", "10.210.160.0/24"]    
     testdev_01_subnet       = ["10.230.50.0/24", "10.230.150.0/24"]
@@ -24,6 +24,8 @@ locals {
     user_pub_sub            = tolist(slice(aws_subnet.subnet_user_dmz_pub[*].id, 0, 2))
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_pub_sub             = tolist(slice(aws_subnet.subnet_dev_dmz_pub[*].id, 0, 2))
+    shared_nex_sub          = tolist(slice(aws_subnet.subnet_subnet_shared_pri[*].id, 0, 2))
+    shared_src_sub          = tolist(slice(aws_subnet.subnet_subnet_shared_pri[*].id, 2, 4))
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
     #user_dev                = tolist(slice(var.name[*], 0, 2))
