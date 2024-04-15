@@ -59,7 +59,7 @@ resource "aws_subnet" "subnet_dev_dmz_pri" {
 
 resource "aws_subnet" "subnet_shared_pri_01" {
   count               = length(local.shared_01_subnet)
-  vpc_id              = aws_vpc.project_vpc[3].id
+  vpc_id              = aws_vpc.project_vpc[2].id
   cidr_block          = element(local.shared_01_subnet, count.index)
   availability_zone   = element(local.azs_2, count.index)
 
