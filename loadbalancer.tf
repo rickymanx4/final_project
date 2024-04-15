@@ -28,6 +28,13 @@ resource "aws_lb_target_group" "user_dmz_nexus_tg" {
   vpc_id = local.user_dev_vpc[0]
 }
 
+resource "aws_lb_target_group_attachment" "user_to_nexus_att" {
+    count            = 2 
+    target_group_arn = aws_lb_target_group.user_dmz_nexus_tg[count.index].arn
+    target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
+    port             = 22 
+}
+
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "user_dmz_proxy_lb" {
@@ -91,6 +98,13 @@ resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   vpc_id = local.user_dev_vpc[1]
 }
 
+resource "aws_lb_target_group_attachment" "dev_to_nexus_att" {
+    count            = 2 
+    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
+    target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
+    port             = 22 
+}
+
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "dev_dmz_proxy_lb" {
@@ -150,13 +164,6 @@ resource "aws_lb_target_group" "shared_int_tg" {
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
-}
-
-resource "aws_lb_target_group_attachment" "shared_nexus_att" {
-    count            = 2 
-    target_group_arn = aws_lb_target_group.nexus_tg[count.index].arn
-    target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
-    port             = 22 
 }
 
 resource "aws_lb_target_group_attachment" "shared_prometheus_att" {
