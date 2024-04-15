@@ -105,68 +105,30 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_rt" {
 # # These are defined in the Route Tables Propagations section below.
 # ###
 
-# resource "aws_ec2_transit_gateway_route_table_association" "user-user-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_association" "user-shared-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.shared.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_association" "user-product-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.product.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
-# }
-
-
-# resource "aws_ec2_transit_gateway_route_table_association" "dev-dev-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_association" "dev-shared-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.shared.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
-# }
-
-resource "aws_ec2_transit_gateway_route_table_association" "dev-testdev-assoc" {
-  count                           = 5
-  transit_gateway_attachment_id   = data.aws_ec2_transit_gateway_vpc_attachment.shared_all[count.index].id
-  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
+resource "aws_ec2_transit_gateway_route_table_association" "user-user-assoc" {
+  transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
+  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
 }
 
+resource "aws_ec2_transit_gateway_route_table_association" "user-product-assoc" {
+  transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.product.id
+  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
+}
 
-# resource "aws_ec2_transit_gateway_route_table_association" "shared-all-assoc" {  
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
+resource "aws_ec2_transit_gateway_route_table_association" "dev-dev-assoc" {
+  transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
+  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
+}
 
-# resource "aws_ec2_transit_gateway_route_table_association" "shared-user-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
+resource "aws_ec2_transit_gateway_route_table_association" "dev-testdev-assoc" {
+  transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.testdev.id
+  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
+ }
 
-# resource "aws_ec2_transit_gateway_route_table_association" "shared-dev-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_association" "shared-shared-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.shared.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_association" "shared-product-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.product.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_association" "shared-testdev-assoc" {
-#   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.testdev.id
-#   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
+resource "aws_ec2_transit_gateway_route_table_association" "shared-shared-assoc" {
+  transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.shared.id
+  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
+}
 
 
 # # ###
