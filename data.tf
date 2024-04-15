@@ -27,7 +27,7 @@ count = 2
 
   filter {
     name   = "description"
-    values = ["ELB net/${aws_lb.shared_ext_lb.name}/*"]
+    values = ["ELB net/${aws_lb.shared_ext_lb[count.index].name}/*"]
   }
   filter {
     name   = "subnet-id"
