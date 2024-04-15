@@ -32,7 +32,7 @@ resource "aws_ec2_transit_gateway" "tgw_main" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "user_dmz" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[0].id
-  subnet_ids          = aws_subnet.subnet_user_dmz_pub[*].id
+  subnet_ids          = local.user_pub_sub[*]
 
   tags = {
     Name = "${local.names[0]}_tgw_attache"
@@ -43,7 +43,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "user_dmz" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "dev_dmz" { 
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[1].id
-  subnet_ids          = aws_subnet.subnet_dev_dmz_pub[*].id
+  subnet_ids          = local.dev_pub_sub[*]
 
   tags = {
     Name = "${local.names[1]}_tgw_attache"
