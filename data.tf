@@ -34,3 +34,20 @@ count = 2
     values = [aws_subnet.subnet_shared_pri[count.index].id]
   }
 }
+
+data "aws_subnet" "shared_nexus" {
+
+  filter {
+    name   = "tags"
+    values = ["shared-subnet-pri-01", "shared-subnet-pri-03"]
+  }
+}
+
+
+data "aws_subnet" "shared_control" {
+
+  filter {
+    name   = "tags"
+    values = ["shared-subnet-pri-02", "shared-subnet-pri-04"]
+  }
+}

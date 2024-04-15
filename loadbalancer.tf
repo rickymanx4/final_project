@@ -193,7 +193,7 @@ resource "aws_lb" "shared_ext_lb" {
   name                = "shared-ext-lb-${count.index + 1}"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = [aws_subnet.subnet_shared_pri[count.index].id]
+  subnets             = data.aws_subnet.shared_nexus[count.index].id
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
@@ -218,7 +218,7 @@ resource "aws_lb" "shared_int" {
   name                = "shared-int-lb"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = [aws_subnet.subnet_shared_pri[0].id]
+  subnets             = data.aws_subnet.shared_control[count.index].id
   security_groups     = [ aws_security_group.shared_int_lb_sg.id ]
 
   tags = {

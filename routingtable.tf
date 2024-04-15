@@ -127,13 +127,13 @@ resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
 
 resource "aws_route_table_association" "shared_nex_rt_asso" {
   count = 2
-  subnet_id      = local.shared_nex_sub[count.index]
+  subnet_id      = aws_subnet.subnet_shared_pri_01[count.index]
   route_table_id = aws_route_table.shared_pri_rt[0].id
 }
 
 resource "aws_route_table_association" "shared_src_rt_asso" {
   count = 2
-  subnet_id      = local.shared_src_sub[count.index]
+  subnet_id      = aws_subnet.subnet_shared_pri_02[count.index]
   route_table_id = aws_route_table.shared_pri_rt[1].id
 }
 

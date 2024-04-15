@@ -57,14 +57,26 @@ resource "aws_subnet" "subnet_dev_dmz_pri" {
 
 ################################ c. shared ################################
 
-resource "aws_subnet" "subnet_shared_pri" {
-  count               = length(local.shared_pri_subnet)
-  vpc_id              = aws_vpc.project_vpc[2].id
-  cidr_block          = element(local.shared_pri_subnet, count.index)
-  availability_zone   = element(local.azs_4, count.index)
+resource "aws_subnet" "subnet_shared_pri_01" {
+  count               = length(local.shared_01_subnet)
+  vpc_id              = aws_vpc.project_vpc[3].id
+  cidr_block          = element(local.shared_01_subnet, count.index)
+  availability_zone   = element(local.azs_2, count.index)
 
   tags = {
-    Name = "${local.names[2]}-subnet-pri-0${count.index+1}"
+    Name = "${local.names[2]}-subnet-pri-01-${local.az_ac[count.index]}"
+  }
+  map_public_ip_on_launch = false
+}
+
+resource "aws_subnet" "subnet_shared_pri_02" {
+  count               = length(local.shared_02_subnet)
+  vpc_id              = aws_vpc.project_vpc[2].id
+  cidr_block          = element(local.shared_02_subnet, count.index)
+  availability_zone   = element(local.azs_2, count.index)
+
+  tags = {
+    Name = "${local.names[2]}-subnet-pri-02-${local.az_ac[count.index]}"
   }
   map_public_ip_on_launch = false
 }
