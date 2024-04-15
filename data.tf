@@ -31,6 +31,6 @@ count = 2
   }
   filter {
     name   = "subnet-id"
-    values = [local.shared_pri_subnet[count.index]]
+    values = [aws_subnet.shared_pri_subnet[count.index]]
   }
 }
