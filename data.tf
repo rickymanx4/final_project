@@ -38,7 +38,7 @@ count = 2
 data "aws_subnet" "shared_nexus" {
 
   filter {
-    name   = "tags"
+    name   = "tags:Name"
     values = ["shared-subnet-pri-01", "shared-subnet-pri-03"]
   }
 }
