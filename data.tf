@@ -42,7 +42,7 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
     values = ["${local.names[count.index]}_tgw_attache"]
   }
 
-    filter {
+  filter {
     name   = "state"
     values = ["available"]
   }
@@ -54,7 +54,7 @@ data "aws_ec2_transit_gateway_vpc_attachments" "user_tgw_rt" {
     values = ["${local.names[0]}_tgw_attache", "${local.names[2]}_tgw_attache", "${local.names[3]}_tgw_attache"]
   }
 
-    filter {
+  filter {
     name   = "state"
     values = ["available"]
   }
@@ -66,7 +66,7 @@ data "aws_ec2_transit_gateway_vpc_attachments" "dev_tgw_rt" {
     values = ["${local.names[1]}_tgw_attache", "${local.names[2]}_tgw_attache", "${local.names[4]}_tgw_attache"]
   }
 
-    filter {
+  filter {
     name   = "state"
     values = ["available"]
   }
