@@ -29,8 +29,9 @@ locals {
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
-    tgw_all                 = tolist(data.aws_ec2_transit_gateway_vpc_attachment.shared_all)
-    #prod_test               = tolist(slice(var.name[*], 3, 5))
+    shared_tgw_rt           = tolist(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt)
+    user_tgw_rt             = tolist(data.aws_ec2_transit_gateway_vpc_attachment.user_tgw_rt)
+    dev_tgw_rt              = tolist(data.aws_ec2_transit_gateway_vpc_attachment.dev_tgw_rt)
     
     shared_ports            = [1111, 2222, 3333, 4444]             
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]

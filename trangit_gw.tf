@@ -136,9 +136,21 @@ resource "aws_ec2_transit_gateway_route_table_association" "shared-shared-assoc"
 # # # This section defines which VPCs will be routed from each Route Table created in the Transit Gateway
 # # ###
 
-resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-product-to-user_vpc" {
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-rt_vpc" {
+  count                          = 3
+  transit_gateway_attachment_id  = local.user_tgw_rt[count.index].id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-rt_vpc" {
+  count                          = 3
+  transit_gateway_attachment_id  = local.dev_tgw_rt[count.index].id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-all_vpc" {
   count                          = 5
-  transit_gateway_attachment_id  = local.tgw_all[count.index].id
+  transit_gateway_attachment_id  = local.shared_tgw_rt[count.index].id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
 }
 

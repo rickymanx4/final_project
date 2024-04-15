@@ -35,7 +35,7 @@ count = 2
   }
 }
 
-data "aws_ec2_transit_gateway_vpc_attachment" "shared_all" {
+data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
   count   = 5
   filter {
     name   = "tag:Name"
@@ -48,11 +48,26 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_all" {
   }
 }
 
+data "aws_ec2_transit_gateway_vpc_attachment" "user_tgw_rt" {
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[0]}_tgw_attache", "${local.names[2]}_tgw_attache", "${local.names[3]}_tgw_attache"]
+  }
 
-# data "aws_subnet" "shared_control" {
-#   count    = 2
-#   filter {
-#     name   = "tag:Name"
-#     values = ["shared-subnet-pri-02", "shared-subnet-pri-04"]
-#   }
-# }
+    filter {
+    name   = "state"
+    values = ["available"]
+  }
+}
+
+data "aws_ec2_transit_gateway_vpc_attachment" "dev_tgw_rt" {
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[1]}_tgw_attache", "${local.names[2]}_tgw_attache", "${local.names[4]}_tgw_attache"]
+  }
+
+    filter {
+    name   = "state"
+    values = ["available"]
+  }
+}
