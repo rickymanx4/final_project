@@ -136,15 +136,33 @@ resource "aws_ec2_transit_gateway_route_table_association" "shared-shared-assoc"
 # # # This section defines which VPCs will be routed from each Route Table created in the Transit Gateway
 # # ###
 
-resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-rt_vpc" {
-  count                          = 3
-  transit_gateway_attachment_id  = data.aws_ec2_transit_gateway_vpc_attachments.user_tgw_rt[count.index]
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-user" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.user.id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
 }
 
-resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-rt_vpc" {
-  count                          = 3
-  transit_gateway_attachment_id  = data.aws_ec2_transit_gateway_vpc_attachments.dev_tgw_rt[count.index]
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-shared" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.shared.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-product" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.product.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-dev" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-shared" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.shared.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-testdev" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.testdev.id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
 }
 
@@ -154,35 +172,6 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-all
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
 }
 
-# resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-dev_dmz_vpc" {
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
-#   transit_gateway_route_table_id =  aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-shared_vpc" {
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.shared.id
-#   transit_gateway_route_table_id =  aws_ec2_transit_gateway_route_table.tgw_rt[1].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-product_vpc" {
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.product.id
-#   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-product_vpc" {
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.product.id
-#   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-test_dev_vpc" {
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.testdev.id
-#   transit_gateway_route_table_id =  aws_ec2_transit_gateway_route_table.tgw_rt[1].id
-# }
-
-# resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-test_dev_vpc" {
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.testdev.id
-#   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-# }
 
 # ###
 # # 6. transit gateway static route
