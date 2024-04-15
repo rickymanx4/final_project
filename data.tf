@@ -27,10 +27,10 @@ count = 2
 
   filter {
     name   = "description"
-    values = ["ELB ${aws_lb.shared_ext_lb}"]
+    values = ["ELB ${aws_lb.shared_ext_lb[count.index]}"]
   }
   filter {
     name   = "subnet-id"
-    values = local.shared_pri_subnet[count.index]
+    values = [local.shared_pri_subnet[count.index]]
   }
 }
