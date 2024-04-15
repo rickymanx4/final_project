@@ -120,18 +120,6 @@ resource "aws_ec2_transit_gateway_route_table_association" "user-product-assoc" 
   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
 }
 
-resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-dev_dmz-assoc" {
-  count                           = 3
-  transit_gateway_attachment_id   = local.tgw_dev_rt_asso[count.index]
-  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
-}
-
-resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-shared_dmz-assoc" {
-  count                           = 5
-  transit_gateway_attachment_id   = local.tgw_shared_rt_asso[count.index]
-  transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-}
-
 resource "aws_ec2_transit_gateway_route_table_association" "shared-user-assoc" {
   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
@@ -156,7 +144,6 @@ resource "aws_ec2_transit_gateway_route_table_association" "shared-testdev-assoc
   transit_gateway_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.testdev.id
   transit_gateway_route_table_id  = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
 }
-
 
 
 # # ###
