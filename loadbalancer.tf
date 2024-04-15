@@ -176,7 +176,7 @@ resource "aws_lb_target_group_attachment" "shared_elk_att" {
 
 resource "aws_lb" "shared_ext_lb" {
   count               = 2
-  name                = "shared-ext-lb-${count.index})"
+  name                = "shared-ext-lb-${count.index}"
   internal            = true
   load_balancer_type  = "network"
   subnets             = [aws_subnet.subnet_shared_pri[count.index].id]
