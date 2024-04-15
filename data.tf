@@ -35,17 +35,13 @@ count = 2
   }
 }
 
-# data "aws_subnet" "shared_nexus" {
-#   count    = 2
-#   filter {
-#     name   = "tag:Name"
-#     values = ["shared-subnet-pri-*"]
-#   }
-#     filter {
-#     name   = "tag:Name"
-#     values = ["${count.index}"]
-#   }
-# }
+data "aws_ec2_transit_gateway_vpc_attachment" "shared_all" {
+  count    = 5
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[count.index]}_tgw_attache"]
+  }
+}
 
 
 # data "aws_subnet" "shared_control" {
