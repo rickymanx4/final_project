@@ -21,3 +21,16 @@ data "aws_ami" "amazon_linux_2023" {
     values = ["hvm"]
   }
 }
+
+data "aws_network_interface" "lb_ni" {
+count = 2
+
+  filter {
+    name   = "description"
+    values = "ELB ${aws_lb.shared-ext-lb[count.index]}"
+  }
+  filter {
+    name   = "subnet-id"
+    values = local.shared_pri_subnet[count.index]
+  }
+}

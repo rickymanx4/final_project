@@ -152,6 +152,13 @@ resource "aws_lb_target_group" "shared_int_tg" {
   vpc_id      = aws_vpc.project_vpc[2].id
 }
 
+resource "aws_lb_target_group_attachment" "shared_nexus_att" {
+    count            = 2 
+    target_group_arn = aws_lb_target_group.nexus_tg[count.index].arn
+    target_id        = data.aws_network_interface.lb_ni[count.index].private_ip
+    port             = 22 
+}
+
 resource "aws_lb_target_group_attachment" "shared_prometheus_att" {
     count            = 2 
     target_group_arn = aws_lb_target_group.shared_int_tg[count.index].arn
@@ -176,14 +183,14 @@ resource "aws_lb_target_group_attachment" "shared_elk_att" {
 
 resource "aws_lb" "shared_ext_lb" {
   count               = 2
-  name                = "shared-ext-lb-${count.index}"
+  name                = "shared-ext-lb-${count.index + 1}"
   internal            = true
   load_balancer_type  = "network"
   subnets             = [aws_subnet.subnet_shared_pri[count.index].id]
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
-    Name = "shared-ext-lb"
+    Name = "shared-ext-lb-${count.index + 1}"
     }
 }
 resource "aws_lb_listener" "nexus_listener" {
