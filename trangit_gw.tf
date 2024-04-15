@@ -54,7 +54,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "dev_dmz" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "shared" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[2].id
-  subnet_ids          = data.aws_subnet.shared_nexus.*.id
+  subnet_ids          = aws_subnet.subnet_shared_pri_01[*].id
   tags = {
     Name = "${local.names[2]}_tgw_attache"
   }
