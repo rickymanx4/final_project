@@ -167,7 +167,7 @@ resource "aws_lb_target_group_attachment" "shared_grafana_att" {
 }
 resource "aws_lb_target_group_attachment" "shared_elk_att" { 
     target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
-    target_id        = aws_instance.shared_elk.id
+    target_id        = aws_instance.shared_elk[count.index].id
     port             = 22 
 }
 
@@ -195,7 +195,7 @@ resource "aws_lb_listener" "nexus_listener" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.nexus_tg.arn
+    target_group_arn = aws_lb_target_group.nexus_tg[count.index].arn
   }
 }
 
