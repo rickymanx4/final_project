@@ -22,14 +22,14 @@ locals {
 
     user_dev_vpc            = tolist(slice(aws_vpc.project_vpc[*].id, 0, 2))
     prod_test_vpc           = tolist(slice(aws_vpc.project_vpc[*].id, 3, 5))
+
     user_pub_sub            = tolist(slice(aws_subnet.subnet_user_dmz_pub[*].id, 0, 2))
-    user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_pub_sub             = tolist(slice(aws_subnet.subnet_dev_dmz_pub[*].id, 0, 2))
-    # shared_nex_sub          = tolist(slice(aws_subnet.subnet_shared_pri[*].id, 0, 2))
-    # shared_src_sub          = tolist(slice(aws_subnet.subnet_shared_pri[*].id, 2, 4))
+
+    user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
-    #user_dev                = tolist(slice(var.name[*], 0, 2))
+    tgw_all                 = tolist(data.aws_ec2_transit_gateway_vpc_attachment.shared_all)
     #prod_test               = tolist(slice(var.name[*], 3, 5))
     
     shared_ports            = [1111, 2222, 3333, 4444]             
