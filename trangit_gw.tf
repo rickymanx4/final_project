@@ -137,7 +137,7 @@ resource "aws_ec2_transit_gateway_route_table_association" "shared-shared-assoc"
 # # ###
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-user" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.user.id
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
 }
 
@@ -152,7 +152,7 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-produ
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-dev" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev.id
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
 }
 
