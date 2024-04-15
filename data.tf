@@ -31,7 +31,7 @@ count = 2
   }
   filter {
     name   = "subnet-id"
-    values = [data.aws_subnet.shared_nexus[count.index].id]
+    values = [aws_subnet.subnet_shared_pri_01[count.index].id]
   }
 }
 
