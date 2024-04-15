@@ -138,13 +138,13 @@ resource "aws_ec2_transit_gateway_route_table_association" "shared-shared-assoc"
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-user-to-rt_vpc" {
   count                          = 3
-  transit_gateway_attachment_id  = local.user_tgw_rt[count.index].id
+  transit_gateway_attachment_id  = data.aws_ec2_transit_gateway_vpc_attachments.user_tgw_rt[count.index].id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-rt_vpc" {
   count                          = 3
-  transit_gateway_attachment_id  = local.dev_tgw_rt[count.index].id
+  transit_gateway_attachment_id  = data.aws_ec2_transit_gateway_vpc_attachments.dev_tgw_rt[count.index].id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
 }
 
