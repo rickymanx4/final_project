@@ -166,6 +166,7 @@ resource "aws_lb_target_group_attachment" "shared_grafana_att" {
     port             = 22 
 }
 resource "aws_lb_target_group_attachment" "shared_elk_att" { 
+    count            = 2
     target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
     target_id        = aws_instance.shared_elk[count.index].id
     port             = 22 
