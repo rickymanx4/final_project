@@ -102,7 +102,7 @@ resource "aws_instance" "shared_prometheus" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "${local.names[2]}_${var.monitoring_ec2[0]}_${local.az_ac[count.index]}"
+    Name = "${local.names[2]}_${local.shared_ec2_name[0]}_${local.az_ac[count.index]}"
   }
 }
 
@@ -125,7 +125,7 @@ resource "aws_instance" "shared_grafana" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "${local.names[2]}_${var.monitoring_ec2[1]}_${local.az_ac[count.index]}"
+    Name = "${local.names[2]}_${local.shared_ec2_name[1]}_${local.az_ac[count.index]}"
   }
 }
 
