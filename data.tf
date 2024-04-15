@@ -38,7 +38,7 @@ count = 2
 data "aws_ec2_transit_gateway_vpc_attachment" "shared_all" {
   filter {
     name   = "tag:Name"
-    values = ["${local.names[count.index]}_tgw_attache"]
+    values = ["${local.names[*]}_tgw_attache"]
   }
 
     filter {
