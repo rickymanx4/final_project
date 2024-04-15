@@ -176,18 +176,20 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-all
 # ###
 # # 6. transit gateway static route
 # ###
-# resource "aws_ec2_transit_gateway_route" "dev" {
-#   destination_cidr_block         = "0.0.0.0/0"
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
-#   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.dev.id
-# }
-# resource "aws_ec2_transit_gateway_route" "shared" {
-#   destination_cidr_block         = "0.0.0.0/0"
-#   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
-#   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.shared.id
-# }
-# # resource "aws_ec2_transit_gateway_route" "prod" {
-# #   destination_cidr_block         = "0.0.0.0/0"
-# #   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.example.id
-# #   transit_gateway_route_table_id = aws_ec2_transit_gateway.example.association_default_route_table_id
-# # }
+resource "aws_ec2_transit_gateway_route" "user" {
+  destination_cidr_block         = "0.0.0.0/0"
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.user_dmz.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[0].id
+}
+
+resource "aws_ec2_transit_gateway_route" "dev" {
+  destination_cidr_block         = "0.0.0.0/0"
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
+}
+
+resource "aws_ec2_transit_gateway_route" "shared" {
+  destination_cidr_block         = "0.0.0.0/0"
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.shared.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
+}
