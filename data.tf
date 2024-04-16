@@ -68,6 +68,7 @@ data "aws_instances" "shared_tg_att_a" {
 }
 
 data "aws_instances" "shared_tg_att_c" {
+  count    = 3
   filter {
     name   = "instance-state-name"
     values = ["running"]
