@@ -160,14 +160,14 @@ resource "aws_lb_target_group" "shared_int_tg" {
 
 resource "aws_lb_target_group_attachment" "shared_prometheus_att" {
     count            = 2 
-    target_group_arn = aws_lb_target_group.shared_int_tg[count.index].arn
+    target_group_arn = aws_lb_target_group.shared_int_tg[0].arn
     target_id        = aws_instance.shared_prometheus[count.index].id
     port             = 22 
 }
 
 resource "aws_lb_target_group_attachment" "shared_grafana_att" {
     count            = 2 
-    target_group_arn = aws_lb_target_group.shared_int_tg[count.index].arn
+    target_group_arn = aws_lb_target_group.shared_int_tg[1].arn
     target_id        = aws_instance.shared_grafana[count.index].id
     port             = 22 
 }
@@ -207,42 +207,43 @@ resource "aws_lb_listener" "nexus_listener" {
 }
 
 resource "aws_lb" "shared_int" {
-  name                = "shared-int-lb"
+  count               = 2
+  name                = "shared-int-lb-${local.az_ac[count.index]}"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = aws_subnet.subnet_shared_pri_02[*].id
+  subnets             = aws_subnet.subnet_shared_pri_02[count.index].id
   security_groups     = [ aws_security_group.shared_int_lb_sg.id ]
 
   tags = {
-    Name = "shared-int-lb"
+    Name = "shared-int-lb-${local.az_ac[count.index]}"
   }
 }
-resource "aws_lb_listener" "shared_int_linsten01" {
-  count             = 2
-  load_balancer_arn = aws_lb.shared_int.arn
-  port              = local.shared_ports[count.index]
-  protocol          = "TCP"
-  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
-  # alpn_policy       = "HTTP2Preferred"
+# resource "aws_lb_listener" "shared_int_linsten_prome" {
+#   count             = 2
+#   load_balancer_arn = aws_lb.shared_int[0].arn
+#   port              = local.shared_ports[0]
+#   protocol          = "TCP"
+#   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+#   # alpn_policy       = "HTTP2Preferred"
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.shared_int_tg[count.index].arn
-  }
-}  
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.shared_int_tg[0].arn
+#   }
+# }  
 
-resource "aws_lb_listener" "shared_int_listen02" {
-  load_balancer_arn = aws_lb.shared_int.arn
-  port              = local.shared_ports[2]
-  protocol          = "TCP"
-  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
-  # alpn_policy       = "HTTP2Preferred"
+# resource "aws_lb_listener" "shared_int_listen02" {
+#   load_balancer_arn = aws_lb.shared_int.arn
+#   port              = local.shared_ports[2]
+#   protocol          = "TCP"
+#   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+#   # alpn_policy       = "HTTP2Preferred"
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
-  }
-}  
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
+#   }
+# }  
 
 output "aws_lb_network_interface_ips" {
   value = "${flatten([data.aws_network_interface.lb_ni.*.private_ips])}"
