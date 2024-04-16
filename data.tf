@@ -49,7 +49,7 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]  
 }
 
-data "aws_instance" "shared_tg_att_a" {
+data "aws_instances" "shared_tg_att_a" {
   filter {
     name   = "instance-state-name"
     values = ["running"]

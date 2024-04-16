@@ -34,6 +34,6 @@ locals {
     # shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
     
     shared_ports            = [1111, 2222, 3333, 4444]             
-    shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
+    shared_ec2_name         = ["prometheus", "grafana", "elk"]
 
 }
