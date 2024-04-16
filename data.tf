@@ -51,19 +51,19 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
 
 data "aws_instance" "shared_tg_att_a" {
   count   = 3
-  filter {
-    name   = "tag:Name"
-    values = ["${local.names[2]}_*_a"]
-  }
+  # filter {
+  #   name   = "tag:Name"
+  #   values = ["${local.names[2]}_*_a"]
+  # }
 
   filter {
-    name   = "instance_state"
+    name   = "instance-state"
     values = ["running"]
   }
   
   filter {
-    name   = "availability_zone"
-    values = ["ap-southeast-1a"]
+    name   = "subnet-id"
+    values = ["aws_subnet.subnet_shared_pri_02[0].id"]
   }
   depends_on = [ 
     aws_instance.shared_prometheus,
@@ -74,19 +74,19 @@ data "aws_instance" "shared_tg_att_a" {
 
 data "aws_instance" "shared_tg_att_c" {
   count   = 3
-  filter {
-    name   = "tag:Name"
-    values = ["${local.names[2]}_*_c"]
-  }
+  # filter {
+  #   name   = "tag:Name"
+  #   values = ["${local.names[2]}_*_c"]
+  # }
 
   filter {
-    name   = "instance_state"
+    name   = "instance-state"
     values = ["running"]
   }
   
   filter {
-    name   = "availability_zone"
-    values = ["ap-southeast-1c"]
+    name   = "subnet-id"
+    values = ["aws_subnet.subnet_shared_pri_02[0].id"]
   }
   depends_on = [ 
     aws_instance.shared_prometheus,
