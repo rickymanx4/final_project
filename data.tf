@@ -49,3 +49,48 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]  
 }
 
+data "aws_instance" "shared_tg_att_a" {
+  count   = 3
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[2]}_*_a"]
+  }
+
+  filter {
+    name   = "state"
+    values = ["running"]
+  }
+  
+  filter {
+    name   = "availability_zone "
+    values = ["ap-southeast-1a"]
+  }
+  depends_on = [ 
+    aws_instance.shared_prometheus,
+    aws_instance.shared_grafana,
+    aws_instance.shared_elk  
+   ]  
+}
+
+data "aws_instance" "shared_tg_att_a" {
+  count   = 3
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[2]}_*_c"]
+  }
+
+  filter {
+    name   = "state"
+    values = ["running"]
+  }
+  
+  filter {
+    name   = "availability_zone "
+    values = ["ap-southeast-1c"]
+  }
+  depends_on = [ 
+    aws_instance.shared_prometheus,
+    aws_instance.shared_grafana,
+    aws_instance.shared_elk  
+   ]  
+}

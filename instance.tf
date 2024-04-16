@@ -77,7 +77,7 @@ resource "aws_instance" "shared_nexus" {
   sudo systemctl enable --now nginx
   EOF
   tags = {
-    Name = "${local.names[2]}_nexus_${local.az_ac[count.index]}"
+    Name = "${local.names[2]}_ec2_nexus_${local.az_ac[count.index]}"
   }
 }
 
