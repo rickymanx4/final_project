@@ -145,7 +145,7 @@ resource "aws_lb_target_group" "nexus_tg" {
 
 resource "aws_lb_target_group_attachment" "nexus_tg_att" {
   count            = 2
-  target_group_arn = aws_lb_target_group.nexus_tg.arn
+  target_group_arn = aws_lb_target_group.nexus_tg[count.index].arn
   target_id        = aws_instance.shared_nexus[count.index].id
   port             = 22
 }
