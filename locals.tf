@@ -30,8 +30,8 @@ locals {
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
     shared_tgw_rt           = tolist(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt)
-    shared_control_a        = tolist(data.aws_instance.shared_tg_att_a)
-    shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
+    # shared_control_a        = tolist(data.aws_instance.shared_tg_att_a)
+    # shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
     
     shared_ports            = [1111, 2222, 3333, 4444]             
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]

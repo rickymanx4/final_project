@@ -158,19 +158,19 @@ resource "aws_lb_target_group" "shared_int_tg" {
   vpc_id      = aws_vpc.project_vpc[2].id
 }
 
-resource "aws_lb_target_group_attachment" "shared_control_a" {
-    count            = 3 
-    target_group_arn = aws_lb_target_group.shared_int_tg[0].arn
-    target_id        = local.shared_control_a[count.index]
-    port             = 22 
-}
+# resource "aws_lb_target_group_attachment" "shared_control_a" {
+#     count            = 3 
+#     target_group_arn = aws_lb_target_group.shared_int_tg[0].arn
+#     target_id        = local.shared_control_a[count.index]
+#     port             = 22 
+# }
 
-resource "aws_lb_target_group_attachment" "shared_control_c" {
-    count            = 3 
-    target_group_arn = aws_lb_target_group.shared_int_tg[1].arn
-    target_id        = local.shared_control_c[count.index]
-    port             = 22 
-}
+# resource "aws_lb_target_group_attachment" "shared_control_c" {
+#     count            = 3 
+#     target_group_arn = aws_lb_target_group.shared_int_tg[1].arn
+#     target_id        = local.shared_control_c[count.index]
+#     port             = 22 
+# }
 
 # resource "aws_lb_target_group_attachment" "shared_prometheus_att" {
 #     count            = 2 
@@ -263,6 +263,6 @@ output "aws_lb_network_interface_ips" {
   value = "${flatten([data.aws_network_interface.lb_ni.*.private_ips])}"
 }
 
-# output "aws_instance_shared_pri_02_a" {
-#   value = "${flatten([data.aws_instance.shared_tg_att_a.*.host_id])}"
-# }
+output "aws_instance_shared_pri_02_a" {
+  value = "${flatten([data.aws_instances.shared_tg_att_a.ids])}"
+}
