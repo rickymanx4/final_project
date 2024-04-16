@@ -29,6 +29,11 @@ resource "aws_route_table" "user_dmz_rt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
   }
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }
+
   tags = {
     Name = "${local.names[0]}_pri_rt_${local.az_ac[count.index]}"
   }
@@ -43,6 +48,10 @@ resource "aws_route_table" "dev_dmz_rt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
   }
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
   tags = {
     Name = "${local.names[1]}_pri_rt_${local.az_ac[count.index]}"
   }
