@@ -19,6 +19,15 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
   port = 80
 }
 
+resource "aws_lb_target_group" "user_dmz_nexus_tg" {
+  count       = 2
+  name        = "user-nexus-target-group-${local.az_ac[count.index]}"
+  port        = 5555
+  protocol    = "TCP"
+  target_type = "ip"
+  vpc_id = local.user_dev_vpc[0]
+}
+
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "user_dmz_proxy_lb" {
@@ -40,7 +49,16 @@ resource "aws_lb_listener" "user_proxy_lb_listener" {
     target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
   }
 }
-
+resource "aws_lb_listener" "dev_nexus_lb_listener" {
+  count             = 2
+  load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
+  port              = "9999"
+  protocol          = "TCP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
+  }
+}
 
 ##############################################################################
 #################################### 2.dev_dmz_lb ###########################
@@ -118,7 +136,8 @@ resource "aws_lb_listener" "dev_nexus_lb_listener" {
 
 ######################### a. target_groups ####################################
 resource "aws_lb_target_group" "nexus_tg" {
-  name        = "shared-nexus-ext-lb-tg"
+  count       = 2
+  name        = "shared-nexus-ext-lb-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -162,18 +181,20 @@ resource "aws_lb_target_group_attachment" "shared_elk_att" {
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "shared_ext_lb" {
-  name                = "shared-ext-lb"
+  count               = 2
+  name                = "shared-ext-lb-${local.az_ac[count.index]}"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = aws_subnet.subnet_shared_pri_01[*].id
+  subnets             = aws_subnet.subnet_shared_pri_01[count.index].id
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
-    Name = "shared-ext-lb"
+    Name = "shared-ext-lb-${local.az_ac[count.index]}"
     }
 }
 resource "aws_lb_listener" "nexus_listener" {
-  load_balancer_arn = aws_lb.shared_ext_lb.arn
+  count             = 2
+  load_balancer_arn = aws_lb.shared_ext_lb[count.index].arn
   port              = "5555"
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
@@ -181,7 +202,7 @@ resource "aws_lb_listener" "nexus_listener" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.nexus_tg.arn
+    target_group_arn = aws_lb_target_group.nexus_tg[count.index].arn
   }
 }
 
