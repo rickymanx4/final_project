@@ -57,12 +57,12 @@ data "aws_instance" "shared_tg_att_a" {
   }
 
   filter {
-    name   = "state"
+    name   = "instance_state"
     values = ["running"]
   }
   
   filter {
-    name   = "availability_zone "
+    name   = "availability_zone"
     values = ["ap-southeast-1a"]
   }
   depends_on = [ 
@@ -85,7 +85,7 @@ data "aws_instance" "shared_tg_att_c" {
   }
   
   filter {
-    name   = "availability_zone "
+    name   = "availability_zone"
     values = ["ap-southeast-1c"]
   }
   depends_on = [ 
