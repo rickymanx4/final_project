@@ -68,6 +68,15 @@ resource "aws_security_group" "dmz_elb_sg" {
   }
 }
 
+resource "aws_security_group_rule" "dev_dmz_lb" {
+  security_group_id = aws_security_group.dmz_elb_sg[1].id
+  type = "ingress"
+  cidr_blocks   = ["0.0.0.0/0"]
+  protocol = "tcp"
+  from_port = local.dmz_lb_ports[0]
+  to_port = local.dmz_lb_ports[0]
+}
+
 ##############################################################################
 ################################## 2. shared_sg ##############################
 ##############################################################################
@@ -294,21 +303,14 @@ resource "aws_security_group" "eks_sg" {
   from_port     = 80
   to_port       = 80
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-
-  ingress {
-  from_port     = 6000
-  to_port       = 6000
-  protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.prodtest_int_lb_sg[count.index].id]
   }
 
   ingress {
   from_port     = 9100
   to_port       = 9100
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.prodtest_int_lb_sg[count.index].id]
   }  
 
   egress {
@@ -334,7 +336,7 @@ resource "aws_security_group" "rds_sg" {
   from_port     = 3306
   to_port       = 3306
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.prodtest_int_lb_sg[count.index].id]
   }
   egress {
   from_port     = 0
