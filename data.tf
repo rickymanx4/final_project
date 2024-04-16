@@ -46,5 +46,6 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
     name   = "state"
     values = ["available"]
   }
+  depends_on = [ aws_ec2_transit_gateway.tgw_main ]  
 }
 
