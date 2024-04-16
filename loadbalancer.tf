@@ -235,31 +235,31 @@ resource "aws_lb" "shared_int" {
     Name = "shared-int-lb-${local.az_ac[count.index]}"
   }
 }
-resource "aws_lb_listener" "shared_int_linsten_prome" {
-  load_balancer_arn = aws_lb.shared_int[0].arn
-  port              = local.shared_ports[0]
-  protocol          = "TCP"
-  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
-  # alpn_policy       = "HTTP2Preferred"
+# resource "aws_lb_listener" "shared_int_linsten_prome" {
+#   load_balancer_arn = aws_lb.shared_int[0].arn
+#   port              = local.shared_ports[0]
+#   protocol          = "TCP"
+#   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+#   # alpn_policy       = "HTTP2Preferred"
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.shared_int_tg[0].arn
-  }
-}  
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.shared_int_tg[0].arn
+#   }
+# }  
 
-resource "aws_lb_listener" "shared_int_listen02" {
-  load_balancer_arn = aws_lb.shared_int[1].arn
-  port              = local.shared_ports[2]
-  protocol          = "TCP"
-  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
-  # alpn_policy       = "HTTP2Preferred"
+# resource "aws_lb_listener" "shared_int_listen02" {
+#   load_balancer_arn = aws_lb.shared_int[1].arn
+#   port              = local.shared_ports[2]
+#   protocol          = "TCP"
+#   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+#   # alpn_policy       = "HTTP2Preferred"
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
-  }
-}  
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.shared_int_tg[2].arn
+#   }
+# }  
 
 output "aws_lb_network_interface_ips" {
   value = "${flatten([data.aws_network_interface.lb_ni.*.private_ips])}"
