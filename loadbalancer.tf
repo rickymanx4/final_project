@@ -40,16 +40,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener" {
     target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
   }
 }
-resource "aws_lb_listener" "user_nexus_lb_listener" {
-  count             = 2
-  load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
-  port              = "9999"
-  protocol          = "TCP"
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.user_dmz_nexus_tg[count.index].arn
-  }
-}
+
 
 ##############################################################################
 #################################### 2.dev_dmz_lb ###########################
