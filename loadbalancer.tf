@@ -66,7 +66,7 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att" {
 resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   count       = 2
   name        = "dev-nexus-target-group-${local.az_ac[count.index]}"
-  port        = 5000
+  port        = 5555
   protocol    = "TCP"
   target_type = "ip"
   vpc_id = local.user_dev_vpc[1]
@@ -163,15 +163,14 @@ resource "aws_lb_target_group_attachment" "shared_elk_att" {
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "shared_ext_lb" {
-  count               = 2
-  name                = "shared-ext-lb-${local.az_ac[count.index]}"
+  name                = "shared-ext-lb"
   internal            = true
   load_balancer_type  = "network"
   subnets             = [aws_subnet.subnet_shared_pri_01[count.index].id]
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
-    Name = "shared-ext-lb-${local.az_ac[count.index]}"
+    Name = "shared-ext-lb"
     }
 }
 resource "aws_lb_listener" "nexus_listener" {
