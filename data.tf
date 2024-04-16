@@ -76,7 +76,7 @@ data "aws_instance" "shared_tg_att_c" {
   }  
   filter {
     name   = "subnet-id"
-    values = ["aws_subnet.subnet_shared_pri_02[0].id"]
+    values = ["aws_subnet.subnet_shared_pri_02[1].id"]
   }
   depends_on = [ 
     aws_instance.shared_prometheus,
