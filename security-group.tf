@@ -51,8 +51,8 @@ resource "aws_security_group" "dmz_elb_sg" {
   }
 
   ingress {
-  from_port     = 9999
-  to_port       = 9999
+  from_port     = local.dmz_lb_ports[count.index]
+  to_port       = local.dmz_lb_ports[count.index]
   protocol      = "tcp"
   cidr_blocks   = ["0.0.0.0/0"]
   }
@@ -122,14 +122,14 @@ resource "aws_security_group" "shared_monitoring_sg" {
   from_port     = 9090
   to_port       = 9090
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
   }
 
   ingress {
   from_port     = 3000
   to_port       = 3000
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
   }
 
   egress {
@@ -161,21 +161,21 @@ resource "aws_security_group" "shared_elk_sg" {
   from_port     = 5044
   to_port       = 5044
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
   }
 
   ingress {
   from_port     = 5601
   to_port       = 5601
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
   }
 
   ingress {
   from_port     = 9000
   to_port       = 9000
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
   }
   egress {
   from_port     = 0
@@ -206,14 +206,14 @@ resource "aws_security_group" "shared_eks_sg" {
   from_port     = 80
   to_port       = 80
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
   }
 
   ingress {
   from_port     = 6000
   to_port       = 6000
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.shared_int_lb_sg.id]
   }
 
   egress {
@@ -274,12 +274,12 @@ resource "aws_security_group_rule" "shared_int_lb" {
   count = 4
   source_security_group_id = aws_security_group.shared_nexus_sg.id
   protocol = "tcp"
-  from_port = local.shared_ports[count.index]
-  to_port = local.shared_ports[count.index]
+  from_port = local.shared_int_ports[count.index]
+  to_port = local.shared_int_ports[count.index]
 }
 
 ##############################################################################
-########################### 3. (produc/testdev)_zone_sg#######################
+########################### 3. (product/testdev)_zone_sg#######################
 ##############################################################################
 
 ################################ a. eks_sg ################################
@@ -347,3 +347,65 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
+################################ c. elb_sg ################################
+
+resource "aws_security_group" "prodtest_ext_sg" {
+  count       = 2
+  name        = "${local.names[count.index + 3]}_ext_sg" 
+  description = "Security Group for load_balancer in prodtest_ext" 
+  vpc_id      = local.prod_test_vpc[count.index]
+
+  ingress {
+  from_port     = local.prodtest_lb_ports[count.index]
+  to_port       = local.prodtest_lb_ports[count.index]
+  protocol      = "tcp"
+  cidr_blocks   = [var.vpc[count.index]]
+  }
+
+  egress {
+  from_port     = 0
+  to_port       = 0
+  protocol      = "-1"
+  cidr_blocks   = ["0.0.0.0/0"]
+  } 
+  tags = {
+    Name = "${local.names[count.index + 3 ]}_elb_sg"
+  }
+}
+
+resource "aws_security_group" "prodtest_int_lb_sg" { 
+  count       = 2
+  name = "${local.names[count.index + 3]}_int_sg" 
+  description = "Security Group for load_balancer in prodtest_int" 
+  vpc_id = local.prod_test_vpc[count.index]
+
+  egress {
+  from_port     = 0
+  to_port       = 0
+  protocol      = "-1"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "${local.names[count.index + 3]}_int_sg"
+  }
+}
+
+resource "aws_security_group_rule" "product_int_lb" {
+  security_group_id = aws_security_group.prodtest_int_lb_sg[0].id
+  type = "ingress"
+  count = 4
+  source_security_group_id = aws_security_group.prodtest_ext_sg[0].id
+  protocol = "tcp"
+  from_port = local.product_int_ports[count.index]
+  to_port = local.product_int_ports[count.index]
+}
+
+resource "aws_security_group_rule" "testdev_int_lb" {
+  security_group_id = aws_security_group.prodtest_int_lb_sg[1].id
+  type = "ingress"
+  count = 4
+  source_security_group_id = aws_security_group.prodtest_ext_sg[1].id
+  protocol = "tcp"
+  from_port = local.testdev_int_ports[count.index]
+  to_port = local.testdev_int_ports[count.index]
+}
