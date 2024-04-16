@@ -264,5 +264,5 @@ resource "aws_lb_listener" "nexus_listener" {
 # }
 
 output "aws_instance_shared_pri_02_a" {
-  value = "${flatten([data.aws_instances.shared_tg_att_a.*.id])}"
+  value = "${flatten([data.aws_instances.shared_tg_att_a.*.private_ips])}"
 }
