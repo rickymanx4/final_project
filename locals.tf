@@ -33,11 +33,11 @@ locals {
     # shared_control_a        = tolist(data.aws_instance.shared_tg_att_a)
     # shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
     
-    dmz_lb_ports            = [8888.9999]             
+    dmz_lb_ports            = [8888, 9999]             
     shared_int_ports        = [1111, 2222, 3333, 4444]             
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
 
-    prodtest_lb_ports       = [6666.7777]             
+    prodtest_lb_ports       = [6666, 7777]             
     product_int_ports       = [1001, 2002, 3003, 4004]             
     testdev_int_ports       = [5005, 6006, 7007, 8008]
     prodtest_ec2_name       = ["node-1", "node-2", "rds-primary", "rds-stanby"]
