@@ -12,7 +12,7 @@ resource "aws_route_table" "dmz_pub_rt" {
     gateway_id = aws_internet_gateway.gw_internet[count.index].id
   }
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   tags = {
@@ -30,7 +30,7 @@ resource "aws_route_table" "user_dmz_rt" {
     gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
   }
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
 
@@ -49,7 +49,7 @@ resource "aws_route_table" "dev_dmz_rt" {
     gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
   }
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
@@ -63,7 +63,7 @@ resource "aws_route_table" "shared_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[2].id
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
@@ -77,7 +77,7 @@ resource "aws_route_table" "product_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[3].id
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
@@ -91,7 +91,7 @@ resource "aws_route_table" "testdev_pri_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[4].id
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
