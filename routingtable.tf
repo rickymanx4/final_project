@@ -67,7 +67,7 @@ resource "aws_route_table" "shared_pri_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[2]}_pri_rt_${count.index}"
+    Name = "${local.names[2]}_pri_rt_${local.az_ac[count.index]}"
   }
 }
 
@@ -81,7 +81,7 @@ resource "aws_route_table" "product_pri_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[3]}_pri_rt_${count.index}"
+    Name = "${local.names[3]}_pri_rt_${local.prodtest_rt_name[count.index]}"
   }
 }
 
@@ -95,7 +95,7 @@ resource "aws_route_table" "testdev_pri_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[4]}_pri_rt_${count.index}"
+    Name = "${local.names[4]}_pri_rt_${local.prodtest_rt_name[count.index]}"
   }
 }
 

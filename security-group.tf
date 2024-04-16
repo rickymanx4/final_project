@@ -293,9 +293,9 @@ resource "aws_security_group_rule" "shared_int_lb" {
 
 ################################ a. eks_sg ################################
 
-resource "aws_security_group" "eks_sg" { 
+resource "aws_security_group" "node_sg" { 
   count       = 2  
-  name        = "${local.names[count.index + 3]}_eks_sg" 
+  name        = "${local.names[count.index + 3]}_node_sg" 
   description = "Security Group for eks" 
   vpc_id = local.prod_test_vpc[count.index]
 
@@ -320,7 +320,7 @@ resource "aws_security_group" "eks_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "${local.names[count.index + 3]}_eks_sg"
+    Name = "${local.names[count.index + 3]}_node_sg"
   }
 }
 
@@ -371,7 +371,7 @@ resource "aws_security_group" "prodtest_ext_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   } 
   tags = {
-    Name = "${local.names[count.index + 3 ]}_elb_sg"
+    Name = "${local.names[count.index + 3 ]}_ext_sg"
   }
 }
 

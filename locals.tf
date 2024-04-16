@@ -19,6 +19,7 @@ locals {
     azs_2                   = ["ap-southeast-1a", "ap-southeast-1c"]
     azs_4                   = ["ap-southeast-1a", "ap-southeast-1c",  "ap-southeast-1a", "ap-southeast-1c"]
     az_ac                   = ["a", "c"]
+    az_ac_4                 = ["a", "c", "a", "c"]
 
     user_dev_vpc            = tolist(slice(aws_vpc.project_vpc[*].id, 0, 2))
     prod_test_vpc           = tolist(slice(aws_vpc.project_vpc[*].id, 3, 5))
@@ -34,12 +35,14 @@ locals {
     # shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
     
     dmz_lb_ports            = [8888, 9999]             
-    shared_int_ports        = [1111, 2222, 3333, 4444]             
-    shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
-
+    shared_int_ports        = [1111, 2222, 3333, 4444]               
     prodtest_lb_ports       = [6666, 7777]             
     product_int_ports       = [1001, 2002, 3003, 4004]             
     testdev_int_ports       = [5005, 6006, 7007, 8008]
+
+    shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
     prodtest_ec2_name       = ["node-1", "node-2", "rds-primary", "rds-stanby"]
+
+    prodtest_rt_name        = ["node", "rds"]
 
 }
