@@ -220,7 +220,7 @@ resource "aws_lb" "shared_int" {
 resource "aws_lb_listener" "shared_int_linsten_prome" {
   count             = 2
   load_balancer_arn = aws_lb.shared_int[count.index].arn
-  port              = local.shared_ports[0]
+  port              = local.shared_int_ports[0]
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   # alpn_policy       = "HTTP2Preferred"
@@ -233,7 +233,7 @@ resource "aws_lb_listener" "shared_int_linsten_prome" {
 resource "aws_lb_listener" "shared_int_linsten_grafana" {
   count             = 2
   load_balancer_arn = aws_lb.shared_int[count.index].arn
-  port              = local.shared_ports[1]
+  port              = local.shared_int_ports[1]
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   # alpn_policy       = "HTTP2Preferred"
@@ -246,7 +246,7 @@ resource "aws_lb_listener" "shared_int_linsten_grafana" {
 resource "aws_lb_listener" "shared_int_linsten_elk" {
   count             = 2
   load_balancer_arn = aws_lb.shared_int[count.index].arn
-  port              = local.shared_ports[2]
+  port              = local.shared_int_ports[2]
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   # alpn_policy       = "HTTP2Preferred"
