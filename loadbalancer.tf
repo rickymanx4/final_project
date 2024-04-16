@@ -48,8 +48,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener" {
 
 ######################### a. target_groups ####################################
 
-resource "aws_lb_target_group" "dev_dmz_proxy_tg" {
-  count       = 2
+resource "aws_lb_target_group" "dev_dmz_proxy_tg" {  
   name        = "dev-dmz-target-group-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
@@ -118,8 +117,7 @@ resource "aws_lb_listener" "dev_nexus_lb_listener" {
 
 ######################### a. target_groups ####################################
 resource "aws_lb_target_group" "nexus_tg" {
-  count       = 2
-  name        = "shared-nexus-ext-lb-tg-${local.az_ac[count.index]}"
+  name        = "shared-nexus-ext-lb-tg"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -127,7 +125,7 @@ resource "aws_lb_target_group" "nexus_tg" {
 
 resource "aws_lb_target_group_attachment" "nexus_tg_att" {
   count            = 2
-  target_group_arn = aws_lb_target_group.nexus_tg[count.index].arn
+  target_group_arn = aws_lb_target_group.nexus_tg.arn
   target_id        = aws_instance.shared_nexus[count.index].id
   port             = 22
 }
@@ -174,7 +172,6 @@ resource "aws_lb" "shared_ext_lb" {
     }
 }
 resource "aws_lb_listener" "nexus_listener" {
-  count             = 2
   load_balancer_arn = aws_lb.shared_ext_lb.arn
   port              = "5555"
   protocol          = "TCP"
@@ -183,7 +180,7 @@ resource "aws_lb_listener" "nexus_listener" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.nexus_tg[count.index].arn
+    target_group_arn = aws_lb_target_group.nexus_tg.arn
   }
 }
 
