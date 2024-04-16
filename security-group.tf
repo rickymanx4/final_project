@@ -238,7 +238,7 @@ resource "aws_security_group" "shared_ext_lb_sg" {
   from_port     = 5555
   to_port       = 5555
   protocol      = "tcp"
-  cidr_blocks = [var.vpc[0]]
+  cidr_blocks = [var.vpc[1]]
   }
 
   egress {
