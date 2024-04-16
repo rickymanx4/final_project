@@ -53,7 +53,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener" {
   protocol          = "TCP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
+    target_group_arn = aws_lb_target_group.user_dmz_nexus_tg[count.index].arn
   }
 }
 
@@ -134,7 +134,7 @@ resource "aws_lb_listener" "dev_nexus_lb_listener" {
   protocol          = "TCP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.dev_dmz_proxy_tg[count.index].arn
+    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
   }
 }
 
