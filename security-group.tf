@@ -30,7 +30,7 @@ resource "aws_security_group" "dmz_proxy_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "user_dmz_proxy_sg"
+    Name = "${local.names[count.index]}_proxy_sg"
   }
   depends_on = [ aws_security_group.dmz_elb_sg ]
 }
@@ -286,7 +286,7 @@ resource "aws_security_group_rule" "shared_int_lb" {
 
 resource "aws_security_group" "eks_sg" { 
   count       = 2  
-  name        = "${local.names[count.index + 2]}_eks_sg" 
+  name        = "${local.names[count.index + 3]}_eks_sg" 
   description = "Security Group for eks" 
   vpc_id = local.prod_test_vpc[count.index]
 
@@ -318,7 +318,7 @@ resource "aws_security_group" "eks_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "${local.names[count.index + 2]}_eks_sg"
+    Name = "${local.names[count.index + 3]}_eks_sg"
   }
 }
 
@@ -326,7 +326,7 @@ resource "aws_security_group" "eks_sg" {
 
 resource "aws_security_group" "rds_sg" { 
   count       = 2
-  name        = "${local.names[count.index + 2]}_rds_sg" 
+  name        = "${local.names[count.index + 3]}_rds_sg" 
   description = "Security Group for rds" 
   vpc_id = local.prod_test_vpc[count.index]
 
@@ -343,7 +343,7 @@ resource "aws_security_group" "rds_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "${local.names[count.index + 2]}_rds_sg"
+    Name = "${local.names[count.index + 3]}_rds_sg"
   }
 }
 
