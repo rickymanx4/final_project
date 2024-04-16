@@ -15,7 +15,7 @@ resource "aws_instance" "user_dmz_proxy" {
   #   aws_efs_file_system.web_efs,
   #   aws_efs_mount_target.web_mount
   #   ]
-  user_data = templatefile("./user-data-nginx.sh")
+  user_data = file("./user-data-nginx.sh")
   tags = {
     Name = "${local.names[0]}_proxy_${local.az_ac[count.index]}"
   }
@@ -38,7 +38,7 @@ resource "aws_instance" "dev_dmz_proxy" {
   #   aws_efs_file_system.web_efs,
   #   aws_efs_mount_target.web_mount
   #   ]
-  user_data = templatefile("./user-data-nginx.sh")
+  user_data = file("./user-data-nginx.sh")
   tags = {
     Name = "${local.names[1]}_proxy_${local.az_ac[count.index]}"
   }
@@ -63,7 +63,7 @@ resource "aws_instance" "shared_nexus" {
   #   aws_efs_file_system.web_efs,
   #   aws_efs_mount_target.web_mount
   #   ]
-  user_data = templatefile("./user-data-nginx.sh")
+  user_data = file("./user-data-nginx.sh")
   tags = {
     Name = "${local.names[2]}_ec2_nexus_${local.az_ac[count.index]}"
   }
@@ -84,7 +84,7 @@ resource "aws_instance" "shared_prometheus" {
   #   aws_efs_file_system.web_efs,
   #   aws_efs_mount_target.web_mount
   #   ]
-  user_data = templatefile("./user-data-nginx.sh")
+  user_data = file("./user-data-nginx.sh")
   tags = {
     Name = "${local.names[2]}_${local.shared_ec2_name[0]}_${local.az_ac[count.index]}"
   }
@@ -103,7 +103,7 @@ resource "aws_instance" "shared_grafana" {
   #   aws_efs_file_system.web_efs,
   #   aws_efs_mount_target.web_mount
   #   ]
-  user_data = templatefile("./user-data-nginx.sh")
+  user_data = file("./user-data-nginx.sh")
   tags = {
     Name = "${local.names[2]}_${local.shared_ec2_name[1]}_${local.az_ac[count.index]}"
   }
@@ -124,7 +124,7 @@ resource "aws_instance" "shared_elk" {
   #   aws_efs_file_system.web_efs,
   #   aws_efs_mount_target.web_mount
   #   ]
-  user_data = templatefile("./user-data-nginx.sh")
+  user_data = file("./user-data-nginx.sh")
   tags = {
     Name = "${local.names[2]}_elk_${local.az_ac[count.index]}"
   }
