@@ -57,7 +57,7 @@ data "aws_instance" "shared_tg_att_a" {
   # }
 
   filter {
-    name   = "instance_state"
+    name   = "instance state"
     values = ["running"]
   }
   
@@ -74,18 +74,9 @@ data "aws_instance" "shared_tg_att_a" {
 
 data "aws_instance" "shared_tg_att_c" {
   count   = 3
-  # filter {
-  #   name   = "tag:Name"
-  #   values = ["${local.names[2]}_*_c"]
-  # }
-
+  #instance_state_names : ["running"]
   filter {
-    name   = "instance_state"
-    values = ["running"]
-  }
-  
-  filter {
-    name   = "subnet_id"
+    name   = "subnet-id"
     values = ["aws_subnet.subnet_shared_pri_02[0].id"]
   }
   depends_on = [ 
