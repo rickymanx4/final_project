@@ -152,7 +152,7 @@ resource "aws_lb_target_group_attachment" "nexus_tg_att" {
 
 resource "aws_lb_target_group" "shared_prome_tg" {
   count       = 2
-  name        = "shared_${local.shared_ec2_name[0]}_tg_${local.az_ac[count.index]}"
+  name        = "shared-${local.shared_ec2_name[0]}-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -160,7 +160,7 @@ resource "aws_lb_target_group" "shared_prome_tg" {
 
 resource "aws_lb_target_group" "shared_grafana_tg" {
   count       = 2
-  name        = "shared_${local.shared_ec2_name[1]}_tg_${local.az_ac[count.index]}"
+  name        = "shared-${local.shared_ec2_name[1]}-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -168,7 +168,7 @@ resource "aws_lb_target_group" "shared_grafana_tg" {
 
 resource "aws_lb_target_group" "shared_elk_tg" {
   count       = 2
-  name        = "shared_${local.shared_ec2_name[2]}_tg_${local.az_ac[count.index]}"
+  name        = "shared-${local.shared_ec2_name[2]}-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
