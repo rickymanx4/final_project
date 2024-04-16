@@ -175,7 +175,7 @@ resource "aws_lb" "shared_ext_lb" {
 }
 resource "aws_lb_listener" "nexus_listener" {
   count             = 2
-  load_balancer_arn = aws_lb.shared_ext_lb[count.index].arn
+  load_balancer_arn = aws_lb.shared_ext_lb.arn
   port              = "5555"
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
