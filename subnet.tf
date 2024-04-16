@@ -11,7 +11,7 @@ resource "aws_subnet" "subnet_user_dmz_pub" {
   availability_zone   = element(local.azs_4, count.index)
 
   tags = {
-    Name = "${local.names[0]}-subnet-pub-0${count.index+1}-${local.az_ac_4[count.index]}"
+    Name = "${local.names[0]}-pub-0${count.index+1}-${local.userdev_rt_name[count.index]}-${local.az_ac_4[count.index]}"
   }
   map_public_ip_on_launch = true
 }

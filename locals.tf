@@ -43,6 +43,7 @@ locals {
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
     prodtest_ec2_name       = ["node-1", "node-2", "rds-primary", "rds-stanby"]
 
+    userdev_rt_name         = ["nat", "nat", "lb", "lb", "proxy"]
+    shared_rt_name          = ["nexus", "control"]
     prodtest_rt_name        = ["node", "rds"]
-
 }
