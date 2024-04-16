@@ -85,7 +85,7 @@ data "aws_instance" "shared_tg_att_c" {
   }
   
   filter {
-    name   = "subnet-id"
+    name   = "subnet_id"
     values = ["aws_subnet.subnet_shared_pri_02[0].id"]
   }
   depends_on = [ 
