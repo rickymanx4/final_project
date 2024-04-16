@@ -259,9 +259,9 @@ resource "aws_lb_listener" "nexus_listener" {
 #   }
 # }  
 
-# output "aws_lb_network_interface_ips" {
-#   value = "${flatten([data.aws_network_interface.lb_ni.*.private_ips])}"
-# }
+output "aws_lb_network_interface_ips" {
+  value = "${flatten([data.aws_network_interface.lb_ni.*.private_ips])}"
+}
 
 output "aws_instance_shared_pri_02_a" {
   value = "${flatten([data.aws_instances.shared_tg_att_a.*.ids])}"
