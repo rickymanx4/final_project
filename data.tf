@@ -57,7 +57,7 @@ data "aws_instance" "shared_tg_att_a" {
   # }
 
   filter {
-    name   = "instance-state"
+    name   = "instance_state"
     values = ["running"]
   }
   
@@ -80,7 +80,7 @@ data "aws_instance" "shared_tg_att_c" {
   # }
 
   filter {
-    name   = "instance-state"
+    name   = "instance_state"
     values = ["running"]
   }
   
