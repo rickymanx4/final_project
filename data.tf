@@ -72,7 +72,7 @@ data "aws_instance" "shared_tg_att_a" {
    ]  
 }
 
-data "aws_instance" "shared_tg_att_a" {
+data "aws_instance" "shared_tg_att_c" {
   count   = 3
   filter {
     name   = "tag:Name"
