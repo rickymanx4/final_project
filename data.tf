@@ -56,10 +56,10 @@ data "aws_instance" "shared_tg_att_a" {
     values = ["running"]
   }
   
-  filter {
-    name   = "subnet-id"
-    values = ["aws_subnet.subnet_shared_pri_02[0].id"]
-  }
+  # filter {
+  #   name   = "subnet-id"
+  #   values = ["aws_subnet.subnet_shared_pri_02[0].id"]
+  # }
 
   filter {
     name   = "tag:Name"
@@ -78,10 +78,10 @@ data "aws_instance" "shared_tg_att_c" {
     name   = "instance-state-name"
     values = ["running"]
   }  
-  filter {
-    name   = "subnet-id"
-    values = ["aws_subnet.subnet_shared_pri_02[1].id"]
-  }
+  # filter {
+  #   name   = "subnet-id"
+  #   values = ["aws_subnet.subnet_shared_pri_02[1].id"]
+  # }
 
   filter {
     name   = "tag:Name"
