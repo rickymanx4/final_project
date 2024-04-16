@@ -119,7 +119,7 @@ resource "aws_lb_listener" "dev_nexus_lb_listener" {
 ######################### a. target_groups ####################################
 resource "aws_lb_target_group" "nexus_tg" {
   count       = 2
-  name        = "shared-nexus-ext-lb-tg-${count.index}"
+  name        = "shared-nexus-ext-lb-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -164,14 +164,14 @@ resource "aws_lb_target_group_attachment" "shared_elk_att" {
 
 resource "aws_lb" "shared_ext_lb" {
   count               = 2
-  name                = "shared-ext-lb-${count.index + 1}"
+  name                = "shared-ext-lb-${local.az_ac[count.index]}"
   internal            = true
   load_balancer_type  = "network"
   subnets             = [aws_subnet.subnet_shared_pri_01[count.index].id]
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
-    Name = "shared-ext-lb-${count.index + 1}"
+    Name = "shared-ext-lb-${local.az_ac[count.index]}"
     }
 }
 resource "aws_lb_listener" "nexus_listener" {
