@@ -80,7 +80,7 @@ data "aws_instance" "shared_tg_att_c" {
   }
 
   filter {
-    name   = "state"
+    name   = "instance_state"
     values = ["running"]
   }
   
