@@ -49,6 +49,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener" {
 ######################### a. target_groups ####################################
 
 resource "aws_lb_target_group" "dev_dmz_proxy_tg" {  
+  count       = 2
   name        = "dev-dmz-target-group-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
