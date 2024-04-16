@@ -161,14 +161,14 @@ resource "aws_lb_target_group" "shared_int_tg" {
 resource "aws_lb_target_group_attachment" "shared_control_a" {
     count            = 3 
     target_group_arn = aws_lb_target_group.shared_int_tg[0].arn
-    target_id        = data.aws_instances.shared_tg_att_a[count.index]
+    target_id        = data.aws_instances.shared_tg_att_a.*.id
     port             = 22 
 }
 
 resource "aws_lb_target_group_attachment" "shared_control_b" {
     count            = 3 
     target_group_arn = aws_lb_target_group.shared_int_tg[1].arn
-    target_id        = data.aws_instances.shared_tg_att_c[count.index]
+    target_id        = data.aws_instances.shared_tg_att_c[count.index].id
     port             = 22 
 }
 
