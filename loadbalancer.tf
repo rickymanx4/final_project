@@ -166,7 +166,7 @@ resource "aws_lb" "shared_ext_lb" {
   name                = "shared-ext-lb"
   internal            = true
   load_balancer_type  = "network"
-  subnets             = [aws_subnet.subnet_shared_pri_01[count.index].id]
+  subnets             = [aws_subnet.subnet_shared_pri_01[*].id]
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
