@@ -76,6 +76,12 @@ data "aws_instances" "shared_tg_att_c" {
     name   = "subnet-id"
     values = ["aws_subnet.subnet_shared_pri_02[1].id"]
   }
+
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[2]}_${local.shared_ec2_name[count.index]}_a"]
+  }
+
   depends_on = [ 
     aws_instance.shared_prometheus,
     aws_instance.shared_grafana,
