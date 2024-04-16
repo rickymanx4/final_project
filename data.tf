@@ -51,7 +51,7 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
 
 data "aws_instance" "shared_tg_att_a" {
   count   = 3
-  instance_state = ["running"]
+  instance_state = "running"
   # filter {
   #   name   = "tag:Name"
   #   values = ["${local.names[2]}_*_a"]
