@@ -264,5 +264,5 @@ output "aws_lb_network_interface_ips" {
 }
 
 output "aws_instance_shared_pri_02_a" {
-  value = "${flatten([data.aws_instances.shared_tg_att_a.*.ids])}"
+  value = "${flatten([data.aws_instance.shared_tg_att_a.*.ids])}"
 }

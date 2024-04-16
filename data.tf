@@ -49,8 +49,8 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
   depends_on = [ aws_ec2_transit_gateway.tgw_main ]  
 }
 
-data "aws_instances" "shared_tg_att_a" {
-
+data "aws_instance" "shared_tg_att_a" {
+  count   = 3
   filter {
     name   = "instance-state-name"
     values = ["running"]
@@ -60,6 +60,11 @@ data "aws_instances" "shared_tg_att_a" {
     name   = "subnet-id"
     values = ["aws_subnet.subnet_shared_pri_02[0].id"]
   }
+
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[2]}_${local.shared_ec2_name[count.index]}_a"]
+  }  
   depends_on = [ 
     aws_instance.shared_prometheus,
     aws_instance.shared_grafana,
@@ -67,7 +72,7 @@ data "aws_instances" "shared_tg_att_a" {
    ]  
 }
 
-data "aws_instances" "shared_tg_att_c" {
+data "aws_instance" "shared_tg_att_c" {
   count    = 3
   filter {
     name   = "instance-state-name"
@@ -80,7 +85,7 @@ data "aws_instances" "shared_tg_att_c" {
 
   filter {
     name   = "tag:Name"
-    values = ["${local.names[2]}_${local.shared_ec2_name[count.index]}_a"]
+    values = ["${local.names[2]}_${local.shared_ec2_name[count.index]}_c"]
   }
 
   depends_on = [ 
