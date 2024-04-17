@@ -63,9 +63,8 @@
 #     }
 
 resource "aws_vpc_endpoint_service" "example" {
-  count                      = 2
   acceptance_required        = false
-  network_load_balancer_arns = aws_lb.user_dmz_proxy_lb[count.index].arn
+  network_load_balancer_arns = aws_lb.user_dmz_proxy_lb[*].arn
 }
 
 
