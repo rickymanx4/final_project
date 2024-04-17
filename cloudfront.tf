@@ -29,26 +29,44 @@
 resource "aws_cloudfront_distribution" "alb_beanstalk" {
     origin {
     domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
-    origin_id = "test"
+    origin_id = "user_dmz_lb_a"
+    origin_shield {
+      origin_shield_region = local.region
+      enabled               = true
+    }
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "https-only"
+      origin_protocol_policy = "match-viewer"
       origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
     }    
     }
-
+    origin {
+    domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
+    origin_id = "user_dmz_lb_c"
+    origin_shield {
+      origin_shield_region = local.region
+      enabled               = true
+    }
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "match-viewer"
+      origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
+    }    
+    }
     enabled = true
     restrictions {
     geo_restriction {
-    restriction_type = "none"
+        restriction_type = "blacklist"
+        locations        = ["CN"]
     }
 
     }
     default_cache_behavior {
     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods = ["GET", "HEAD"]
-    target_origin_id = "test"
+    target_origin_id = "user_dmz_lb_a"
     forwarded_values {
     query_string = false
 
@@ -68,50 +86,9 @@ resource "aws_cloudfront_distribution" "alb_beanstalk" {
     
     }
 
-resource "aws_vpc_endpoint_service" "example" {
-  acceptance_required        = false
-  network_load_balancer_arns = aws_lb.user_dmz_proxy_lb[*].arn
-}
-
-
-# resource "aws_cloudfront_distribution" "user_dmz_distribution" {
-#   depends_on = [
-#     aws_lb.user_dmz_proxy_lb
-#   ]
-#   default_cache_behavior {
-#     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-#     cached_methods   = ["GET", "HEAD"]
-#     target_origin_id = "user_dmz_lb_a" "user_dmz_lb_a"
-#     forwarded_values {
-#       query_string = false
-#       cookies {
-#         forward = "none"
-#       }
-#     }
-#     viewer_protocol_policy = "allow-all"
-#   }
-
-#   enabled = true
-
-#   origin {
-#     domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
-#     origin_id   = local.cf_orgin_name[0]
-#   }
-#   origin {
-#     domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
-#     origin_id   = local.cf_orgin_name[1]
-#   }
-
-#   restrictions {
-#     geo_restriction {
-#       restriction_type = "blacklist"
-#       locations = ["CN"]
-#     }
-#   }
-
-#   viewer_certificate {
-#     cloudfront_default_certificate = true
-#   }
+# resource "aws_vpc_endpoint_service" "example" {
+#   acceptance_required        = false
+#   network_load_balancer_arns = aws_lb.user_dmz_proxy_lb[*].arn
 # }
-#===============================================================
+
 
