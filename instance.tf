@@ -111,7 +111,7 @@ resource "aws_instance" "shared_grafana" {
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("~/.ssh/ec2_key")
+      private_key = file("~/ec2_key")
       port        = 9999 
       host        = aws_lb.dev_dmz_proxy_lb[count.index].dns_name
     }    
