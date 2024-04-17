@@ -43,11 +43,18 @@ resource "aws_security_group" "dmz_elb_sg" {
   vpc_id      = local.user_dev_vpc[count.index]
 
   ingress {
-  from_port     = local.dmz_lb_ports[0]
-  to_port       = local.dmz_lb_ports[0]
+  from_port     = local.dmz_lb_ports[1]
+  to_port       = local.dmz_lb_ports[1]
   protocol      = "tcp"
   cidr_blocks   = ["0.0.0.0/0"]
   }
+
+  ingress {
+  from_port     = local.dmz_proxy_ports[0]
+  to_port       = local.dmz_proxy_ports[0]
+  protocol      = "tcp"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }  
 
   egress {
   from_port     = 0
@@ -60,34 +67,34 @@ resource "aws_security_group" "dmz_elb_sg" {
   }
 }
 
-resource "aws_security_group_rule" "dev_dmz_lb" {
-  security_group_id = aws_security_group.dmz_elb_sg[1].id
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-  protocol          = "tcp"
-  from_port         = local.dmz_lb_ports[1]
-  to_port           = local.dmz_lb_ports[1]
-}
+# resource "aws_security_group_rule" "dev_dmz_lb" {
+#   security_group_id = aws_security_group.dmz_elb_sg[1].id
+#   type              = "ingress"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   protocol          = "tcp"
+#   from_port         = local.dmz_lb_ports[1]
+#   to_port           = local.dmz_lb_ports[1]
+# }
 
-resource "aws_security_group_rule" "user_dmz_proxy_sg_01" {
-  count             = 2
-  security_group_id = aws_security_group.dmz_elb_sg[count.index].id
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-  protocol          = "tcp"
-  from_port         = local.dmz_proxy_ports[0]
-  to_port           = local.dmz_proxy_ports[0]
-}
+# resource "aws_security_group_rule" "user_dmz_proxy_sg_01" {
+#   count             = 2
+#   security_group_id = aws_security_group.dmz_elb_sg[count.index].id
+#   type              = "ingress"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   protocol          = "tcp"
+#   from_port         = local.dmz_proxy_ports[0]
+#   to_port           = local.dmz_proxy_ports[0]
+# }
 
-resource "aws_security_group_rule" "dev_dmz_proxy_sg_02" {
-  count             = 2
-  security_group_id = aws_security_group.dmz_elb_sg[count.index].id
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-  protocol          = "tcp"
-  from_port         = local.dmz_proxy_ports[1]
-  to_port           = local.dmz_proxy_ports[1]
-}
+# resource "aws_security_group_rule" "dev_dmz_proxy_sg_02" {
+#   count             = 2
+#   security_group_id = aws_security_group.dmz_elb_sg[count.index].id
+#   type              = "ingress"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   protocol          = "tcp"
+#   from_port         = local.dmz_proxy_ports[1]
+#   to_port           = local.dmz_proxy_ports[1]
+# }
 ##############################################################################
 ################################## 2. shared_sg ##############################
 ##############################################################################
