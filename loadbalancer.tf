@@ -114,10 +114,21 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
   security_groups = [aws_security_group.dmz_elb_sg[1].id]
 }
 
-resource "aws_lb_listener" "dev_proxy_lb_listener" {
+resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_proxy_ports[*]
+  port              = local.dmz_proxy_ports[0]
+  protocol          = "TCP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.dev_dmz_proxy_tg[count.index].arn
+  }
+}
+
+resource "aws_lb_listener" "dev_proxy_lb_listener_9009" {
+  count             = 2
+  load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
+  port              = local.dmz_proxy_ports[1]
   protocol          = "TCP"
   default_action {
     type             = "forward"
