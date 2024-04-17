@@ -35,7 +35,7 @@ resource "aws_cloudfront_distribution" "user_dmz_distribution" {
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = cf-origin
+    target_origin_id = "cf-origin"
     forwarded_values {
       query_string = false
       cookies {
