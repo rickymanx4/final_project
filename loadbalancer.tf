@@ -172,7 +172,7 @@ resource "aws_lb_listener" "dev_nexus_lb_listener" {
 ######################### a. target_groups ####################################
 resource "aws_lb_target_group" "nexus_tg" {
   count       = 2
-  name        = "shared-nexus-ext-lb-tg-${local.az_ac[count.index]}"
+  name        = "${var.name[2]}-nexus-ext-lb-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -187,7 +187,7 @@ resource "aws_lb_target_group_attachment" "nexus_tg_att" {
 
 resource "aws_lb_target_group" "shared_prome_tg" {
   count       = 2
-  name        = "shared-${local.shared_ec2_name[0]}-tg-${local.az_ac[count.index]}"
+  name        = "${var.name[2]}-${local.shared_ec2_name[0]}-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -195,7 +195,7 @@ resource "aws_lb_target_group" "shared_prome_tg" {
 
 resource "aws_lb_target_group" "shared_grafana_tg" {
   count       = 2
-  name        = "shared-${local.shared_ec2_name[1]}-tg-${local.az_ac[count.index]}"
+  name        = "${var.name[2]}-${local.shared_ec2_name[1]}-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -203,7 +203,7 @@ resource "aws_lb_target_group" "shared_grafana_tg" {
 
 resource "aws_lb_target_group" "shared_elk_tg" {
   count       = 2
-  name        = "shared-${local.shared_ec2_name[2]}-tg-${local.az_ac[count.index]}"
+  name        = "${var.name[2]}-${local.shared_ec2_name[2]}-tg-${local.az_ac[count.index]}"
   port        = 22
   protocol    = "TCP"
   vpc_id      = aws_vpc.project_vpc[2].id
@@ -234,14 +234,14 @@ resource "aws_lb_target_group_attachment" "shared_elk_att" {
 
 resource "aws_lb" "shared_ext_lb" {
   count               = 2
-  name                = "shared-ext-lb-${local.az_ac[count.index]}"
+  name                = "${var.name[2]}-ext-lb-${local.az_ac[count.index]}"
   internal            = true
   load_balancer_type  = "network"
   subnets             = [aws_subnet.subnet_shared_pri_01[count.index].id]
   security_groups     = [ aws_security_group.shared_ext_lb_sg.id ]
 
   tags = {  
-    Name = "shared-ext-lb-${local.az_ac[count.index]}"
+    Name = "${var.name[2]}-ext-lb-${local.az_ac[count.index]}"
     }
 }
 resource "aws_lb_listener" "nexus_listener" {
@@ -260,14 +260,14 @@ resource "aws_lb_listener" "nexus_listener" {
 
 resource "aws_lb" "shared_int" {
   count               = 2
-  name                = "shared-int-lb-${local.az_ac[count.index]}"
+  name                = "${var.name[2]}-int-lb-${local.az_ac[count.index]}"
   internal            = true
   load_balancer_type  = "network"
   subnets             = [aws_subnet.subnet_shared_pri_02[count.index].id]
   security_groups     = [ aws_security_group.shared_int_lb_sg.id ]
 
   tags = {
-    Name = "shared-int-lb-${local.az_ac[count.index]}"
+    Name = "${var.name[2]}-int-lb-${local.az_ac[count.index]}"
   }
 }
 resource "aws_lb_listener" "shared_int_linsten_prome" {
