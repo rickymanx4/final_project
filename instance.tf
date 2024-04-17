@@ -115,35 +115,16 @@ resource "aws_instance" "shared_grafana" {
       port        = 9999 
       host        = aws_lb.dev_dmz_proxy_lb.dns_name
     }    
-
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod 400 ${var.private_key_location}"
+    ]
+  }  
   tags = {
     Name = "${local.names[2]}_${local.shared_ec2_name[1]}_${local.az_ac[count.index]}"
   }
 }
 
-resource "null_resource" "copy_files" {
-  connection {
-    type = "ssh"
-    user = "ec2-user"
-    private_key = "${file("~/.ssh/terraform-key")}"
-    host = "${aws_instance.project_bastion.public_ip}"
-  }
-  provisioner "file" {
-    source = var.private_key_location
-    destination = "${var.dest1}"
-  }
-  provisioner "file" {
-    source = "./service"
-    destination = "${var.dest2}"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo chmod 400 ${var.dest1}"
-    ]
-  }
-
-  depends_on = [aws_instance.project_bastion]
-}
 
 
 ################################ c. elk_ec2 ################################
