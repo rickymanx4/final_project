@@ -51,45 +51,49 @@ resource "aws_route_table" "dev_dmz_rt" {
 
 # ################################ d. shared_zone ################################
 
-resource "aws_route_table" "shared_pri_rt" {
-  count = 2
+resource "aws_route_table" "shared_nexus_rt" {
   vpc_id = aws_vpc.project_vpc[2].id
-  # route {
-  #   cidr_block = "0.0.0.0/8"
-  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  # }  
   tags = {
-    Name = "${local.names[2]}_pri_rt_${local.shared_rt_name[count.index]}"
+    Name = "${local.names[2]}_pri_rt_${local.shared_rt_name[0]}"
   }
 }
 
-# ################################ d. product_zone ################################
+resource "aws_route_table" "shared_control_rt" {
+  vpc_id = aws_vpc.project_vpc[2].id
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
+  tags = {
+    Name = "${local.names[2]}_pri_rt_${local.shared_rt_name[1]}"
+  }
+}
 
-resource "aws_route_table" "product_pri_rt" {
+# ################################ d. prodtest_node_rt ################################
+
+resource "aws_route_table" "testdev_node_rt" {
   count = 2
-  vpc_id = aws_vpc.project_vpc[3].id
-  # route {
-  #   cidr_block = "0.0.0.0/8"
-  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  # }  
+  vpc_id = local.prod_test_vpc[count.index]
+ 
   tags = {
-    Name = "${local.names[3]}_pri_rt_${local.prodtest_rt_name[count.index]}"
+    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_rt_name[0]}"
   }
 }
 
-# ################################ e. testdev_zone ################################
+# ################################ e. prodtest_rds_rt ################################
 
-resource "aws_route_table" "testdev_pri_rt" {
+resource "aws_route_table" "prodtest_rds_rt" {
   count = 2
-  vpc_id = aws_vpc.project_vpc[4].id
-  # route {
-  #   cidr_block = "0.0.0.0/8"
-  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  # }  
+  vpc_id = local.prod_test_vpc[count.index]
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
   tags = {
-    Name = "${local.names[4]}_pri_rt_${local.prodtest_rt_name[count.index]}"
+    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_rt_name[1]}"
   }
 }
+
 
 
 # ##############################################################################
@@ -138,11 +142,6 @@ resource "aws_route_table_association" "shared_src_rt_asso" {
   route_table_id = aws_route_table.shared_pri_rt[1].id
 }
 
-resource "aws_route_table_association" "shared_transit_rt_asso" {
-  gateway_id     = aws_ec2_transit_gateway.tgw_main.id
-  route_table_id = aws_route_table.shared_pri_rt[1].id
-}
-
 # ################################ d. product_zone ################################
 
 resource "aws_route_table_association" "product_pri_rt_asso_01" {
@@ -157,11 +156,6 @@ resource "aws_route_table_association" "product_pri_rt_asso_02" {
   route_table_id = aws_route_table.product_pri_rt[1].id
 }
 
-resource "aws_route_table_association" "product_transit_rt_asso" {
-  gateway_id     = aws_ec2_transit_gateway.tgw_main.id
-  route_table_id = aws_route_table.product_pri_rt[1].id
-}
-
 # ################################ e. testdev_zone ################################
 
 resource "aws_route_table_association" "testdev_pri_rt_asso_01" {
@@ -173,11 +167,6 @@ resource "aws_route_table_association" "testdev_pri_rt_asso_01" {
 resource "aws_route_table_association" "testdev_pri_rt_asso_02" {
   count = 2
   subnet_id      = aws_subnet.subnet_testdev_pri_02[count.index].id
-  route_table_id = aws_route_table.testdev_pri_rt[1].id
-}
-
-resource "aws_route_table_association" "testdev_transit_rt_asso" {
-  gateway_id     = aws_ec2_transit_gateway.tgw_main.id
   route_table_id = aws_route_table.testdev_pri_rt[1].id
 }
 
