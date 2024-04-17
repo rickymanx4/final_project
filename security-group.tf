@@ -74,7 +74,7 @@ resource "aws_security_group_rule" "dev_dmz_proxy_sg" {
   protocol          = "tcp"
   from_port         = local.dmz_proxy_ports[count.index]
   to_port           = local.dmz_proxy_ports[count.index]
-
+}
 ##############################################################################
 ################################## 2. shared_sg ##############################
 ##############################################################################
