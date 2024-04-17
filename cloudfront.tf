@@ -26,47 +26,82 @@
 #   }
 # }
 
-
-
-resource "aws_cloudfront_distribution" "user_dmz_distribution" {
-  depends_on = [
-    aws_lb.user_dmz_proxy_lb
-  ]
-  default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = ["user_dmz_lb_a", "user_dmz_lb_a"]
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
+resource "aws_cloudfront_distribution" "alb_beanstalk" {
+    origin {
+    domain_name = "vpce-0d7266209b48d91da-f66wb15m.elasticloadbalancing.ap-southeast-1.vpce.amazonaws.com"
+    origin_id = test
     }
-    viewer_protocol_policy = "allow-all"
-  }
 
-  enabled = true
-
-  origin {
-    domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
-    origin_id   = local.cf_orgin_name[0]
-  }
-  origin {
-    domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
-    origin_id   = local.cf_orgin_name[1]
-  }
-
-  restrictions {
+    enabled = true
+    restrictions {
     geo_restriction {
-      restriction_type = "blacklist"
-      locations = ["CN"]
+    restriction_type = "none"
     }
-  }
 
-  viewer_certificate {
+    }
+    default_cache_behavior {
+    allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods = ["GET", "HEAD"]
+    target_origin_id = test
+    forwarded_values {
+    query_string = false
+
+    cookies {
+        forward = "none"
+    }
+    }
+
+    viewer_protocol_policy = "allow-all"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl
+    }
+    viewer_certificate {
     cloudfront_default_certificate = true
-  }
-}
+    }
+    
+    }
+
+
+# resource "aws_cloudfront_distribution" "user_dmz_distribution" {
+#   depends_on = [
+#     aws_lb.user_dmz_proxy_lb
+#   ]
+#   default_cache_behavior {
+#     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+#     cached_methods   = ["GET", "HEAD"]
+#     target_origin_id = "user_dmz_lb_a" "user_dmz_lb_a"
+#     forwarded_values {
+#       query_string = false
+#       cookies {
+#         forward = "none"
+#       }
+#     }
+#     viewer_protocol_policy = "allow-all"
+#   }
+
+#   enabled = true
+
+#   origin {
+#     domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
+#     origin_id   = local.cf_orgin_name[0]
+#   }
+#   origin {
+#     domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
+#     origin_id   = local.cf_orgin_name[1]
+#   }
+
+#   restrictions {
+#     geo_restriction {
+#       restriction_type = "blacklist"
+#       locations = ["CN"]
+#     }
+#   }
+
+#   viewer_certificate {
+#     cloudfront_default_certificate = true
+#   }
+# }
 
 # resource "aws_cloudfront_distribution" "example" {
 #   domain_name = "example.com"
