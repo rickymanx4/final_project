@@ -109,13 +109,13 @@ resource "aws_route_table" "prodtest_rds_rt" {
 # ################################ a. user_dmz ################################
 
 resource "aws_route_table_association" "user_dmz_pub_rt_asso" {
-  count = length(local.user_dmz_pub_subnet)
+  count          = length(local.user_dmz_pub_subnet)
   subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index].id
   route_table_id = aws_route_table.dmz_pub_rt[0].id
 }
 
 resource "aws_route_table_association" "user_dmz_pri_rt_asso" {
-  count = 2
+  count          = 2
   subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index].id
   route_table_id = aws_route_table.user_dmz_rt[count.index].id
 }
@@ -123,13 +123,13 @@ resource "aws_route_table_association" "user_dmz_pri_rt_asso" {
 # ################################ b. dev_dmz ################################
 
 resource "aws_route_table_association" "dev_dmz_pub_rt_asso" {
-  count = length(local.dev_dmz_pub_subnet)
+  count          = length(local.dev_dmz_pub_subnet)
   subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index].id
   route_table_id = aws_route_table.dmz_pub_rt[1].id
 }
 
 resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
-  count = 2
+  count          = 2
   subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index].id
   route_table_id = aws_route_table.dev_dmz_rt[count.index].id
 }
@@ -137,13 +137,13 @@ resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
 # ################################ c. shared_zone ################################
 
 resource "aws_route_table_association" "shared_nex_rt_asso" {
-  count = 2
+  count          = 2
   subnet_id      = aws_subnet.subnet_shared_pri_01[count.index].id
   route_table_id = aws_route_table.shared_nexus_rt.id
 }
 
 resource "aws_route_table_association" "shared_src_rt_asso" {
-  count = 2
+  count          = 2
   subnet_id      = aws_subnet.subnet_shared_pri_02[count.index].id
   route_table_id = aws_route_table.shared_control_rt.id
 }

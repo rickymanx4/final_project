@@ -33,7 +33,7 @@ resource "aws_lb" "user_dmz_proxy_lb" {
   name               = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
-  subnets = [aws_subnet.subnet_user_dmz_pri[count.index].id]
+  subnets = [aws_subnet.subnet_user_dmz_pub[count.index +2 ].id]
   security_groups = [aws_security_group.dmz_elb_sg[0].id]
 }
 
@@ -100,7 +100,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
   name               = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
-  subnets = [aws_subnet.subnet_dev_dmz_pri[count.index].id]
+  subnets = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]
   security_groups = [aws_security_group.dmz_elb_sg[1].id]
 }
 
