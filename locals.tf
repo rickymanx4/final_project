@@ -31,7 +31,7 @@ locals {
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
     user_dev_tgw_rt           = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 0, 2))
-    prod_test_tgw_rt          = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 2, 4))
+    prod_test_tgw_rt          = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 3, 5))
     # shared_control_a        = tolist(data.aws_instance.shared_tg_att_a)
     # shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
     
