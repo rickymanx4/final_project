@@ -13,7 +13,7 @@ resource "aws_security_group" "dmz_proxy_sg" {
   from_port     = 22
   to_port       = 22
   protocol      = "tcp"
-  security_groups = [aws_security_group.dmz_elb_sg[count.index].id]
+  cidr_blocks   = ["10.100.0.0/16"]
   }
 
   ingress {
@@ -318,6 +318,13 @@ resource "aws_security_group" "node_sg" {
   vpc_id = local.prod_test_vpc[count.index]
 
   ingress {
+  from_port     = 22
+  to_port       = 22
+  protocol      = "tcp"
+  cidr_blocks   = ["10.100.0.0/16"]
+  }  
+
+  ingress {
   from_port     = 80
   to_port       = 80
   protocol      = "tcp"
@@ -349,6 +356,13 @@ resource "aws_security_group" "rds_sg" {
   name        = "${local.names[count.index + 3]}_rds_sg" 
   description = "Security Group for rds" 
   vpc_id = local.prod_test_vpc[count.index]
+
+  ingress {
+  from_port     = 22
+  to_port       = 22
+  protocol      = "tcp"
+  cidr_blocks   = ["10.100.0.0/16"]
+  }  
 
   ingress {
   from_port     = 3306

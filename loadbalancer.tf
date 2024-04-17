@@ -19,21 +19,6 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
   port = 80
 }
 
-resource "aws_lb_target_group" "user_dmz_proxy_ssh_tg" {
-  count       = 2
-  name        = "${var.name[0]}-tg-ssh-${local.az_ac[count.index]}"
-  port        = 9009
-  protocol    = "TCP"
-  target_type = "instance"
-  vpc_id = aws_vpc.project_vpc[0].id
-}
-
-resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_22" {
-  count            = 2
-  target_group_arn = aws_lb_target_group.user_dmz_proxy_ssh_tg[count.index].arn
-  target_id        = aws_instance.user_dmz_proxy[count.index].id
-  port             = 22
-}
 
 ######################### b. load_balancer ####################################
 
@@ -56,16 +41,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
     target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg[count.index].arn
   }
 }
-resource "aws_lb_listener" "user_nexus_lb_listener_9009" {
-  count             = 2
-  load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_proxy_ports[1]
-  protocol          = "TCP"
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.user_dmz_proxy_ssh_tg[count.index].arn
-  }
-}
+
 
 
 ##############################################################################
@@ -89,21 +65,6 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_80" {
   port = 80
 }
 
-resource "aws_lb_target_group" "dev_dmz_proxy_ssh_tg" {
-  count       = 2
-  name        = "${var.name[1]}-ssh-tg-${local.az_ac[count.index]}"
-  port        = 9009
-  protocol    = "TCP"
-  target_type = "instance"
-  vpc_id = aws_vpc.project_vpc[1].id
-}
-
-resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_22" {
-  count            = 2
-  target_group_arn = aws_lb_target_group.dev_dmz_proxy_ssh_tg[count.index].arn
-  target_id        = aws_instance.dev_dmz_proxy[count.index].id
-  port = 22
-}
 
 resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   count       = 2
@@ -140,17 +101,6 @@ resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.dev_dmz_proxy_nginx_tg[count.index].arn
-  }
-}
-
-resource "aws_lb_listener" "dev_proxy_lb_listener_9009" {
-  count             = 2
-  load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_proxy_ports[1]
-  protocol          = "TCP"
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.dev_dmz_proxy_ssh_tg[count.index].arn
   }
 }
 
