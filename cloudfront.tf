@@ -26,41 +26,47 @@
 #   }
 # }
 
-resource "aws_cloudfront_distribution" "alb_beanstalk" {
-    origin {
-    domain_name = "vpce-0d7266209b48d91da-f66wb15m.elasticloadbalancing.ap-southeast-1.vpce.amazonaws.com"
-    origin_id = "test"
-    }
+# resource "aws_cloudfront_distribution" "alb_beanstalk" {
+#     origin {
+#     domain_name = "vpce-0d7266209b48d91da-f66wb15m.elasticloadbalancing.ap-southeast-1.vpce.amazonaws.com"
+#     origin_id = "test"
+#     }
 
-    enabled = true
-    restrictions {
-    geo_restriction {
-    restriction_type = "none"
-    }
+#     enabled = true
+#     restrictions {
+#     geo_restriction {
+#     restriction_type = "none"
+#     }
 
-    }
-    default_cache_behavior {
-    allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods = ["GET", "HEAD"]
-    target_origin_id = "test"
-    forwarded_values {
-    query_string = false
+#     }
+#     default_cache_behavior {
+#     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+#     cached_methods = ["GET", "HEAD"]
+#     target_origin_id = "test"
+#     forwarded_values {
+#     query_string = false
 
-    cookies {
-        forward = "none"
-    }
-    }
+#     cookies {
+#         forward = "none"
+#     }
+#     }
 
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
-    }
-    viewer_certificate {
-    cloudfront_default_certificate = true
-    }
+#     viewer_protocol_policy = "allow-all"
+#     min_ttl                = 0
+#     default_ttl            = 3600
+#     max_ttl                = 86400
+#     }
+#     viewer_certificate {
+#     cloudfront_default_certificate = true
+#     }
     
-    }
+#     }
+
+resource "aws_vpc_endpoint_service" "example" {
+  count                      = 2
+  acceptance_required        = false
+  network_load_balancer_arns = aws_lb.user_dmz_proxy_lb[count.index]
+}
 
 
 # resource "aws_cloudfront_distribution" "user_dmz_distribution" {
