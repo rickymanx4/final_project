@@ -28,8 +28,14 @@
 
 resource "aws_cloudfront_distribution" "alb_beanstalk" {
     origin {
-    domain_name = "vpce-svc-093f77ac2f0faf164.ap-southeast-1.vpce.amazonaws.com"
+    domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
     origin_id = "test"
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2", "TLSv1.3"]
+    }    
     }
 
     enabled = true
@@ -107,105 +113,5 @@ resource "aws_vpc_endpoint_service" "example" {
 #     cloudfront_default_certificate = true
 #   }
 # }
+#===============================================================
 
-# resource "aws_cloudfront_distribution" "example" {
-#   domain_name = "example.com"
-#   origin = "nddff"
-#   origin_group = [
-#     aws_cloudfront_origin_group.app1.id,
-#     aws_cloudfront_origin_group.app2.id,
-#   ]
-#   default_cache_behavior {
-#     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-#     cached_methods   = ["GET", "HEAD"]
-#     target_origin_id = "user_dmz_lb_a"
-#     forwarded_values {
-#       query_string = false
-#       cookies {
-#         forward = "none"
-#       }
-#     }
-#     viewer_protocol_policy = "allow-all"
-#   }
-#   default_origin_group_id = aws_cloudfront_origin_group.app1.id
-
-#   custom_error_pages = {
-#     404 = "error/404.html",
-#     500 = "error/500.html",
-#   }
-
-#   restrictions {
-#     geo_restriction {
-#       restriction_type = "blacklist"
-#       countries = ["CN"]
-#     }
-#   }
-
-#   viewer_certificate {
-#     acm_certificate_arn = aws_acm_certificate.example.arn
-#   }
-
-#   web_acl_id = aws_wafv2_web_acl.example.id
-# }
-
-# resource "aws_cloudfront_origin_group" "app1" {
-#   domain_name = "app1.example.com"
-
-#   health_check {
-#     interval = 10
-#     timeout = 5
-#     unhealthy_threshold = 3
-#     path = "/"
-#   }
-
-#   members = [
-#     aws_elb_target_group.app1.arn,
-#   ]
-# }
-
-# resource "aws_cloudfront_origin_group" "app2" {
-#   domain_name = "app2.example.com"
-
-#   health_check {
-#     interval = 10
-#     timeout = 5
-#     unhealthy_threshold = 3
-#     path = "/"
-#   }
-
-#   members = [
-#     aws_elb_target_group.app2.arn,
-#   ]
-# }
-
-# resource "aws_elb_target_group" "app1" {
-#   name = "app1-target-group"
-#   port = 80
-
-#   vpc_id = aws_vpc.example.id
-
-#   health_check {
-#     interval = 10
-#     timeout = 5
-#     unhealthy_threshold = 3
-#     path = "/"
-#   }
-
-#   protocol = "HTTP"
-# }
-
-# resource "aws_elb_target_group" "app2" {
-#   name = "app2-target-group"
-#   port = 80
-
-#   vpc_id = aws_vpc.example.id
-
-#   health_check {
-#     interval = 10
-#     timeout = 5
-#     unhealthy_threshold = 3
-#     path = "/"
-#   }
-
-#   protocol = "HTTP"
-# }
