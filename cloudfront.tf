@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "alb_beanstalk" {
     default_cache_behavior {
     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods = ["GET", "HEAD"]
-    target_origin_id = test
+    target_origin_id = "test"
     forwarded_values {
     query_string = false
 
