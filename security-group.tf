@@ -71,22 +71,22 @@ resource "aws_security_group_rule" "dev_dmz_lb" {
 
 resource "aws_security_group_rule" "user_dmz_proxy_sg_01" {
   count             = 2
-  security_group_id = aws_security_group.dmz_elb_sg[0].id
+  security_group_id = aws_security_group.dmz_elb_sg[count.index].id
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
   protocol          = "tcp"
-  from_port         = local.dmz_proxy_ports[count.index]
-  to_port           = local.dmz_proxy_ports[count.index]
+  from_port         = local.dmz_proxy_ports[0]
+  to_port           = local.dmz_proxy_ports[0]
 }
 
 resource "aws_security_group_rule" "dev_dmz_proxy_sg_02" {
   count             = 2
-  security_group_id = aws_security_group.dmz_elb_sg[1].id
+  security_group_id = aws_security_group.dmz_elb_sg[count.index].id
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
   protocol          = "tcp"
-  from_port         = local.dmz_proxy_ports[count.index]
-  to_port           = local.dmz_proxy_ports[count.index]
+  from_port         = local.dmz_proxy_ports[1]
+  to_port           = local.dmz_proxy_ports[1]
 }
 ##############################################################################
 ################################## 2. shared_sg ##############################
