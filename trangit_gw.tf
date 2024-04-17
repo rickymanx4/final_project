@@ -154,18 +154,16 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-testde
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[1].id
 }
 
-resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-all_vpc" {
-  count                          = 5
-  transit_gateway_attachment_id  = local.shared_tgw_rt[count.index].id
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-user_dev_vpc" {
+  count                          = 2
+  transit_gateway_attachment_id  = local.user_dev_tgw_rt[count.index].id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
-  depends_on                     = [ 
-    aws_ec2_transit_gateway_route_table_propagation.tgw-rt-user-to-user,
-    aws_ec2_transit_gateway_route_table_propagation.tgw-rt-user-to-shared,
-    aws_ec2_transit_gateway_route_table_propagation.tgw-rt-user-to-product,
-    aws_ec2_transit_gateway_route_table_propagation.tgw-rt-dev-to-dev,
-    aws_ec2_transit_gateway_route_table_propagation.tgw-rt-dev-to-shared,
-    aws_ec2_transit_gateway_route_table_propagation.tgw-rt-dev-to-testdev
-    ]
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-shared-to-prod_test_vpc" {
+  count                          = 2
+  transit_gateway_attachment_id  = local.prod_test_tgw_rt[count.index].id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
 }
 
 
