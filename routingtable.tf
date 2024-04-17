@@ -71,7 +71,7 @@ resource "aws_route_table" "shared_control_rt" {
 
 # ################################ d. prodtest_node_rt ################################
 
-resource "aws_route_table" "testdev_node_rt" {
+resource "aws_route_table" "prodtest_node_rt" {
   count = 2
   vpc_id = local.prod_test_vpc[count.index]
  
@@ -133,13 +133,13 @@ resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
 resource "aws_route_table_association" "shared_nex_rt_asso" {
   count = 2
   subnet_id      = aws_subnet.subnet_shared_pri_01[count.index].id
-  route_table_id = aws_route_table.shared_nexus_rt[0].id
+  route_table_id = aws_route_table.shared_nexus_rt.id
 }
 
 resource "aws_route_table_association" "shared_src_rt_asso" {
   count = 2
   subnet_id      = aws_subnet.subnet_shared_pri_02[count.index].id
-  route_table_id = aws_route_table.shared_control_rt[1].id
+  route_table_id = aws_route_table.shared_control_rt.id
 }
 
 # ################################ d. product_zone ################################
