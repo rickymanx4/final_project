@@ -9,6 +9,19 @@ resource "aws_security_group" "dmz_proxy_sg" {
   description = "Security Group for ngninx_proxy_instance in dmz" 
   vpc_id      = local.user_dev_vpc[count.index]
 
+  ingress {
+  from_port     = 22
+  to_port       = 22
+  protocol      = "tcp"
+  security_groups = [aws_security_group.dmz_elb_sg[count.index].id]
+  }
+
+  ingress {
+  from_port     = 80
+  to_port       = 80
+  protocol      = "tcp"
+  security_groups = [aws_security_group.dmz_elb_sg[count.index].id]
+  }  
   egress {
   from_port     = 0
   to_port       = 0
@@ -19,16 +32,6 @@ resource "aws_security_group" "dmz_proxy_sg" {
     Name = "${local.names[count.index]}_proxy_sg"
   }
   depends_on = [ aws_security_group.dmz_elb_sg ]
-}
-
-resource "aws_security_group_rule" "dev_dmz_proxy" {
-  count                      = 3
-  security_group_id          = aws_security_group.dmz_proxy_sg[count.index].id
-  type                       = "ingress"
-  source_security_group_id   = aws_security_group.dmz_elb_sg[count.index].id
-  protocol                   = "tcp"
-  from_port                  = local.dmz_proxy_ports[count.index]
-  to_port                    = local.dmz_proxy_ports[count.index]
 }
 
 ################################ b. dmz_elb_sg ################################
@@ -66,9 +69,19 @@ resource "aws_security_group_rule" "dev_dmz_lb" {
   to_port           = local.dmz_lb_ports[1]
 }
 
-resource "aws_security_group_rule" "dev_dmz_proxy_sg" {
+resource "aws_security_group_rule" "user_dmz_proxy_sg_01" {
   count             = 2
-  security_group_id = aws_security_group.dmz_elb_sg[count.index].id
+  security_group_id = aws_security_group.dmz_elb_sg[0].id
+  type              = "ingress"
+  cidr_blocks       = ["0.0.0.0/0"]
+  protocol          = "tcp"
+  from_port         = local.dmz_proxy_ports[count.index]
+  to_port           = local.dmz_proxy_ports[count.index]
+}
+
+resource "aws_security_group_rule" "dev_dmz_proxy_sg_02" {
+  count             = 2
+  security_group_id = aws_security_group.dev_dmz_elb_sg[1].id
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
   protocol          = "tcp"
