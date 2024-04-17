@@ -34,7 +34,8 @@ locals {
     # shared_control_a        = tolist(data.aws_instance.shared_tg_att_a)
     # shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
     
-    dmz_lb_ports            = [8888, 9999]             
+    dmz_lb_ports            = [8888, 9999]
+    dmz_proxy_ports         = [80, 9009]             
     shared_int_ports        = [1111, 2222, 3333, 4444]               
     prodtest_lb_ports       = [6666, 7777]             
     product_int_ports       = [1001, 2002, 3003, 4004]             
