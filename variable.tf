@@ -30,27 +30,9 @@ variable "public_key_location" {
   sensitive = true
 }
 
-variable "shared_int" {
-  type = map(object({
-    name = string
-    port = string
-  }))
-  default = {
-    "prometheus" = {
-      name = "prometheus"
-      port = "1111"
-    },
-    "grafana" = {
-      name = "grafana"
-      port = "2222"
-    },
-    "elk" = {
-      name = "elk"
-      port = "3333"
-    },
-    "eks" = {
-      name = "eks"
-      port = "4444"
-    },
-  }
+variable "private_key_location" {
+  description = "Location of the Private key"
+  type        = string
+  default     = "./ec2_key"
+  sensitive = true
 }
