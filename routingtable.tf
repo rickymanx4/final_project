@@ -29,7 +29,6 @@ resource "aws_route_table" "user_dmz_rt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
   }
-
   tags = {
     Name = "${local.names[0]}_pri_rt_${local.userdev_rt_name[4]}_${local.az_ac[count.index]}"
   }
@@ -61,7 +60,7 @@ resource "aws_route_table" "shared_nexus_rt" {
 resource "aws_route_table" "shared_control_rt" {
   vpc_id = aws_vpc.project_vpc[2].id
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/0"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
@@ -86,7 +85,7 @@ resource "aws_route_table" "prodtest_rds_rt" {
   count = 2
   vpc_id = local.prod_test_vpc[count.index]
   route {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "0.0.0.0/0"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
