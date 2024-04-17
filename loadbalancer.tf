@@ -37,10 +37,10 @@ resource "aws_lb" "user_dmz_proxy_lb" {
   security_groups = [aws_security_group.dmz_elb_sg[0].id]
 }
 
-resource "aws_lb_listener" "user_proxy_lb_listener" {
+resource "aws_lb_listener" "user_proxy_lb_listener_80" {
   count             = 2
   load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_proxy_ports[*]
+  port              = local.dmz_proxy_ports[0]
   protocol          = "TCP"
   default_action {
     type             = "forward"
