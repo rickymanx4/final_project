@@ -173,6 +173,6 @@ resource "aws_route_table_association" "testdev_pri_rt_asso_01" {
 resource "aws_route_table_association" "testdev_pri_rt_asso_02" {
   count          = 2
   subnet_id      = aws_subnet.subnet_testdev_pri_02[count.index].id
-  route_table_id = aws_route_table.prodtest_node_rt[1].id
+  route_table_id = aws_route_table.prodtest_rds_rt[1].id
 }
 
