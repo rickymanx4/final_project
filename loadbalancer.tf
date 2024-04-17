@@ -6,7 +6,7 @@
 
 resource "aws_lb_target_group" "user_dmz_proxy_nginx_tg" {
   count       = 2
-  name        = "${var.name[1]}-tg-nginx-${local.az_ac[count.index]}"
+  name        = "${var.name[0]}-tg-nginx-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
   target_type = "instance"
