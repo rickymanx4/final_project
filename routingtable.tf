@@ -151,13 +151,11 @@ resource "aws_route_table_association" "shared_src_rt_asso" {
 # ################################ d. product_zone ################################
 
 resource "aws_route_table_association" "product_pri_rt_asso_01" {
-  count = 2
   subnet_id      = aws_subnet.subnet_product_pri_01[0].id
   route_table_id = aws_route_table.prodtest_node_rt[0].id
 }
 
 resource "aws_route_table_association" "product_pri_rt_asso_02" {
-  count = 2
   subnet_id      = aws_subnet.subnet_product_pri_02[0].id
   route_table_id = aws_route_table.prodtest_rds_rt[0].id
 }
@@ -165,13 +163,11 @@ resource "aws_route_table_association" "product_pri_rt_asso_02" {
 # ################################ e. testdev_zone ################################
 
 resource "aws_route_table_association" "testdev_pri_rt_asso_01" {
-  count = 2
   subnet_id      = aws_subnet.subnet_testdev_pri_01[1].id
   route_table_id = aws_route_table.prodtest_node_rt[1].id
 }
 
 resource "aws_route_table_association" "testdev_pri_rt_asso_02" {
-  count = 2
   subnet_id      = aws_subnet.subnet_testdev_pri_02[1].id
   route_table_id = aws_route_table.prodtest_node_rt[1].id
 }
