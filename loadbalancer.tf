@@ -269,7 +269,4 @@ resource "aws_lb_listener" "shared_int_linsten_elk" {
     target_group_arn = aws_lb_target_group.shared_elk_tg[count.index].arn
   }
 }  
-output "aws_lb_network_interface_ips" {
-  value = "${flatten([data.aws_network_interface.lb_ni.*.private_ips])}"
-}
 
