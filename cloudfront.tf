@@ -29,7 +29,7 @@
 resource "aws_cloudfront_distribution" "alb_beanstalk" {
     origin {
     domain_name = "vpce-0d7266209b48d91da-f66wb15m.elasticloadbalancing.ap-southeast-1.vpce.amazonaws.com"
-    origin_id = test
+    origin_id = "test"
     }
 
     enabled = true
