@@ -113,7 +113,7 @@ resource "aws_instance" "shared_grafana" {
       user        = "ec2-user"
       private_key = file("~/.ssh/ec2_key")
       port        = 9999 
-      host        = aws_lb.dev_dmz_proxy_lb.dns_name
+      host        = aws_lb.dev_dmz_proxy_lb[count.index].dns_name
     }    
   provisioner "remote-exec" {
     inline = [
