@@ -81,7 +81,7 @@ resource "aws_security_group_rule" "user_dmz_proxy_sg_01" {
 
 resource "aws_security_group_rule" "dev_dmz_proxy_sg_02" {
   count             = 2
-  security_group_id = aws_security_group.dev_dmz_elb_sg[1].id
+  security_group_id = aws_security_group.dmz_elb_sg[1].id
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
   protocol          = "tcp"
