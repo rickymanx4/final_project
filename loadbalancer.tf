@@ -76,7 +76,7 @@ resource "aws_lb_listener" "user_nexus_lb_listener_9009" {
 
 resource "aws_lb_target_group" "dev_dmz_proxy_nginx_tg" {  
   count       = 2
-  name        = "${var.name[1]}-target-group-nginx-${local.az_ac[count.index]}"
+  name        = "${var.name[1]}-tg-nginx-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
   target_type = "instance"
