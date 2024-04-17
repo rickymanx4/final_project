@@ -46,7 +46,13 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
     name   = "state"
     values = ["available"]
   }
-  depends_on = [ aws_ec2_transit_gateway.tgw_main ]  
+  depends_on = [ 
+    aws_ec2_transit_gateway_vpc_attachment.user_dmz,
+    aws_ec2_transit_gateway_vpc_attachment.dev_dmz,
+    aws_ec2_transit_gateway_vpc_attachment.shared,
+    aws_ec2_transit_gateway_vpc_attachment.product,
+    aws_ec2_transit_gateway_vpc_attachment.testdev,
+    ]  
 }
 
 # data "aws_instances" "shared_tg_att_a" {

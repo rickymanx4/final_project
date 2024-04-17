@@ -1,0 +1,77 @@
+#########################################################################
+################  basition setting for ansible, awscli  ###################
+#########################################################################
+
+# ############ copy sudoers file ###########        
+# - name: Copy a "sudoers" file into place for ansible
+#   ansible.builtin.copy:
+#     src: ./sudoers
+#     dest: /etc/sudoers
+#     owner: root
+#     group: root
+
+# ############ copy ansible inventory file ###########        
+# - name: Copy a "aws_ec2.yaml" file into place for ansible
+#   ansible.builtin.copy:
+#     src: ./aws_ec2.yaml
+#     dest: /home/ec2-user/ansible
+#     owner: ec2-user
+#     group: ec2-user
+    
+# ############ copy ansible.cfg file ###########        
+# - name: Copy a "ansible.cfg" file into place for ansible
+#   ansible.builtin.copy:
+#     src: ./ansible.cfg
+#     dest: /home/ec2-user/ansible/
+#     owner: ec2-user
+#     group: ec2-user        
+
+# ############ copy ec2-key ###########
+# - name: Copy a "ec2-key" file into place for ansible
+#   ansible.builtin.copy:
+#     src: ./ec2-key.pem
+#     dest: /home/ec2-user/ansible
+#     owner: ec2-user
+#     group: ec2-user
+#     mode: '0400'
+
+# ########### download aws cli by curl ###########        
+# - name: download aws cli by curl
+#   ansible.builtin.command: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
+
+# ########### unzip aws cli ###########      
+# - name: unzip aws cli 
+#   ansible.builtin.command: unzip awscliv2.zip 
+
+# ########### install aws cli ###########      
+# - name: install aws cli
+#   ansible.builtin.command: ./aws/install
+
+# ############ create directory .aws for configure ###########      
+# - name: Create a directory ".aws"
+#   ansible.builtin.file:
+#     path: /home/ec2-user/.aws
+#     state: directory
+#     owner: ec2-user
+#     group: ec2-user
+#     mode: '0755'
+    
+# ############ copy aws config file ###########        
+# - name: Copy a "aws config" file into place for aws cli
+#   ansible.builtin.copy:
+#     src: ~/.aws/config
+#     dest: /home/ec2-user/.aws/config
+#     owner: ec2-user
+#     group: ec2-user
+#     mode: '0755'
+
+# ############ copy aws credentials file ###########        
+# - name: Copy a "aws credentials" file into place for aws cli
+#   ansible.builtin.copy:
+#     src: ~/.aws/credentials
+#     dest: /home/ec2-user/.aws/credentials
+#     owner: ec2-user
+#     group: ec2-user
+#     mode: '0755'
+
+           
