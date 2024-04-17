@@ -99,7 +99,7 @@ resource "aws_security_group" "shared_nexus_sg" {
   from_port     = 80
   to_port       = 80
   protocol      = "tcp"
-  cidr_blocks   = [aws_security_group.shared_ext_lb_sg.id]
+  security_groups   = [aws_security_group.shared_ext_lb_sg.id]
   }
 
   egress {
