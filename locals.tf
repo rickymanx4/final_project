@@ -3,7 +3,7 @@ locals {
 
     region                  = "ap-southeast-1"
 
-    names                   = ["user-dmz", "dev-dmz", "shared", "product", "testdev"]
+    names                   = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
 
     user_dmz_pub_subnet     = ["10.10.10.0/24", "10.10.20.0/24", "10.10.110.0/24", "10.10.120.0/24"]
     user_dmz_pri_subnet     = ["10.10.50.0/24", "10.10.150.0/24"]

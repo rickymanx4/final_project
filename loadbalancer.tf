@@ -6,7 +6,7 @@
 
 resource "aws_lb_target_group" "user_dmz_proxy_nginx_tg" {
   count       = 2
-  name        = "${local.names[1]}-tg-nginx-${local.az_ac[count.index]}"
+  name        = "${var.name[1]}-tg-nginx-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
   target_type = "instance"
@@ -21,7 +21,7 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
 
 resource "aws_lb_target_group" "user_dmz_proxy_ssh_tg" {
   count       = 2
-  name        = "${local.names[0]}-tg-ssh-${local.az_ac[count.index]}"
+  name        = "${var.name[0]}-tg-ssh-${local.az_ac[count.index]}"
   port        = 9009
   protocol    = "TCP"
   target_type = "instance"
@@ -39,7 +39,7 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_22" {
 
 resource "aws_lb" "user_dmz_proxy_lb" {
   count              = 2
-  name               = "${local.names[0]}-proxy-lb-${local.az_ac[count.index]}"
+  name               = "${var.name[0]}-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
   subnets = [aws_subnet.subnet_user_dmz_pub[count.index +2 ].id]
@@ -76,7 +76,7 @@ resource "aws_lb_listener" "user_nexus_lb_listener_9009" {
 
 resource "aws_lb_target_group" "dev_dmz_proxy_nginx_tg" {  
   count       = 2
-  name        = "${local.names[1]}-target-group-nginx-${local.az_ac[count.index]}"
+  name        = "${var.name[1]}-target-group-nginx-${local.az_ac[count.index]}"
   port        = 80
   protocol    = "TCP"
   target_type = "instance"
@@ -91,7 +91,7 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_80" {
 
 resource "aws_lb_target_group" "dev_dmz_proxy_ssh_tg" {
   count       = 2
-  name        = "${local.names[1]}-ssh-tg-${local.az_ac[count.index]}"
+  name        = "${var.name[1]}-ssh-tg-${local.az_ac[count.index]}"
   port        = 9009
   protocol    = "TCP"
   target_type = "instance"
@@ -107,7 +107,7 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_22" {
 
 resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   count       = 2
-  name        = "${local.names[1]}-nexus-tg-${local.az_ac[count.index]}"
+  name        = "${var.name[1]}-nexus-tg-${local.az_ac[count.index]}"
   port        = 5555
   protocol    = "TCP"
   target_type = "ip"
@@ -125,7 +125,7 @@ resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
 
 resource "aws_lb" "dev_dmz_proxy_lb" {
   count              = 2
-  name               = "${local.names[1]}-proxy-lb-${local.az_ac[count.index]}"
+  name               = "${var.name[1]}-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal = false
   subnets = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]

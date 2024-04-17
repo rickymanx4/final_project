@@ -13,7 +13,7 @@ variable "vpc" {
 variable "name" {
   type        = list(string)
   description = "name"
-  default     = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
+  default     = ["user-dmz", "dev-dmz", "shared", "product", "testdev"]
 }
 
 variable "key_name" {
