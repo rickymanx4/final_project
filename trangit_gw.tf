@@ -186,6 +186,6 @@ resource "aws_ec2_transit_gateway_route" "dev" {
 
 resource "aws_ec2_transit_gateway_route" "shared" {
   destination_cidr_block         = "0.0.0.0/0"
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.shared.id
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.dev_dmz.id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_rt[2].id
 }

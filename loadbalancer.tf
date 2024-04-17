@@ -12,11 +12,18 @@ resource "aws_lb_target_group" "user_dmz_proxy_tg" {
   target_type = "instance"
   vpc_id = aws_vpc.project_vpc[0].id
 }
-resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att" {
+resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
   count            = 2
   target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
   target_id        = aws_instance.user_dmz_proxy[count.index].id
   port = 80
+}
+
+resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_22" {
+  count            = 2
+  target_group_arn = aws_lb_target_group.user_dmz_proxy_tg[count.index].arn
+  target_id        = aws_instance.user_dmz_proxy[count.index].id
+  port = 22
 }
 
 ######################### b. load_balancer ####################################
@@ -56,11 +63,18 @@ resource "aws_lb_target_group" "dev_dmz_proxy_tg" {
   target_type = "instance"
   vpc_id = aws_vpc.project_vpc[1].id
 }
-resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att" {
+resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_80" {
   count            = 2
   target_group_arn = aws_lb_target_group.dev_dmz_proxy_tg[count.index].arn
   target_id        = aws_instance.dev_dmz_proxy[count.index].id
   port = 80
+}
+
+resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_22" {
+  count            = 2
+  target_group_arn = aws_lb_target_group.dev_dmz_proxy_tg[count.index].arn
+  target_id        = aws_instance.dev_dmz_proxy[count.index].id
+  port = 22
 }
 
 resource "aws_lb_target_group" "dev_dmz_nexus_tg" {

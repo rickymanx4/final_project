@@ -51,8 +51,8 @@ resource "aws_security_group" "dmz_elb_sg" {
   }
 
   ingress {
-  from_port     = local.dmz_lb_ports[count.index]
-  to_port       = local.dmz_lb_ports[count.index]
+  from_port     = local.dmz_lb_ports[0]
+  to_port       = local.dmz_lb_ports[0]
   protocol      = "tcp"
   cidr_blocks   = ["0.0.0.0/0"]
   }
@@ -73,8 +73,8 @@ resource "aws_security_group_rule" "dev_dmz_lb" {
   type = "ingress"
   cidr_blocks   = ["0.0.0.0/0"]
   protocol = "tcp"
-  from_port = local.dmz_lb_ports[0]
-  to_port = local.dmz_lb_ports[0]
+  from_port = local.dmz_lb_ports[1]
+  to_port = local.dmz_lb_ports[1]
 }
 
 ##############################################################################
@@ -99,7 +99,7 @@ resource "aws_security_group" "shared_nexus_sg" {
   from_port     = 80
   to_port       = 80
   protocol      = "tcp"
-  cidr_blocks   = ["0.0.0.0/0"]
+  cidr_blocks   = [aws_security_group.shared_ext_lb_sg.id]
   }
 
   egress {
