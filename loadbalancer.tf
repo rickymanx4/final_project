@@ -5,12 +5,13 @@
 ######################### a. target_groups ####################################
 
 resource "aws_lb_target_group" "user_dmz_proxy_nginx_tg" {
-  count       = 2
-  name        = "${var.name[0]}-tg-nginx-${local.az_ac[count.index]}"
-  port        = 80
-  protocol    = "TCP"
-  target_type = "instance"
-  vpc_id = aws_vpc.project_vpc[0].id
+  count            = 2
+  name             = "${var.name[0]}-tg-nginx-${local.az_ac[count.index]}"
+  port             = 80
+  protocol         = "HTTP"
+  protocol_version = "HTTP1"
+  target_type      = "instance"
+  vpc_id           = aws_vpc.project_vpc[0].id
 }
 resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
   count            = 2
@@ -19,13 +20,12 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
   port = 80
 }
 
-
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "user_dmz_proxy_lb" {
   count              = 2
   name               = "${var.name[0]}-proxy-lb-${local.az_ac[count.index]}"
-  load_balancer_type = "network"
+  load_balancer_type = "application"
   internal = false
   subnets = [aws_subnet.subnet_user_dmz_pub[count.index +2 ].id]
   security_groups = [aws_security_group.user_dmz_sg[0].id]
@@ -34,14 +34,30 @@ resource "aws_lb" "user_dmz_proxy_lb" {
 resource "aws_lb_listener" "user_proxy_lb_listener_80" {
   count             = 2
   load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_ports[3]
-  protocol          = "TCP"
+  port              = local.dmz_ports[2]
+  protocol          = "HTTP"
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg[count.index].arn
   }
 }
 
+resource "aws_lb_listener" "user_proxy_lb_listener_443" {
+  count             = 2
+  load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
+  port              = local.dmz_ports[1]
+  protocol          = "HTTPS"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg[count.index].arn
+  }
+}
+
+resource "aws_lb_listener_certificate" "user_dmz_proxy_crt" {
+  count           = 2
+  listener_arn    = aws_lb_listener.user_proxy_lb_listener_443[count.index].arn
+  certificate_arn = local.proxy_acm
+}
 
 
 ##############################################################################
@@ -51,11 +67,12 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
 ######################### a. target_groups ####################################
 
 resource "aws_lb_target_group" "dev_dmz_proxy_nginx_tg" {  
-  count       = 2
-  name        = "${var.name[1]}-tg-nginx-${local.az_ac[count.index]}"
-  port        = 80
-  protocol    = "TCP"
-  target_type = "instance"
+  count            = 2
+  name             = "${var.name[1]}-tg-nginx-${local.az_ac[count.index]}"
+  port             = 80
+  protocol         = "HTTP"
+  protocol_version = "HTTP1"
+  target_type      = "instance"
   vpc_id = aws_vpc.project_vpc[1].id
 }
 resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_80" {
@@ -96,7 +113,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
 resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_ports[3]
+  port              = local.dmz_ports[2]
   protocol          = "TCP"
   default_action {
     type             = "forward"
@@ -104,10 +121,27 @@ resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
   }
 }
 
+resource "aws_lb_listener" "dev_proxy_lb_listener_443" {
+  count             = 2
+  load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
+  port              = local.dmz_ports[1]
+  protocol          = "TCP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.dev_dmz_proxy_nginx_tg[count.index].arn
+  }
+}
+
+resource "aws_lb_listener_certificate" "dev_dmz_proxy_crt" {
+  count           = 2
+  listener_arn    = aws_lb_listener.dev_proxy_lb_listener_443[count.index].arn
+  certificate_arn = local.proxy_acm
+}
+
 resource "aws_lb_listener" "dev_nexus_lb_listener" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_ports[0]
+  port              = local.dmz_ports[3]
   protocol          = "TCP"
   default_action {
     type             = "forward"
