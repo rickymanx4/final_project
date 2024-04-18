@@ -3,7 +3,6 @@ resource "aws_route53_record" "www-nadri" {
   zone_id = local.host_zone
   name    = "www"
   type    = "CNAME"
-  ttl     = 5
   set_identifier = "nadri-${local.az_ac[count.index]}"
   weighted_routing_policy {
     weight = local.weight[count.index]
