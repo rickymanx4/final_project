@@ -5,8 +5,7 @@
 ######################### a. target_groups ####################################
 
 resource "aws_lb_target_group" "user_dmz_proxy_nginx_tg" {
-  count            = 2
-  name             = "${var.name[0]}-tg-nginx-${local.az_ac[count.index]}"
+  name             = "${var.name[0]}-tg-nginx"
   port             = 80
   protocol         = "HTTP"
   protocol_version = "HTTP1"
@@ -15,7 +14,7 @@ resource "aws_lb_target_group" "user_dmz_proxy_nginx_tg" {
 }
 resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
   count            = 2
-  target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg[count.index].arn
+  target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg.arn
   target_id        = aws_instance.user_dmz_proxy[count.index].id
   port = 80
 }
@@ -39,43 +38,40 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    # target_group_arn = [
-    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn,
-    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
-    #   ]
+    target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg.arn
   }
 }
 
-resource "aws_lb_listener_rule" "user_dmz_listner_80" {
-  listener_arn = aws_lb_listener.user_proxy_lb_listener_80.arn
-  priority     = 99
+# resource "aws_lb_listener_rule" "user_dmz_listner_80" {
+#   listener_arn = aws_lb_listener.user_proxy_lb_listener_80.arn
+#   priority     = 99
 
-  action {
-    type = "forward"
-    forward {
-      target_group {
-        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn
-        weight = 80
-      }
+#   action {
+#     type = "forward"
+#     forward {
+#       target_group {
+#         arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn
+#         weight = 80
+#       }
 
-      target_group {
-        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
-        weight = 20
-      }
+#       target_group {
+#         arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
+#         weight = 20
+#       }
 
-      stickiness {
-        enabled  = true
-        duration = 600
-      }
-    }
-  }
+#       stickiness {
+#         enabled  = true
+#         duration = 600
+#       }
+#     }
+#   }
 
-  condition {
-    # host_header {
-    #   values = ["my-service.*.terraform.io"]
-    # }
-  }
-}
+#   condition {
+#     # host_header {
+#     #   values = ["my-service.*.terraform.io"]
+#     # }
+#   }
+# }
 resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[1]
@@ -83,43 +79,10 @@ resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   certificate_arn = local.proxy_acm
   default_action {
     type             = "forward"
-    # target_group_arn =[ 
-    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn, 
-    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn 
-    #   ]
+    target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg.arn
   }
 }
 
-resource "aws_lb_listener_rule" "user_dmz_listner_443" {
-  listener_arn = aws_lb_listener.user_proxy_lb_listener_443.arn
-  priority     = 99
-
-  action {
-    type = "forward"
-    forward {
-      target_group {
-        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn
-        weight = 80
-      }
-
-      target_group {
-        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
-        weight = 20
-      }
-
-      stickiness {
-        enabled  = true
-        duration = 600
-      }
-    }
-  }
-
-  condition {
-    # host_header {
-    #   values = ["my-service.*.terraform.io"]
-    # }
-  }
-}
 
 # resource "aws_lb_listener_certificate" "user_dmz_proxy_crt" {
 #   count           = 2
