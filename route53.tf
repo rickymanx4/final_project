@@ -31,17 +31,17 @@ resource "aws_route53_record" "www-nadri" {
 #   zone_id         = local.host_zone
 # }
 
-# resource "aws_acm_certificate" "cert" {
-#   domain_name       = "nadri-project.com"
-#   validation_method = "DNS"
-#   tags = {
-#     Environment = "nadri-cst"
-#   }
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-#   depends_on = [ aws_route53_record.acm_record ]
-# }
+resource "aws_acm_certificate" "cert" {
+  domain_name       = "nadri-project.com"
+  validation_method = "DNS"
+  tags = {
+    Environment = "nadri-cst"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+  depends_on = [ aws_route53_record.acm_record ]
+}
 
 
 
