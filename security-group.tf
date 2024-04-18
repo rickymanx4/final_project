@@ -40,7 +40,7 @@ resource "aws_security_group_rule" "user_dmz_https_proxy" {
   protocol                 = "tcp"
   from_port                = local.dmz_lb_ports[1]
   to_port                  = local.dmz_lb_ports[1]
-  source_security_group_id = [aws_security_group.dmz_elb_sg[0].id]
+  source_security_group_id = aws_security_group.dmz_elb_sg[0].id
 }
 
 ################################ b. dmz_elb_sg ################################
