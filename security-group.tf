@@ -34,6 +34,15 @@ resource "aws_security_group" "dmz_proxy_sg" {
   depends_on = [ aws_security_group.dmz_elb_sg ]
 }
 
+resource "aws_security_group_rule" "user_dmz_https_proxy" {
+  security_group_id        = aws_security_group.dmz_proxy_sg[0].id
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = local.dmz_lb_ports[1]
+  to_port                  = local.dmz_lb_ports[1]
+  source_security_group_id = [aws_security_group.dmz_elb_sg[0].id]
+}
+
 ################################ b. dmz_elb_sg ################################
 
 resource "aws_security_group" "dmz_elb_sg" {
