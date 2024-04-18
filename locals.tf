@@ -33,8 +33,7 @@ locals {
     user_dev_tgw_rt           = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 0, 2))
     prod_test_tgw_rt          = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 3, 5))
         
-    dmz_lb_ports            = [8888, 9999]
-    dmz_proxy_ports         = [80, 443, 22]             
+    dmz_ports               = [9999, 22, 443, 80]    
     shared_int_ports        = [1111, 2222, 3333, 4444]               
     prodtest_lb_ports       = [6666, 7777]             
     product_int_ports       = [1001, 2002, 3003, 4004]             
