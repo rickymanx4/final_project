@@ -30,7 +30,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   origin {
     domain_name = aws_lb.user_dmz_proxy_lb.dns_name
-    origin_id = user_dmz_alb_cf
+    origin_id = "user_dmz_alb_cf"
     origin_shield {
       origin_shield_region = local.region
       enabled               = true
@@ -79,7 +79,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   default_cache_behavior {
     allowed_methods = ["GET", "HEAD", "OPTIONS"]
     cached_methods = ["GET", "HEAD"]
-    target_origin_id = local.cf_origin_name[2]
+    target_origin_id = "user_dmz_alb_cf"
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 1800
