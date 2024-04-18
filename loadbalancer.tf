@@ -47,7 +47,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
 }
 
 resource "aws_lb_listener_rule" "user_dmz_listner_80" {
-  listener_arn = aws_lb_listener.user_dmz_proxy_lb.arn
+  listener_arn = aws_lb_listener.user_proxy_lb_listener_80.arn
   priority     = 99
 
   action {
@@ -91,7 +91,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener_443" {
 }
 
 resource "aws_lb_listener_rule" "user_dmz_listner_443" {
-  listener_arn = aws_lb_listener.user_dmz_proxy_lb.arn
+  listener_arn = aws_lb_listener.user_proxy_lb_listener_443.arn
   priority     = 99
 
   action {
