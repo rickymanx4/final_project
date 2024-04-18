@@ -22,16 +22,12 @@ data "aws_ami" "amazon_linux_2023" {
   }
 }
 
-data "aws_network_interface" "lb_ni" {
+data "aws_security_group" "proxy_sg" {
 count = 2
 
   filter {
-    name   = "description"
-    values = ["ELB net/${aws_lb.shared_ext_lb[count.index].name}/*"]
-  }
-  filter {
-    name   = "subnet-id"
-    values = [aws_subnet.subnet_shared_pri_01[count.index].id]
+    name   = "tag:Name"
+    values = ["${local.names[count.index]}_proxy_sg"]
   }
 }
 
@@ -53,6 +49,19 @@ data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
     aws_ec2_transit_gateway_vpc_attachment.product,
     aws_ec2_transit_gateway_vpc_attachment.testdev,
     ]  
+}
+
+data "aws_network_interface" "lb_ni" {
+count = 2
+
+  filter {
+    name   = "description"
+    values = ["ELB net/${aws_lb.shared_ext_lb[count.index].name}/*"]
+  }
+  filter {
+    name   = "subnet-id"
+    values = [aws_subnet.subnet_shared_pri_01[count.index].id]
+  }
 }
 
 # data "aws_instances" "shared_tg_att_a" {
