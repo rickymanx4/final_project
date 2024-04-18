@@ -52,7 +52,4 @@ locals {
     domain_name             = "nadri-project.com"
     host_zone               = "Z0373230225TMW4PZYVS1"
     weight                  = [200, 100]
-    proxy_acm               = "arn:aws:acm:ap-southeast-1:707677861059:certificate/c4589e99-c327-45dc-bc20-bb67e3fa6c4c"
-
-
 }
