@@ -10,8 +10,8 @@ resource "aws_route53_record" "www-nadri" {
     weight = local.weight[count.index]
   }
   alias {
-    name                   = aws_lb.user_dmz_proxy_lb[count.index].dns_name
-    zone_id                = aws_lb.user_dmz_proxy_lb[count.index].zone_id
+    name                   = aws_lb.user_dmz_proxy_lb.dns_name
+    zone_id                = aws_lb.user_dmz_proxy_lb.zone_id
     evaluate_target_health = true
   }
   
