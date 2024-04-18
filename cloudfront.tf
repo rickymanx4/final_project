@@ -26,7 +26,7 @@
 #   }
 # }
 
-resource "aws_cloudfront_distribution" "alb_beanstalk" {
+resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   origin {
     domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "alb_beanstalk" {
   }
   
   default_cache_behavior {
-    allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods = ["GET", "HEAD", "OPTIONS"]
     cached_methods = ["GET", "HEAD"]
     target_origin_id = local.cf_origin_name[2]
     viewer_protocol_policy = "redirect-to-https"
