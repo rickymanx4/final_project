@@ -79,7 +79,7 @@ resource "aws_security_group_rule" "dev_dmz_lb_SG" {
 }
 
 resource "aws_security_group_rule" "dev_dmz_proxy_SG" {
-  count                    = 3
+  count                    = 2
   security_group_id        = aws_security_group.dev_dmz_sg[1].id
   type                     = "ingress"
   protocol                 = "tcp"
