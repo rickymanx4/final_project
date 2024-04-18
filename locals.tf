@@ -35,7 +35,7 @@ locals {
 
     proxy_sg                = tolist(data.aws_security_group.proxy_sg[*].id)
 
-    dmz_ports               = [9999, 22, 443, 80]    
+    dmz_ports               = [22, 443, 80, 9999]    
     shared_int_ports        = [1111, 2222, 3333, 4444]               
     prodtest_lb_ports       = [6666, 7777]             
     product_int_ports       = [1001, 2002, 3003, 4004]             
@@ -52,6 +52,7 @@ locals {
     domain_name             = "nadri-project.com"
     host_zone               = "Z0373230225TMW4PZYVS1"
     weight                  = [200, 100]
+    proxy_acm               = "arn:aws:acm:ap-southeast-1:707677861059:certificate/c4589e99-c327-45dc-bc20-bb67e3fa6c4c"
 
 
 }
