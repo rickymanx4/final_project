@@ -33,7 +33,7 @@ resource "aws_lb" "user_dmz_proxy_lb" {
 
 resource "aws_lb_listener" "user_proxy_lb_listener_80" {
   count             = 2
-  load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
+  load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[2]
   protocol          = "HTTP"
   default_action {
@@ -44,7 +44,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
 
 resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   count             = 2
-  load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
+  load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[1]
   protocol          = "HTTPS"
   default_action {
