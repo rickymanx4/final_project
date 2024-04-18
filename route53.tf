@@ -1,6 +1,6 @@
 resource "aws_route53_record" "www-nadri" {
   count   = 2
-  zone_id = local.host_zone.id
+  zone_id = local.host_zone
   name    = "www"
   type    = "CNAME"
   ttl     = 5
