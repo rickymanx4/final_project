@@ -48,5 +48,5 @@ locals {
     userdev_rt_name         = ["nat", "nat", "lb", "lb", "proxy"]
     shared_rt_name          = ["nexus", "control"]
     prodtest_rt_name        = ["node", "rds"]
-    cf_origin_name           = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
+    cf_origin_name          = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
 }
