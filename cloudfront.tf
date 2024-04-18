@@ -29,8 +29,8 @@
 resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   origin {
-    domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
-    origin_id = local.cf_origin_name[0]
+    domain_name = aws_lb.user_dmz_proxy_lb.dns_name
+    origin_id = user_dmz_alb_cf
     origin_shield {
       origin_shield_region = local.region
       enabled               = true
@@ -42,39 +42,39 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
       origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
     }    
   }
-  origin {
-    domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
-    origin_id = local.cf_origin_name[1]
-      origin_shield {
-        origin_shield_region = local.region
-        enabled               = true
-      }
-      custom_origin_config {
-        http_port              = 80
-        https_port             = 443
-        origin_protocol_policy = "match-viewer"
-        origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
-    }    
-  }
+  # origin {
+  #   domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
+  #   origin_id = local.cf_origin_name[1]
+  #     origin_shield {
+  #       origin_shield_region = local.region
+  #       enabled               = true
+  #     }
+  #     custom_origin_config {
+  #       http_port              = 80
+  #       https_port             = 443
+  #       origin_protocol_policy = "match-viewer"
+  #       origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
+  #   }    
+  # }
     
     restrictions {
       geo_restriction {
-          restriction_type = "blacklist"
-          locations        = ["CN", "KP"]
+          restriction_type = "whitelist"
+          locations        = ["KR"]
     }
   }
-  origin_group {
-    origin_id = local.cf_origin_name[2]
-    failover_criteria {
-      status_codes = [403, 404, 500, 502, 500]
-    }
-    member {
-      origin_id = local.cf_origin_name[0]
-    }
-    member {
-      origin_id = local.cf_origin_name[1]
-    }
-  }
+  # origin_group {
+  #   origin_id = local.cf_origin_name[2]
+  #   failover_criteria {
+  #     status_codes = [403, 404, 500, 502, 500]
+  #   }
+  #   member {
+  #     origin_id = local.cf_origin_name[0]
+  #   }
+  #   member {
+  #     origin_id = local.cf_origin_name[1]
+  #   }
+  # }
   
   default_cache_behavior {
     allowed_methods = ["GET", "HEAD", "OPTIONS"]
