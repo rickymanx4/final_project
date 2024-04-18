@@ -34,25 +34,29 @@ resource "aws_lb" "user_dmz_proxy_lb" {
 }
 
 resource "aws_lb_listener" "user_proxy_lb_listener_80" {
-  count             = 2
   load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[2]
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg[count.index].arn
+    target_group_arn = [
+      aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn,
+      aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
+      ]
   }
 }
 
 resource "aws_lb_listener" "user_proxy_lb_listener_443" {
-  count             = 2
   load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[1]
   protocol          = "HTTPS"
   certificate_arn = local.proxy_acm
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg[count.index].arn
+    target_group_arn =[ 
+      aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn, 
+      aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn 
+      ]
   }
 }
 
