@@ -23,11 +23,11 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "user_dmz_proxy_lb" {
-  count              = 2
+#  count              = 2
   name               = "${var.name[0]}-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "application"
   internal = false
-  subnets = [aws_subnet.subnet_user_dmz_pub[count.index +2 ].id]
+  subnets = [aws_subnet.subnet_user_dmz_pub[2].id, aws_subnet.subnet_user_dmz_pub[3].id]
   security_groups = [aws_security_group.user_dmz_sg[0].id]
 }
 
@@ -70,8 +70,7 @@ resource "aws_lb_target_group" "dev_dmz_proxy_nginx_tg" {
   count            = 2
   name             = "${var.name[1]}-tg-nginx-${local.az_ac[count.index]}"
   port             = 80
-  protocol         = "HTTP"
-  protocol_version = "HTTP1"
+  protocol         = "TCP"
   target_type      = "instance"
   vpc_id = aws_vpc.project_vpc[1].id
 }
