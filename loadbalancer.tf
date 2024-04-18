@@ -24,7 +24,7 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
 
 resource "aws_lb" "user_dmz_proxy_lb" {
 #  count              = 2
-  name               = "${var.name[0]}-proxy-lb-${local.az_ac[count.index]}"
+  name               = "${var.name[0]}-proxy-lb"
   load_balancer_type = "application"
   internal = false
   subnets = [aws_subnet.subnet_user_dmz_pub[2].id, aws_subnet.subnet_user_dmz_pub[3].id]
