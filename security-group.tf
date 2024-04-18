@@ -69,7 +69,7 @@ resource "aws_security_group_rule" "dev_dmz_lb_SG" {
   cidr_blocks              = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "user_dmz_proxy_SG" {
+resource "aws_security_group_rule" "dev_dmz_proxy_SG" {
   count                    = 4
   security_group_id        = aws_security_group.dmz_proxy_sg[1].id
   type                     = "ingress"
