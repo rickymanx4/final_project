@@ -39,13 +39,43 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = [
-      aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn,
-      aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
-      ]
+    # target_group_arn = [
+    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn,
+    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
+    #   ]
   }
 }
 
+resource "aws_lb_listener_rule" "user_dmz_listner_80" {
+  listener_arn = aws_lb_listener.user_dmz_proxy_lb.arn
+  priority     = 99
+
+  action {
+    type = "forward"
+    forward {
+      target_group {
+        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn
+        weight = 80
+      }
+
+      target_group {
+        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
+        weight = 20
+      }
+
+      stickiness {
+        enabled  = true
+        duration = 600
+      }
+    }
+  }
+
+  condition {
+    # host_header {
+    #   values = ["my-service.*.terraform.io"]
+    # }
+  }
+}
 resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[1]
@@ -53,10 +83,41 @@ resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   certificate_arn = local.proxy_acm
   default_action {
     type             = "forward"
-    target_group_arn =[ 
-      aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn, 
-      aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn 
-      ]
+    # target_group_arn =[ 
+    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn, 
+    #   aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn 
+    #   ]
+  }
+}
+
+resource "aws_lb_listener_rule" "user_dmz_listner_443" {
+  listener_arn = aws_lb_listener.user_dmz_proxy_lb.arn
+  priority     = 99
+
+  action {
+    type = "forward"
+    forward {
+      target_group {
+        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[0].arn
+        weight = 80
+      }
+
+      target_group {
+        arn    = aws_lb_target_group.user_dmz_proxy_nginx_tg[1].arn
+        weight = 20
+      }
+
+      stickiness {
+        enabled  = true
+        duration = 600
+      }
+    }
+  }
+
+  condition {
+    # host_header {
+    #   values = ["my-service.*.terraform.io"]
+    # }
   }
 }
 
