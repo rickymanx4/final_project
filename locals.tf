@@ -32,9 +32,7 @@ locals {
 
     user_dev_tgw_rt           = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 0, 2))
     prod_test_tgw_rt          = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 3, 5))
-    # shared_control_a        = tolist(data.aws_instance.shared_tg_att_a)
-    # shared_control_c        = tolist(data.aws_instance.shared_tg_att_c)    
-    
+        
     dmz_lb_ports            = [8888, 9999]
     dmz_proxy_ports         = [80, 9009, 22]             
     shared_int_ports        = [1111, 2222, 3333, 4444]               
@@ -48,5 +46,11 @@ locals {
     userdev_rt_name         = ["nat", "nat", "lb", "lb", "proxy"]
     shared_rt_name          = ["nexus", "control"]
     prodtest_rt_name        = ["node", "rds"]
-    cf_origin_name          = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
+    #cf_origin_name          = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
+
+    domain_name             = "nadri-project.com"
+    host_zone               = "Z0373230225TMW4PZYVS1"
+    weight                  = [200, 100]
+
+
 }
