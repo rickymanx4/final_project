@@ -2,7 +2,7 @@ resource "aws_route53_record" "www-nadri" {
   zone_id        = local.host_zone
   name           = "www"
   type           = "A"
-  set_identifier = "nadri-${local.az_ac[count.index]}"
+  # set_identifier = "nadri-${local.az_ac[count.index]}"
   # records        = [aws_lb.user_dmz_proxy_lb.dns_name]
   # ttl            = 7200
   # weighted_routing_policy {
