@@ -11,7 +11,7 @@ resource "aws_route53_record" "www-nadri" {
   }
   alias {
     name                   = aws_lb.user_dmz_proxy_lb[count.index].dns_name
-    zone_id                = aws_lb.user_dmz_proxy_lb[count.index].zone.id
+    zone_id                = aws_lb.user_dmz_proxy_lb[count.index].zone_id
     evaluate_target_health = true
   }
   
