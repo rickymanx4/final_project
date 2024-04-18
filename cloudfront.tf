@@ -27,9 +27,10 @@
 # }
 
 resource "aws_cloudfront_distribution" "alb_beanstalk" {
-    origin {
+  enabled = true
+  origin {
     domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
-    origin_id = "user_dmz_lb_a"
+    origin_id = local.cf_origin_name[0]
     origin_shield {
       origin_shield_region = local.region
       enabled               = true
@@ -40,51 +41,61 @@ resource "aws_cloudfront_distribution" "alb_beanstalk" {
       origin_protocol_policy = "match-viewer"
       origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
     }    
-    }
-    origin {
+  }
+  origin {
     domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
-    origin_id = "user_dmz_lb_c"
-    origin_shield {
-      origin_shield_region = local.region
-      enabled               = true
-    }
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "match-viewer"
-      origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
+    origin_id = local.cf_origin_name[1]
+      origin_shield {
+        origin_shield_region = local.region
+        enabled               = true
+      }
+      custom_origin_config {
+        http_port              = 80
+        https_port             = 443
+        origin_protocol_policy = "match-viewer"
+        origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1"]
     }    
-    }
-    enabled = true
+  }
+    
     restrictions {
-    geo_restriction {
-        restriction_type = "blacklist"
-        locations        = ["CN"]
+      geo_restriction {
+          restriction_type = "blacklist"
+          locations        = ["CN", "KP"]
     }
-
+  }
+  origin_group {
+    origin_id = local.cf_origin_name[2]
+    failover_criteria {
+      status_codes = [403, 404, 500, 502, 500]
     }
-    default_cache_behavior {
+    member {
+      origin_id = local.cf_origin_name[0]
+    }
+    member {
+      origin_id = local.cf_origin_name[1]
+    }
+  }
+  
+  default_cache_behavior {
     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods = ["GET", "HEAD"]
-    target_origin_id = "user_dmz_lb_a"
+    target_origin_id = local.cf_origin_name[2]
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 1800
+    max_ttl                = 21600    
     forwarded_values {
     query_string = false
-
-    cookies {
-        forward = "none"
+      cookies {
+          forward = "none"
+      }
     }
-    }
-
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
-    }
-    viewer_certificate {
+  }
+  viewer_certificate {
     cloudfront_default_certificate = true
-    }
-    
-    }
+  }
+  
+  }
 
 # resource "aws_vpc_endpoint_service" "example" {
 #   acceptance_required        = false
