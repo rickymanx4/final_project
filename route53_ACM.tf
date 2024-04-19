@@ -47,7 +47,7 @@ resource "aws_route53_record" "acm_record" {
   ttl             = 60
   type            = each.value.type
   zone_id         = local.host_zone
-
+  depends_on = [ aws_route53_record.acm_record ]
 }
 
 resource "aws_acm_certificate" "cert" {
@@ -59,7 +59,7 @@ resource "aws_acm_certificate" "cert" {
   lifecycle {
     create_before_destroy = true
   }
-  depends_on = [ aws_route53_record.acm_record ]  
+
 }
 
 resource "aws_acm_certificate_validation" "cert_vali" {
