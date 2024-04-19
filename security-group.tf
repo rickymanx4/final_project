@@ -46,7 +46,7 @@ resource "aws_security_group_rule" "user_dmz_ssh_SG" {
   protocol                 = "tcp"
   from_port                = local.dmz_ports[0]
   to_port                  = local.dmz_ports[0]
-  cidr_blocks              = ["16.100.0.0/16"]
+  cidr_blocks              = ["10.100.0.0/16"]
 }
 
 ################################ b. dev_dmz_sg ################################
@@ -94,7 +94,7 @@ resource "aws_security_group_rule" "dev_dmz_ssh_SG" {
   protocol                 = "tcp"
   from_port                = local.dmz_ports[0]
   to_port                  = local.dmz_ports[0]
-  cidr_blocks              = ["16.100.0.0/16"]
+  cidr_blocks              = ["10.100.0.0/16"]
 }
 
 
