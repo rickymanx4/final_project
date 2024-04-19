@@ -33,39 +33,38 @@ resource "aws_route53_record" "www-nadri" {
 }
 
 
-# resource "aws_route53_record" "www_acm_record" {
-#   for_each = {
-#     for dvo in aws_acm_certificate.cert_www.domain_validation_options : dvo.domain_name => {
-#       name   = dvo.resource_record_name
-#       record = dvo.resource_record_value
-#       type   = dvo.resource_record_type
-#     }
-#   }
-#   allow_overwrite = true
-#   name            = each.value.name
-#   records         = [each.value.record]
-#   ttl             = 60
-#   type            = each.value.type
-#   zone_id         = local.host_zone
-#   depends_on = [ aws_acm_certificate.cert_www ]
-# }
+resource "aws_route53_record" "www_acm_record" {
+  for_each = {
+    for dvo in aws_acm_certificate.cert_www.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = local.host_zone
+  depends_on = [ aws_acm_certificate.cert_www ]
+}
 
-# resource "aws_acm_certificate" "cert_www" {
-#   domain_name       = "www.nadri-project.com"
-#   validation_method = "DNS"
-#   tags = {
-#     Name = "www_nadri-cst"
-#   }
-#   lifecycle {
-#     create_before_destroy = true
-#   }
+resource "aws_acm_certificate" "cert_www" {
+  domain_name       = "www.nadri-project.com"
+  validation_method = "DNS"
+  tags = {
+    Name = "www_nadri-cst"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
 
-# }
-
-# resource "aws_acm_certificate_validation" "cert_vali_www" {
-#   certificate_arn         = aws_acm_certificate.cert_www.arn
-#   validation_record_fqdns = [for record in aws_route53_record.www_acm_record : record.fqdn]
-# }
+resource "aws_acm_certificate_validation" "cert_vali_www" {
+  certificate_arn         = aws_acm_certificate.cert_www.arn
+  validation_record_fqdns = [for record in aws_route53_record.www_acm_record : record.fqdn]
+}
 
 resource "aws_route53_record" "no_acm_record" {
   for_each = {
@@ -87,17 +86,12 @@ resource "aws_route53_record" "no_acm_record" {
 resource "aws_acm_certificate" "cert" {
   domain_name       = "nadri-project.com"
   validation_method = "DNS"
-  validation_option {
-    domain_name       = "nadri-project.com"
-    validation_domain = "www.nadri-project.com"
-  }  
   tags = {
     Name = "nadri-cst"
   }
   lifecycle {
     create_before_destroy = true
   }
-
 }
 
 resource "aws_acm_certificate_validation" "cert_vali" {
