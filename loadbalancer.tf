@@ -83,11 +83,11 @@ resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   depends_on = [ aws_acm_certificate.cert ]
 }
 
-resource "aws_lb_listener_certificate" "user_dmz_proxy_crt" {
-  count           = 2
-  listener_arn    = aws_lb_listener.user_proxy_lb_listener_443.arn
-  certificate_arn = aws_acm_certificate.cert_www.arn
-}
+# resource "aws_lb_listener_certificate" "user_dmz_proxy_crt" {
+#   count           = 2
+#   listener_arn    = aws_lb_listener.user_proxy_lb_listener_443.arn
+#   certificate_arn = aws_acm_certificate.cert_www.arn
+# }
 
 
 ##############################################################################
