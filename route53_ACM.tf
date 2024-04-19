@@ -54,7 +54,7 @@ resource "aws_route53_record" "www-nadri" {
 #   domain_name       = "www.nadri-project.com"
 #   validation_method = "DNS"
 #   tags = {
-#     Environment = "www_nadri-cst"
+#     Name = "www_nadri-cst"
 #   }
 #   lifecycle {
 #     create_before_destroy = true
@@ -92,7 +92,7 @@ resource "aws_acm_certificate" "cert" {
     validation_domain = "nadri-project.com"
   }  
   tags = {
-    Environment = "nadri-cst"
+    Name = "nadri-cst"
   }
   lifecycle {
     create_before_destroy = true
