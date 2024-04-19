@@ -47,7 +47,7 @@ resource "aws_route53_record" "acm_record" {
   ttl             = 60
   type            = each.value.type
   zone_id         = local.host_zone
-  depends_on = [ aws_route53_record.acm_record ]
+
 }
 
 resource "aws_acm_certificate" "cert" {
