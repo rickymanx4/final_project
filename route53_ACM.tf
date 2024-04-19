@@ -64,7 +64,7 @@ resource "aws_acm_certificate" "cert_www" {
 
 resource "aws_acm_certificate_validation" "cert_vali_www" {
   certificate_arn         = aws_acm_certificate.cert_www.arn
-  validation_record_fqdns = [for record in aws_route53_record.acm_record : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.www_acm_record : record.fqdn]
 }
 
 resource "aws_route53_record" "no_acm_record" {
@@ -98,5 +98,5 @@ resource "aws_acm_certificate" "cert" {
 
 resource "aws_acm_certificate_validation" "cert_vali" {
   certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [for record in aws_route53_record.acm_record : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.no_acm_record : record.fqdn]
 }
