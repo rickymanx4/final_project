@@ -1,6 +1,23 @@
+# resource "aws_route53_record" "www-nadri" {
+#   zone_id        = local.host_zone
+#   name           = "www"
+#   type           = "A"
+#   # set_identifier = "nadri-${local.az_ac[count.index]}"
+#   # records        = [aws_lb.user_dmz_proxy_lb.dns_name]
+#   # ttl            = 7200
+#   # weighted_routing_policy {
+#   #   weight = local.weight[count.index]
+#   # }
+#   alias {
+#     name                   = aws_lb.user_dmz_proxy_lb.dns_name
+#     zone_id                = aws_lb.user_dmz_proxy_lb.zone_id
+#     evaluate_target_health = true
+#   }  
+# }
+
 resource "aws_route53_record" "www-nadri" {
   zone_id        = local.host_zone
-  name           = "www"
+  name           = "www.nadri-project.com"
   type           = "A"
   # set_identifier = "nadri-${local.az_ac[count.index]}"
   # records        = [aws_lb.user_dmz_proxy_lb.dns_name]
@@ -9,11 +26,12 @@ resource "aws_route53_record" "www-nadri" {
   #   weight = local.weight[count.index]
   # }
   alias {
-    name                   = aws_lb.user_dmz_proxy_lb.dns_name
-    zone_id                = aws_lb.user_dmz_proxy_lb.zone_id
+    name                   = aws_cloudfront_distribution.user_dmz_alb_cf.domain_name
+    zone_id                = aws_cloudfront_distribution.user_dmz_alb_cf.hosted_zone_id
     evaluate_target_health = true
   }  
 }
+
 
 resource "aws_route53_record" "acm_record" {
   for_each = {

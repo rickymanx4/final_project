@@ -19,8 +19,6 @@ resource "aws_lb_target_group_attachment" "user_dmz_proxy_tg_att_80" {
   port = 80
 }
 
-
-
 ######################### b. load_balancer ####################################
 
 resource "aws_lb" "user_dmz_proxy_lb" {
@@ -72,6 +70,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
 #     # }
 #   }
 # }
+
 resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[1]
