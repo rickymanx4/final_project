@@ -88,8 +88,8 @@ resource "aws_acm_certificate" "cert" {
   domain_name       = "nadri-project.com"
   validation_method = "DNS"
   validation_option {
-    domain_name       = "www.nadri-project.com"
-    validation_domain = "nadri-project.com"
+    domain_name       = "nadri-project.com"
+    validation_domain = "www.nadri-project.com"
   }  
   tags = {
     Name = "nadri-cst"
