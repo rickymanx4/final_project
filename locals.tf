@@ -50,6 +50,6 @@ locals {
     #cf_origin_name          = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
 
     domain_name             = "nadri-project.com"
-    host_zone               = "Z0373230225TMW4PZYVS1"
+    host_zone               = "Z0828139280N1GN57OZY6"
     weight                  = [200, 100]
 }
