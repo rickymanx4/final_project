@@ -33,7 +33,7 @@ resource "aws_route53_record" "no_acm_record" {
 }
 
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "*.nadri-project.com"
+  domain_name       = "nadri-project.com"
   validation_method = "DNS"
   tags = {
     Name = "nadri-cst"
