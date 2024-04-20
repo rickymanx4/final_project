@@ -15,6 +15,17 @@ resource "aws_route53_record" "nadri" {
   }  
 }
 
+resource "aws_route53_record" "www.nadri" {
+  zone_id        = local.host_zone
+  name           = "*.${local.domain_name}"
+  type           = "A"
+  alias {
+    name                   = aws_cloudfront_distribution.user_dmz_alb_cf.domain_name
+    zone_id                = aws_cloudfront_distribution.user_dmz_alb_cf.hosted_zone_id
+    evaluate_target_health = true
+  }  
+}
+
 # resource "aws_route53_record" "no_acm_record" {
 #   for_each = {
 #     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {

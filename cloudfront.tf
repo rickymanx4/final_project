@@ -28,6 +28,7 @@
 
 resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
+  comment = local.domain_name
   origin {
     domain_name = aws_lb.user_dmz_proxy_lb.dns_name
     origin_id = "user_dmz_alb_cf"
