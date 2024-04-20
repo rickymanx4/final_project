@@ -80,7 +80,6 @@ resource "aws_lb_listener" "user_proxy_lb_listener_443" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg.arn
   }
-  depends_on = [ aws_acm_certificate.cert ]
 }
 
 # resource "aws_lb_listener_certificate" "user_dmz_proxy_crt" {
@@ -160,7 +159,6 @@ resource "aws_lb_listener" "dev_proxy_lb_listener_443" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.dev_dmz_proxy_nginx_tg[count.index].arn
   }
-  depends_on = [ aws_acm_certificate.cert ]
 }
 
 # resource "aws_lb_listener_certificate" "dev_dmz_proxy_crt" {
