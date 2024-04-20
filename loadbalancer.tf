@@ -75,7 +75,7 @@ resource "aws_lb_listener" "user_proxy_lb_listener_443" {
   load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
   port              = local.dmz_ports[1]
   protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate.cert.arn
+  certificate_arn   = local.acm_cert
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg.arn

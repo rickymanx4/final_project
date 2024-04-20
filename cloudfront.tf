@@ -92,7 +92,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
     }
   }
   viewer_certificate {
-    acm_certificate_arn         = aws_acm_certificate.cert.arn
+    acm_certificate_arn         = local.acm_cert
     ssl_support_method          = "sni-only"
     minimum_protocol_version    = "TLSv1.2_2021"
   }
