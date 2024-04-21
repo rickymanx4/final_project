@@ -15,7 +15,7 @@ resource "aws_route53_record" "nadri" {
   }  
 }
 
-resource "aws_route53_record" "www.nadri" {
+resource "aws_route53_record" "www_nadri" {
   zone_id        = local.host_zone
   name           = "*.${local.domain_name}"
   type           = "A"
