@@ -38,7 +38,7 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
 
   rule {
     name     = "block_iphone"
-    priority = 40
+    priority = 30
 
     action {
       block {}
