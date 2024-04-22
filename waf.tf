@@ -47,7 +47,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
     }
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "${local.waf_ruleset[0]}_metric"
+      metric_name                = "${local.waf_ruleset[0]}metric"
       sampled_requests_enabled   = true
     }
   }    
@@ -64,7 +64,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "${local.waf_ruleset[1]}_metric"
+      metric_name                = "${local.waf_ruleset[1]}metric"
       sampled_requests_enabled   = true
     }
   }
@@ -81,7 +81,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "${local.waf_ruleset[2]}_metric"
+      metric_name                = "${local.waf_ruleset[2]}metric"
       sampled_requests_enabled   = true
     }
   }
