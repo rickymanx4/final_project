@@ -66,7 +66,8 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_80" {
 
 
 resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
-  name        = "${var.name[1]}-nexus-tg"
+  count       = 2
+  name        = "${var.name[1]}-nexus-tg-${local.az_ac[count.index]}"
   port        = 5555
   protocol    = "TCP"
   target_type = "ip"
@@ -103,7 +104,8 @@ resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
 }
 
 resource "aws_lb" "dev_dmz_nexus_lb" {
-  name               = "${var.name[1]}-nexus-lb"
+  count              = 2
+  name               = "${var.name[1]}-nexus-lb-${local.az_ac[count.index]}"
   load_balancer_type = "network"
   internal           = false
   subnets            = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
@@ -113,12 +115,12 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
 
 resource "aws_lb_listener" "dev_nexus_lb_listener" {
   count             = 2
-  load_balancer_arn = aws_lb.dev_dmz_nexus_lb.arn
-  port              = local.dmz_ports[3]
+  load_balancer_arn = aws_lb.dev_dmz_nexus_lb[count.index].arn
+  port              = local.dmz_ports[count.index + 3]
   protocol          = "TCP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg.arn
+    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
   }
 }
 
@@ -204,7 +206,7 @@ resource "aws_lb" "shared_ext_lb" {
 resource "aws_lb_listener" "nexus_listener" {
   count             = 2
   load_balancer_arn = aws_lb.shared_ext_lb[count.index].arn
-  port              = local.shared_ext_ports[count.index]
+  port              = 5555
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   # alpn_policy       = "HTTP2Preferred"
