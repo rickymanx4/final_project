@@ -53,7 +53,7 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
               }
             }
             search_string         = "iphone"
-            positional_constraint = "STARTS_WITH"
+            positional_constraint = "CONTAINS"
             text_transformation {
               priority = 0
               type     = "LOWERCASE"
@@ -113,7 +113,7 @@ resource "aws_wafv2_web_acl" "wacl" {
     }
   } 
   rule {
-    name     = "example-rule-group"
+    name     = "kr-iphone-rule-group"
     priority = 1
 
     override_action {
@@ -127,19 +127,18 @@ resource "aws_wafv2_web_acl" "wacl" {
     }
 
     visibility_config {
-      cloudwatch_metrics_enabled = false
-      metric_name                = "exampleRuleGroup"
-      sampled_requests_enabled   = false
+      cloudwatch_metrics_enabled = true
+      metric_name                = "kr-iphone-rule-group"
+      sampled_requests_enabled   = true
     }
   }  
    
   tags = {
-    Tag1 = "Value1"
-    Tag2 = "Value2"
+    Name = "kr-iphone-rule-group"
   }
   visibility_config {
-    cloudwatch_metrics_enabled = false
-    metric_name                = "friendly-metric-name"
-    sampled_requests_enabled   = false
+    cloudwatch_metrics_enabled = true
+    metric_name                = "lb-wacl"
+    sampled_requests_enabled   = true
   }
 }
