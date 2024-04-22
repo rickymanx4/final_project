@@ -8,6 +8,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   comment = local.domain_name
   aliases = ["nadri-project.com", "www.nadri-project.com"]
   web_acl_id = aws_wafv2_web_acl.cf_wacl.id
+  provider     = aws.virginia
   origin {
     domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
     origin_id = local.cf_origin_name[0]
