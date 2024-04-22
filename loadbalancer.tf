@@ -34,7 +34,7 @@ resource "aws_lb" "user_dmz_proxy_lb" {
 resource "aws_lb_listener" "user_proxy_lb_listener_80" {
   count             = 2
   load_balancer_arn = aws_lb.user_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_ports[2]
+  port              = local.dmz_ports[1]
   protocol          = "HTTP"
   default_action {
     type             = "forward"
@@ -95,7 +95,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
 resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_ports[2]
+  port              = local.dmz_ports[1]
   protocol          = "HTTP"
   default_action {
     type             = "forward"
@@ -115,7 +115,7 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
 resource "aws_lb_listener" "dev_nexus_lb_listener" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_nexus_lb.arn
-  port              = local.dmz_ports[count.index + 3]
+  port              = local.dmz_ports[count.index + 2]
   protocol          = "TCP"
   default_action {
     type             = "forward"
