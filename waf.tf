@@ -86,7 +86,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
     }
   }
   rule {
-    name     = "BlockIPhone"
+    name     = "block_iphone"
     priority = 40
 
     action {
@@ -104,7 +104,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
             }
             text_transformation {
               priority = 0
-              type     = "NONE"
+              type     = "Lowercase"
             }
           }
         }
