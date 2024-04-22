@@ -104,7 +104,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
             }
             text_transformation {
               priority = 0
-              type     = "lowercase"
+              type     = "LOWERCASE"
             }
           }
         }
