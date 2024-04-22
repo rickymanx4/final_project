@@ -1,3 +1,9 @@
+##############################################################################
+#################################### 1.route53 record ########################
+##############################################################################
+
+######################### a. cloudfront attach ###############################
+
 resource "aws_route53_record" "nadri" {
   zone_id        = local.host_zone
   name           = local.domain_name
@@ -26,6 +32,11 @@ resource "aws_route53_record" "www_nadri" {
   }  
 }
 
+##############################################################################
+#################################### 2.ACM ###################################
+##############################################################################
+
+######################### a. ACM to route53 record ###########################
 resource "aws_route53_record" "no_acm_record" {
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
@@ -43,6 +54,7 @@ resource "aws_route53_record" "no_acm_record" {
   depends_on = [ aws_acm_certificate.cert ]
 }
 
+######################### b. ACM create ################################
 resource "aws_acm_certificate" "cert" {
   domain_name                = local.domain_name
   subject_alternative_names  = ["www.${local.domain_name}"]
@@ -56,41 +68,9 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 
+######################### c. ACM to route53 validation ###########################
 resource "aws_acm_certificate_validation" "cert_vali" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [for record in aws_route53_record.no_acm_record : record.fqdn]
 }
 
-
-# resource "aws_route53_record" "www_acm_record" {
-#   for_each = {
-#     for dvo in aws_acm_certificate.cert_www.domain_validation_options : dvo.domain_name => {
-#       name   = dvo.resource_record_name
-#       record = dvo.resource_record_value
-#       type   = dvo.resource_record_type
-#     }
-#   }
-#   allow_overwrite = true
-#   name            = each.value.name
-#   records         = [each.value.record]
-#   ttl             = 60
-#   type            = each.value.type
-#   zone_id         = local.host_zone
-#   depends_on = [ aws_acm_certificate.cert_www ]
-# }
-
-# resource "aws_acm_certificate" "cert_www" {
-#   domain_name       = "www.${local.domain_name}"
-#   validation_method = "DNS"
-#   tags = {
-#     Name = "www_nadri-crt"
-#   }
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-# }
-
-# resource "aws_acm_certificate_validation" "cert_vali_www" {
-#   certificate_arn         = aws_acm_certificate.cert_www.arn
-#   validation_record_fqdns = [for record in aws_route53_record.www_acm_record : record.fqdn]
-# }
