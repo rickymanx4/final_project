@@ -36,3 +36,37 @@ variable "private_key_location" {
   default     = "./ec2_key"
   sensitive = true
 }
+
+variable "rules" {
+  type    = list
+  default = [
+    {
+      name     = "AWS-AWSManagedRulesLinuxRuleSet"
+      priority = 10
+      aws_rg_name = "AWS-AWSManagedRulesLinuxRuleSet"
+      aws_rg_vendor_name = "AWS"
+      metric_name = "AWS-AWSManagedRulesLinuxRuleSetMetric"
+    },
+    {
+      name     = "AWS-AWSManagedRulesSQLiRuleSet"
+      priority = 1
+      aws_rg_name = "AWS-AWSManagedRulesSQLiRuleSet"
+      aws_rg_vendor_name = "AWS"
+      metric_name = "AWSManagedRulesSQLiRuleSetMetric"
+    },
+    {
+      name     = "AWS-AWSManagedRulesCommonRuleSet"
+      priority = 1
+      aws_rg_name = "AWS-AWSManagedRulesCommonRuleSet"
+      aws_rg_vendor_name = "AWS"
+      metric_name = "AWSManagedRulesCommonRuleSetMetric"
+    },
+    {
+      name     = "AWS-AWSManagedRulesCommonRuleSet"
+      priority = 1
+      aws_rg_name = "AWS-AWSManagedRulesCommonRuleSet"
+      aws_rg_vendor_name = "AWS"
+      metric_name = "AWSManagedRulesCommonRuleSetMetric"
+    }
+  ]
+}
