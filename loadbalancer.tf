@@ -114,11 +114,11 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
 resource "aws_lb_listener" "dev_nexus_lb_listener" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_nexus_lb.arn
-  port              = local.dmz_ports[3]
+  port              = local.dmz_ports[count.index + 3]
   protocol          = "TCP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg[count.index].arn
+    target_group_arn = aws_lb_target_group.dev_dmz_nexus_tg.arn
   }
 }
 

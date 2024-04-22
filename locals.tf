@@ -35,7 +35,7 @@ locals {
 
     proxy_sg                = tolist(data.aws_security_group.proxy_sg[*].id)
 
-    dmz_ports               = [22, 443, 80, 9999]    
+    dmz_ports               = [22, 443, 80, 9999, 8888]    
     shared_int_ports        = [1111, 2222, 3333, 4444]               
     prodtest_lb_ports       = [6666, 7777]             
     product_int_ports       = [1001, 2002, 3003, 4004]             
