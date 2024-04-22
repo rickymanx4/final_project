@@ -265,12 +265,12 @@ resource "aws_wafv2_web_acl_association" "wacl_cf_asso" {
 
 resource "aws_wafv2_web_acl_association" "wacl_user_lb_asso" { 
   count        = 2
-  resource_arn = local.user_dmz_alb[0]
+  resource_arn = local.user_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.alb_wacl.arn
 }
 
 resource "aws_wafv2_web_acl_association" "wacl_dev_lb_asso" { 
   count        = 2
-  resource_arn = local.dev_dmz_alb[0]
+  resource_arn = local.dev_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.alb_wacl.arn
 }
