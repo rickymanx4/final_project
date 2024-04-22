@@ -113,7 +113,7 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
 
 resource "aws_lb_listener" "dev_nexus_lb_listener" {
   count             = 2
-  load_balancer_arn = aws_lb.dev_dmz_nexus_lb[count.index].arn
+  load_balancer_arn = aws_lb.dev_dmz_nexus_lb.arn
   port              = local.dmz_ports[3]
   protocol          = "TCP"
   default_action {
