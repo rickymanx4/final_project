@@ -104,8 +104,7 @@ resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
 }
 
 resource "aws_lb" "dev_dmz_nexus_lb" {
-  count              = 2
-  name               = "${var.name[1]}-nexus-lb-${local.az_ac[count.index]}"
+  name               = "${var.name[1]}-nexus-lb"
   load_balancer_type = "network"
   internal           = false
   subnets            = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
@@ -115,7 +114,7 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
 
 resource "aws_lb_listener" "dev_nexus_lb_listener" {
   count             = 2
-  load_balancer_arn = aws_lb.dev_dmz_nexus_lb[count.index].arn
+  load_balancer_arn = aws_lb.dev_dmz_nexus_lb.arn
   port              = local.dmz_ports[count.index + 3]
   protocol          = "TCP"
   default_action {
