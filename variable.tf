@@ -49,21 +49,14 @@ variable "rules" {
     },
     {
       name     = "AWS-AWSManagedRulesSQLiRuleSet"
-      priority = 1
+      priority = 20
       aws_rg_name = "AWS-AWSManagedRulesSQLiRuleSet"
       aws_rg_vendor_name = "AWS"
       metric_name = "AWSManagedRulesSQLiRuleSetMetric"
     },
     {
       name     = "AWS-AWSManagedRulesCommonRuleSet"
-      priority = 1
-      aws_rg_name = "AWS-AWSManagedRulesCommonRuleSet"
-      aws_rg_vendor_name = "AWS"
-      metric_name = "AWSManagedRulesCommonRuleSetMetric"
-    },
-    {
-      name     = "AWS-AWSManagedRulesCommonRuleSet"
-      priority = 1
+      priority = 30
       aws_rg_name = "AWS-AWSManagedRulesCommonRuleSet"
       aws_rg_vendor_name = "AWS"
       metric_name = "AWSManagedRulesCommonRuleSetMetric"
