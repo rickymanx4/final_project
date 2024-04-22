@@ -69,7 +69,7 @@ count = 2
   }
 }
 
-data "aws_lbs" "alb_arn" {
+data "aws_lb" "alb_arn" {
   tags = {
     Name = "*-dmz-proxy-lb-*"
   }
