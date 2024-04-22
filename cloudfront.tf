@@ -1,31 +1,3 @@
-# resource "aws_cloudfront_cache_policy" "user_dmz_cache_policy" {
-#   name        = "user-dmz-policy"
-#   comment     = "user-dmz-policy"
-#   default_ttl = 50
-#   max_ttl     = 100
-#   min_ttl     = 1
-#   parameters_in_cache_key_and_forwarded_to_origin {
-#     cookies_config {
-#       cookie_behavior = "whitelist"
-#       cookies {
-#         items = ["example"]
-#       }
-#     }
-#     headers_config {
-#       header_behavior = "whitelist"
-#       headers {
-#         items = ["example"]
-#       }
-#     }
-#     query_strings_config {
-#       query_string_behavior = "whitelist"
-#       query_strings {
-#         items = ["example"]
-#       }
-#     }
-#   }
-# }
-
 resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   comment = local.domain_name
@@ -85,6 +57,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
     min_ttl                = 0
     default_ttl            = 1800
     max_ttl                = 21600    
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.nadri.id
     forwarded_values {
     query_string = false
       cookies {
@@ -100,9 +73,55 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   
   }
 
-# resource "aws_vpc_endpoint_service" "example" {
-#   acceptance_required        = false
-#   network_load_balancer_arns = aws_lb.user_dmz_proxy_lb[*].arn
+
+resource "aws_cloudfront_response_headers_policy" "nadri" {
+  name    = "nadri-policy"
+  comment = "nadri-project-com_policy"
+
+  cors_config {
+    access_control_allow_credentials = false
+
+    access_control_allow_headers {
+      items = ["*"]
+    }
+
+    access_control_allow_methods {
+      items = ["GET", "HEAD"]
+    }
+
+    access_control_allow_origins {
+      items = ["*.nadri-project.com"]
+    }
+
+    origin_override = true
+  }
+}
+
+
+# resource "aws_cloudfront_cache_policy" "user_dmz_cache_policy" {
+#   name        = "user-dmz-policy"
+#   comment     = "user-dmz-policy"
+#   default_ttl = 50
+#   max_ttl     = 100
+#   min_ttl     = 1
+#   parameters_in_cache_key_and_forwarded_to_origin {
+#     cookies_config {
+#       cookie_behavior = "whitelist"
+#       cookies {
+#         items = ["example"]
+#       }
+#     }
+#     headers_config {
+#       header_behavior = "whitelist"
+#       headers {
+#         items = ["example"]
+#       }
+#     }
+#     query_strings_config {
+#       query_string_behavior = "whitelist"
+#       query_strings {
+#         items = ["example"]
+#       }
+#     }
+#   }
 # }
-
-
