@@ -82,43 +82,46 @@ resource "aws_wafv2_regex_pattern_set" "iphone" {
 
 
 
-# resource "aws_wafv2_web_acl" "wacl" {
-#   name  = "rule-group-example"
-#   scope = "REGIONAL"
+resource "aws_wafv2_web_acl" "wacl" {
+  name  = "wacl"
+  scope = "REGIONAL"
 
-#   default_action {
-#     block {}
-#   }
-#   dynamic "rule" {
-#     for_each = var.rules
-#     content {
-#       name     = rule.value.name
-#       priority = rule.value.priority
-#       action {
-#         count {}
-#       }
-#       statement {
-#         managed_rule_group_statement {
-#           name        = rule.value.managed_rule_group_statement_name
-#           vendor_name = rule.value.managed_rule_group_statement_vendor_name
-#         }
-#       }
+  default_action {
+    allow {}
+  }
+  dynamic "rule" {
+    for_each = var.rules
+    content {
+      name     = rule.value.name
+      priority = rule.value.priority
+      action {
+        count {}
+      }
+      statement {
+        managed_rule_group_statement {
+          name        = rule.value.managed_rule_group_statement_name
+          vendor_name = rule.value.managed_rule_group_statement_vendor_name
+        }
+        rule_group_reference_statement {
+          arn = aws_wafv2_rule_group.web_acl_rule_group.arn
+      }        
+      }
 
-#       visibility_config {
-#         cloudwatch_metrics_enabled = false
-#         metric_name                = rule.value.metric_name
-#         sampled_requests_enabled   = false
-#       }
-#     }
-#   }  
-#   tags = {
-#     Tag1 = "Value1"
-#     Tag2 = "Value2"
-#   }
+      visibility_config {
+        cloudwatch_metrics_enabled = false
+        metric_name                = rule.value.metric_name
+        sampled_requests_enabled   = false
+      }
+    }
+  }  
+  tags = {
+    Tag1 = "Value1"
+    Tag2 = "Value2"
+  }
 
-#   visibility_config {
-#     cloudwatch_metrics_enabled = false
-#     metric_name                = "friendly-metric-name"
-#     sampled_requests_enabled   = false
-#   }
-# }
+  visibility_config {
+    cloudwatch_metrics_enabled = false
+    metric_name                = "friendly-metric-name"
+    sampled_requests_enabled   = false
+  }
+}
