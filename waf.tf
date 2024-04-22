@@ -53,7 +53,7 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
               }
             }
             search_string         = "iphone"
-            positional_constraint = "START_WITH"
+            positional_constraint = "STARTS_WITH"
             text_transformation {
               priority = 0
               type     = "LOWERCASE"
