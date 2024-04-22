@@ -1,19 +1,19 @@
 resource "aws_wafv2_rule_group" "web_acl_rule_group" {
-#  count     = 2
+  count     = 2
   capacity  = 100
-  name      = local.wacl_name[1]
-  scope     = local.wacl_scope[1]
+  name      = local.wacl_name[count.index]
+  scope     = local.wacl_scope[count.index]
 
 #   default_action {
 #     allow {}
 #   }
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = local.wacl_name[1]
+    metric_name                = local.wacl_name[count.index]
     sampled_requests_enabled   = true
   }
   tags = {
-    Name = local.wacl_name[1]
+    Name = local.wacl_name[count.index]
   }
   rule {
     name     = "allow_kr"
@@ -68,22 +68,11 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
   }
 }
 
-# resource "aws_wafv2_regex_pattern_set" "iphone" {
-#   name  = "iphone-pattern-set"
-#   scope = "REGIONAL"
-
-#   regular_expression {
-#     regex_string = "iphone"
-#   }
-# }
-
-
-
-
 resource "aws_wafv2_web_acl" "wacl" {
-  name  = "wacl"
-  scope = "REGIONAL"
-
+  count       = 2
+  name        = local.wacl_name[count.index]
+  scope       = local.wacl_scope[count.index]
+  description = "${local.wacl_scope[count.index]}_wacl"
   default_action {
     allow {}
   }
@@ -103,9 +92,9 @@ resource "aws_wafv2_web_acl" "wacl" {
       }
 
       visibility_config {
-        cloudwatch_metrics_enabled = false
+        cloudwatch_metrics_enabled = true
         metric_name                = rule.value.metric_name
-        sampled_requests_enabled   = false
+        sampled_requests_enabled   = true
       }
     }
   } 
@@ -135,7 +124,18 @@ resource "aws_wafv2_web_acl" "wacl" {
   }
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "lb-wacl"
+    metric_name                = "${local.wacl_name[count.index]}-metric"
     sampled_requests_enabled   = true
   }
+}
+
+resource "aws_wafv2_web_acl_association" "wacl_cf_asso" { 
+  resource_arn = aws_cloudfront_distribution.user_dmz_alb_cf.arn
+  web_acl_arn  = aws_wafv2_web_acl.wacl[0].arn
+}
+
+resource "aws_wafv2_web_acl_association" "wacl_lb_asso" { 
+  count        = 4
+  resource_arn = data.aws_lbs.alb_arn[count.index].arn
+  web_acl_arn  = aws_wafv2_web_acl.wacl[1].arn
 }

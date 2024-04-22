@@ -69,6 +69,13 @@ count = 2
   }
 }
 
+data "aws_lbs" "alb_arn" {
+  tags = {
+    Name = "*-dmz-proxy-lb-*"
+  }
+}
+
+
 # data "aws_instances" "shared_tg_att_a" {
 #   filter {
 #     name   = "instance-state-name"
