@@ -15,7 +15,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
     Name = "cf_wacl"
   }
   rule {
-    name     = "AllowKR"
+    name     = "allow_kr"
     priority = 1
 
     action {
@@ -30,7 +30,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AllowKR"
+      metric_name                = "allow_kr"
       sampled_requests_enabled   = true
     }
   }  
@@ -92,7 +92,6 @@ resource "aws_wafv2_web_acl" "web_acl" {
     action {
       block {}
     }
-
     statement {
       not_statement {
         statement {
@@ -111,7 +110,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
         }
       }
     }
-
+  
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "BlockIPhone"
