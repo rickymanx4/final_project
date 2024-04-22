@@ -52,7 +52,8 @@ resource "aws_lb_target_group" "dev_dmz_proxy_nginx_tg" {
   count            = 2
   name             = "${var.name[1]}-tg-nginx-${local.az_ac[count.index]}"
   port             = 80
-  protocol         = "TCP"
+  protocol         = "HTTP"
+  protocol_version = "HTTP1"
   target_type      = "instance"
   vpc_id           = aws_vpc.project_vpc[1].id
 }
