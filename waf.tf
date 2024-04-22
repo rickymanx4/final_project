@@ -36,28 +36,6 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
     }
   }  
 
-  dynamic "rule" {
-    for_each = var.rules
-    content {
-      name     = rule.value.name
-      priority = rule.value.priority
-      action {
-        count {}
-      }
-      statement {
-        managed_rule_group_statement {
-          name        = rule.value.managed_rule_group_statement_name
-          vendor_name = rule.value.managed_rule_group_statement_vendor_name
-        }
-      }
-
-      visibility_config {
-        cloudwatch_metrics_enabled = false
-        metric_name                = rule.value.metric_name
-        sampled_requests_enabled   = false
-      }
-    }
-  }  
   rule {
     name     = "block_iphone"
     priority = 40
@@ -111,44 +89,28 @@ resource "aws_wafv2_regex_pattern_set" "iphone" {
 #   default_action {
 #     block {}
 #   }
-
-#   rule {
-#     name     = "rule-1"
-#     priority = 1
-
-#     override_action {
-#       count {}
-#     }
-
-#     statement {
-#       rule_group_reference_statement {
-#         arn = aws_wafv2_rule_group.example.arn
-
-#         rule_action_override {
-#           action_to_use {
-#             count {}
-#           }
-
-#           name = "rule-to-exclude-b"
-#         }
-
-#         rule_action_override {
-#           action_to_use {
-#             count {}
-#           }
-
-#           name = "rule-to-exclude-a"
+#   dynamic "rule" {
+#     for_each = var.rules
+#     content {
+#       name     = rule.value.name
+#       priority = rule.value.priority
+#       action {
+#         count {}
+#       }
+#       statement {
+#         managed_rule_group_statement {
+#           name        = rule.value.managed_rule_group_statement_name
+#           vendor_name = rule.value.managed_rule_group_statement_vendor_name
 #         }
 #       }
-#     }
 
-#     visibility_config {
-#       cloudwatch_metrics_enabled = false
-#       metric_name                = "friendly-rule-metric-name"
-#       sampled_requests_enabled   = false
+#       visibility_config {
+#         cloudwatch_metrics_enabled = false
+#         metric_name                = rule.value.metric_name
+#         sampled_requests_enabled   = false
+#       }
 #     }
-#   }
-
+#   }  
 #   tags = {
 #     Tag1 = "Value1"
 #     Tag2 = "Value2"
