@@ -44,24 +44,21 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
       block {}
     }
     statement {
-      not_statement {
-        statement {
-          byte_match_statement {          
-            field_to_match {
-              single_header {
-                name = "user-agent"
-              }
-            }
-            search_string         = "iphone"
-            positional_constraint = "CONTAINS"
-            text_transformation {
-              priority = 0
-              type     = "LOWERCASE"
-            }
+      byte_match_statement {          
+        field_to_match {
+          single_header {
+            name = "user-agent"
           }
+        }
+        search_string         = "iphone"
+        positional_constraint = "CONTAINS"
+        text_transformation {
+          priority = 0
+          type     = "LOWERCASE"
         }
       }
     }
+
   
     visibility_config {
       cloudwatch_metrics_enabled = true
