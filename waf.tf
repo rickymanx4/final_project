@@ -73,6 +73,7 @@ resource "aws_wafv2_web_acl" "wacl" {
   name        = local.wacl_name[count.index]
   scope       = local.wacl_scope[count.index]
   description = "${local.wacl_scope[count.index]}_wacl"
+  provider    = local.wacl_name == cf-wacl ? aws.virginia : aws.seoul
   default_action {
     allow {}
   }
