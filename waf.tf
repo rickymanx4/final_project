@@ -94,17 +94,14 @@ resource "aws_wafv2_web_acl" "wacl" {
     content {
       name     = rule.value.name
       priority = rule.value.priority
-      action {
-        count {}
+      override_action {
+         none {}
       }
       statement {
         managed_rule_group_statement {
           name        = rule.value.aws_rg_name
           vendor_name = rule.value.aws_rg_vendor_name
-        }
-        rule_group_reference_statement {
-          arn = aws_wafv2_rule_group.web_acl_rule_group.arn
-      }        
+        }       
       }
 
       visibility_config {
@@ -113,12 +110,32 @@ resource "aws_wafv2_web_acl" "wacl" {
         sampled_requests_enabled   = false
       }
     }
+  } 
+  rule {
+    name     = "example-rule-group"
+    priority = 1
+
+    override_action {
+      none {}
+    }
+
+    statement {
+      rule_group_reference_statement {
+        arn = aws_wafv2_rule_group.web_acl_rule_group.arn
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = false
+      metric_name                = "exampleRuleGroup"
+      sampled_requests_enabled   = false
+    }
   }  
+   
   tags = {
     Tag1 = "Value1"
     Tag2 = "Value2"
   }
-
   visibility_config {
     cloudwatch_metrics_enabled = false
     metric_name                = "friendly-metric-name"
