@@ -80,8 +80,9 @@ data "aws_lb" "dev_alb_arn" {
 }
 
 data "aws_wafv2_web_acl" "cf_wacl" {
-  name = "cf-wacl"
-  scope = "CLOUDFRONT"
+  name      = "cf-wacl"
+  scope     = "CLOUDFRONT"
+  provider  = aws.virginia
 }
 
 
