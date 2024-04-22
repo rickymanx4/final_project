@@ -134,8 +134,14 @@ resource "aws_wafv2_web_acl_association" "wacl_cf_asso" {
   web_acl_arn  = aws_wafv2_web_acl.wacl[0].arn
 }
 
-resource "aws_wafv2_web_acl_association" "wacl_lb_asso" { 
-  count        = 4
-  resource_arn = data.aws_lb.alb_arn[count.index].arn
+resource "aws_wafv2_web_acl_association" "wacl_user_lb_asso" { 
+  count        = 2
+  resource_arn = local.user_dmz_alb[count.index]
+  web_acl_arn  = aws_wafv2_web_acl.wacl[1].arn
+}
+
+resource "aws_wafv2_web_acl_association" "wacl_dev_lb_asso" { 
+  count        = 2
+  resource_arn = local.dev_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.wacl[1].arn
 }

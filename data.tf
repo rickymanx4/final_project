@@ -69,10 +69,14 @@ count = 2
   }
 }
 
-data "aws_lb" "alb_arn" {
-  tags = {
-    Name = "*-dmz-proxy-lb-*"
-  }
+data "aws_lb" "user_alb_arn" {
+  count  = 2 
+  name = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
+}
+
+data "aws_lb" "dev_alb_arn" {
+  count  = 2 
+  name = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
 }
 
 

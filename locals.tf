@@ -35,6 +35,9 @@ locals {
 
     proxy_sg                = tolist(data.aws_security_group.proxy_sg[*].id)
 
+    user_dmz_alb            = tolist(data.aws_lb.user_alb_arn[*].arn)
+    dev_dmz_alb             = tolist(data.aws_lb.dev_alb_arn[*].arn)
+
     dmz_ports               = [22, 80, 9999, 8888]    
     shared_ext_ports        = [5555, 6666]
     shared_int_ports        = [1111, 2222, 3333, 4444]               
