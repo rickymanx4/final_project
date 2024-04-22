@@ -45,7 +45,7 @@ resource "aws_route53_record" "no_acm_record" {
 
 resource "aws_acm_certificate" "cert" {
   domain_name                = local.domain_name
-  subject_alternative_names  = "www.${local.domain_name}"
+  subject_alternative_names  = "www.nadri-project.com"
   validation_method          = "DNS"
   tags = {
     Name = "nadri-crt"
