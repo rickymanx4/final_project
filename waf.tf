@@ -49,7 +49,7 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
           byte_match_statement {          
             field_to_match {
               single_header {
-                name = "User-Agent"
+                name = "user-agent"
               }
             }
             search_string         = "iphone"
