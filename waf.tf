@@ -108,7 +108,7 @@ resource "aws_wafv2_web_acl" "wacl" {
 
     statement {
       rule_group_reference_statement {
-        arn = aws_wafv2_rule_group.web_acl_rule_group.arn
+        arn = aws_wafv2_rule_group.web_acl_rule_group[count.index].arn
       }
     }
 
