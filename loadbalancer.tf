@@ -114,7 +114,7 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
 resource "aws_lb_listener" "dev_nexus_lb_listener" {
   count             = 2
   load_balancer_arn = aws_lb.dev_dmz_nexus_lb.arn
-  port              = local.dmz_ports[count.index + 3]
+  port              = local.dmz_ports[3]
   protocol          = "TCP"
   default_action {
     type             = "forward"
@@ -204,7 +204,7 @@ resource "aws_lb" "shared_ext_lb" {
 resource "aws_lb_listener" "nexus_listener" {
   count             = 2
   load_balancer_arn = aws_lb.shared_ext_lb[count.index].arn
-  port              = "5555"
+  port              = local.shared_ext_ports[count.index]
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   # alpn_policy       = "HTTP2Preferred"
