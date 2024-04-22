@@ -1,7 +1,7 @@
 locals {
     tgw_name                = "project-tgw"
 
-    region                  = "us-east-1"
+    region                  = "ap-northeast-2"
 
     names                   = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
 
@@ -16,8 +16,8 @@ locals {
     testdev_01_subnet       = ["10.230.50.0/24", "10.230.150.0/24"]
     testdev_02_subnet       = ["10.230.60.0/24", "10.230.160.0/24"]    
     
-    azs_2                   = ["us-east-1a", "us-east-1c"]
-    azs_4                   = ["us-east-1a", "us-east-1c",  "us-east-1a", "us-east-1c"]
+    azs_2                   = ["ap-northeast-2a", "ap-northeast-2c"]
+    azs_4                   = ["ap-northeast-2a", "ap-northeast-2c",  "ap-northeast-2a", "ap-northeast-2c"]
     az_ac                   = ["a", "c"]
     az_ac_4                 = ["a", "c", "a", "c"]
 
