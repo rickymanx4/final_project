@@ -17,7 +17,7 @@ resource "aws_route53_record" "nadri" {
 
 resource "aws_route53_record" "www_nadri" {
   zone_id        = local.host_zone
-  name           = "*.${local.domain_name}"
+  name           = "www.${local.domain_name}"
   type           = "A"
   alias {
     name                   = aws_cloudfront_distribution.user_dmz_alb_cf.domain_name
