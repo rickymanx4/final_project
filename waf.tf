@@ -31,7 +31,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "AllowKR"
-      sampled_requests_enabled   = ture
+      sampled_requests_enabled   = true
     }
   }  
 
@@ -117,5 +117,14 @@ resource "aws_wafv2_web_acl" "web_acl" {
       metric_name                = "BlockIPhone"
       sampled_requests_enabled   = true
     }
+  }
+}
+
+resource "aws_wafv2_regex_pattern_set" "iphone" {
+  name  = "iphone-pattern-set"
+  scope = "REGIONAL"
+
+  regular_expression {
+    regex_string = "iPhone"
   }
 }
