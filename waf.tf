@@ -50,7 +50,7 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
             arn = aws_wafv2_regex_pattern_set.iphone.arn
             field_to_match {
               single_header {
-                name = "User-Agent"
+                name = "user-agent"
               }
             }
             text_transformation {
