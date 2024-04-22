@@ -1,6 +1,6 @@
 resource "aws_wafv2_rule_group" "web_acl_rule_group" {
 #  count     = 2
-  capacity  = 1
+  capacity  = 100
   name      = local.wacl_name[1]
   scope     = local.wacl_scope[1]
 
@@ -38,7 +38,7 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
 
   rule {
     name     = "block_iphone"
-    priority = 30
+    priority = 20
 
     action {
       block {}
