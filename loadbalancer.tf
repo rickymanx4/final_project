@@ -71,16 +71,16 @@ resource "aws_lb_listener" "user_proxy_lb_listener_80" {
 #   }
 # }
 
-resource "aws_lb_listener" "user_proxy_lb_listener_443" {
-  load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
-  port              = local.dmz_ports[1]
-  protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate.cert.arn
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg.arn
-  }
-}
+# resource "aws_lb_listener" "user_proxy_lb_listener_443" {
+#   load_balancer_arn = aws_lb.user_dmz_proxy_lb.arn
+#   port              = local.dmz_ports[1]
+#   protocol          = "HTTPS"
+#   certificate_arn   = aws_acm_certificate.cert.arn
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.user_dmz_proxy_nginx_tg.arn
+#   }
+# }
 
 # resource "aws_lb_listener_certificate" "user_dmz_proxy_crt" {
 #   count           = 2
@@ -149,17 +149,17 @@ resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
   }
 }
 
-resource "aws_lb_listener" "dev_proxy_lb_listener_443" {
-  count             = 2
-  load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
-  port              = local.dmz_ports[1]
-  protocol          = "TCP"
-#  certificate_arn   = aws_acm_certificate.cert.arn
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.dev_dmz_proxy_nginx_tg[count.index].arn
-  }
-}
+# resource "aws_lb_listener" "dev_proxy_lb_listener_443" {
+#   count             = 2
+#   load_balancer_arn = aws_lb.dev_dmz_proxy_lb[count.index].arn
+#   port              = local.dmz_ports[1]
+#   protocol          = "TCP"
+# #  certificate_arn   = aws_acm_certificate.cert.arn
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.dev_dmz_proxy_nginx_tg[count.index].arn
+#   }
+# }
 
 # resource "aws_lb_listener_certificate" "dev_dmz_proxy_crt" {
 #   count           = 2
