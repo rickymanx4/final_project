@@ -75,7 +75,7 @@ resource "aws_wafv2_regex_pattern_set" "iphone" {
   scope = "REGIONAL"
 
   regular_expression {
-    regex_string = "iPhone"
+    regex_string = "iphone"
   }
 }
 
