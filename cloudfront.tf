@@ -24,23 +24,23 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   origin {
     domain_name = aws_lb.user_dmz_proxy_lb[1].dns_name
     origin_id = local.cf_origin_name[1]
-      origin_shield {
-        origin_shield_region = local.region
-        enabled               = true
-      }
-      custom_origin_config {
-        http_port              = 80
-        https_port             = 443
-        origin_protocol_policy = "http-only"
-        origin_ssl_protocols   = ["TLSv1.2"]
-    }    
+    origin_shield {
+      origin_shield_region = local.region
+      enabled               = true
+    }
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+  }    
   }
     
-    restrictions {
-      geo_restriction {
-          restriction_type = "whitelist"
-          locations        = ["KR"]
-    }
+  restrictions {
+    geo_restriction {
+        restriction_type = "whitelist"
+        locations        = ["KR"]
+  }
   }
   origin_group {
     origin_id = local.cf_origin_name[2]
