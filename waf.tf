@@ -46,13 +46,14 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
     statement {
       not_statement {
         statement {
-          regex_pattern_set_reference_statement {
-            arn = aws_wafv2_regex_pattern_set.iphone.arn
+          byte_match_statement {          
             field_to_match {
               single_header {
-                name = "user-agent"
+                name = "User-Agent"
               }
             }
+            search_string         = "iphone"
+            positional_constraint = "START_WITH"
             text_transformation {
               priority = 0
               type     = "LOWERCASE"
@@ -70,14 +71,14 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
   }
 }
 
-resource "aws_wafv2_regex_pattern_set" "iphone" {
-  name  = "iphone-pattern-set"
-  scope = "REGIONAL"
+# resource "aws_wafv2_regex_pattern_set" "iphone" {
+#   name  = "iphone-pattern-set"
+#   scope = "REGIONAL"
 
-  regular_expression {
-    regex_string = "iPhone"
-  }
-}
+#   regular_expression {
+#     regex_string = "iphone"
+#   }
+# }
 
 
 
