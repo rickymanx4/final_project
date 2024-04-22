@@ -99,8 +99,8 @@ resource "aws_wafv2_web_acl" "wacl" {
       }
       statement {
         managed_rule_group_statement {
-          name        = rule.value.managed_rule_group_statement_name
-          vendor_name = rule.value.managed_rule_group_statement_vendor_name
+          name        = rule.value.aws_rg_name
+          vendor_name = rule.value.aws_rg_vendor_name
         }
         rule_group_reference_statement {
           arn = aws_wafv2_rule_group.web_acl_rule_group.arn
