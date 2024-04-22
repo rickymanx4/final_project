@@ -47,6 +47,7 @@ resource "aws_acm_certificate" "cert" {
   domain_name                = local.domain_name
   subject_alternative_names  = ["www.${local.domain_name}"]
   validation_method          = "DNS"
+  provider = aws.virginia
   tags = {
     Name = "nadri-crt"
   }
