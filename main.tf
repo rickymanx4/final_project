@@ -31,7 +31,6 @@ terraform {
 # } 
  
 provider "aws" { 
-  alias = "seoul"
   region = local.region
 } 
 
