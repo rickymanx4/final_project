@@ -1,3 +1,8 @@
+##############################################################################
+################################# 1.create cloudfront ########################
+##############################################################################
+
+###################### a. cloudfront distribution ############################
 resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   comment = local.domain_name
@@ -74,6 +79,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   
   }
 
+###################### b. cloudfront heaers_policy ############################
 
 # resource "aws_cloudfront_response_headers_policy" "nadri" {
 #   name    = "nadri-policy"
@@ -98,6 +104,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
 #   }
 # }
 
+###################### c. cloudfront cache_policy ############################
 
 # resource "aws_cloudfront_cache_policy" "user_dmz_cache_policy" {
 #   name        = "user-dmz-policy"
