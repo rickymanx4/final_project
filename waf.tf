@@ -99,12 +99,12 @@ resource "aws_wafv2_web_acl" "web_acl" {
             arn = aws_wafv2_regex_pattern_set.iphone.arn
             field_to_match {
               single_header {
-                name = "User-Agent"
+                name = "user-agent"
               }
             }
             text_transformation {
               priority = 0
-              type     = "Lowercase"
+              type     = "lowercase"
             }
           }
         }
@@ -113,7 +113,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
   
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "BlockIPhone"
+      metric_name                = "block_iphone"
       sampled_requests_enabled   = true
     }
   }
