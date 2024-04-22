@@ -66,8 +66,7 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_80" {
 
 
 resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
-  count       = 2
-  name        = "${var.name[1]}-nexus-tg-${local.az_ac[count.index]}"
+  name        = "${var.name[1]}-nexus-tg"
   port        = 5555
   protocol    = "TCP"
   target_type = "ip"
