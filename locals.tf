@@ -53,4 +53,8 @@ locals {
     domain_name             = "nadri-project.com"
     host_zone               = "Z07664632DQ4G268CW0D1"
     acm_cert                = "arn:aws:acm:us-east-1:707677861059:certificate/9f1b94c3-b1cd-4de1-b080-20094264264e"
+
+    waf_ruleset             = ["AWSManagedRulesCommonRuleSet", "AWSManagedRulesSQLiRuleSet","AWSManagedRulesLinuxRuleSet"]
+    wacl_name               = ["cf_wacl", "alb_wacl"]
+    wacl_scope              = ["CLOUDFRONT", "REGIONAL"]
 }
