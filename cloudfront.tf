@@ -1,6 +1,7 @@
 resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   comment = local.domain_name
+  aliases = ["nadri-project.com", "www.nadri-project.com"]
   origin {
     domain_name = aws_lb.user_dmz_proxy_lb.dns_name
     origin_id = "user_dmz_alb_cf"
@@ -74,28 +75,28 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   }
 
 
-resource "aws_cloudfront_response_headers_policy" "nadri" {
-  name    = "nadri-policy"
-  comment = "nadri-project-com_policy"
+# resource "aws_cloudfront_response_headers_policy" "nadri" {
+#   name    = "nadri-policy"
+#   comment = "nadri-project-com_policy"
 
-  cors_config {
-    access_control_allow_credentials = false
+#   cors_config {
+#     access_control_allow_credentials = false
 
-    access_control_allow_headers {
-      items = ["*"]
-    }
+#     access_control_allow_headers {
+#       items = ["*"]
+#     }
 
-    access_control_allow_methods {
-      items = ["GET", "HEAD"]
-    }
+#     access_control_allow_methods {
+#       items = ["GET", "HEAD"]
+#     }
 
-    access_control_allow_origins {
-      items = ["*.nadri-project.com"]
-    }
+#     access_control_allow_origins {
+#       items = ["*.nadri-project.com"]
+#     }
 
-    origin_override = true
-  }
-}
+#     origin_override = true
+#   }
+# }
 
 
 # resource "aws_cloudfront_cache_policy" "user_dmz_cache_policy" {
