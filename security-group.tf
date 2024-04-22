@@ -22,22 +22,12 @@ resource "aws_security_group" "user_dmz_sg" {
 
 resource "aws_security_group_rule" "user_dmz_lb_SG" {
   count                    = 2
-  security_group_id        = aws_security_group.user_dmz_sg[0].id
+  security_group_id        = aws_security_group.user_dmz_sg[count.index].id
   type                     = "ingress"
   protocol                 = "tcp"
-  from_port                = local.dmz_ports[count.index + 1]
-  to_port                  = local.dmz_ports[count.index + 1]
+  from_port                = local.dmz_ports[1]
+  to_port                  = local.dmz_ports[1]
   cidr_blocks              = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "user_dmz_proxy_SG" {
-  count                    = 2 
-  security_group_id        = aws_security_group.user_dmz_sg[1].id
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = local.dmz_ports[count.index +1]
-  to_port                  = local.dmz_ports[count.index +1]
-  source_security_group_id = aws_security_group.user_dmz_sg[0].id
 }
 
 resource "aws_security_group_rule" "user_dmz_ssh_SG" {
@@ -79,12 +69,11 @@ resource "aws_security_group_rule" "dev_dmz_lb_SG" {
 }
 
 resource "aws_security_group_rule" "dev_dmz_proxy_SG" {
-  count                    = 2
   security_group_id        = aws_security_group.dev_dmz_sg[1].id
   type                     = "ingress"
   protocol                 = "tcp"
-  from_port                = local.dmz_ports[count.index +1]
-  to_port                  = local.dmz_ports[count.index +1]
+  from_port                = local.dmz_ports[1]
+  to_port                  = local.dmz_ports[1]
   source_security_group_id = aws_security_group.dev_dmz_sg[0].id
 }
 
