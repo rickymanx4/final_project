@@ -17,7 +17,7 @@ resource "aws_wafv2_rule_group" "web_acl_rule_group" {
   }
   rule {
     name     = "allow_kr"
-    priority = 1
+    priority = 10
 
     action {
       allow {}
