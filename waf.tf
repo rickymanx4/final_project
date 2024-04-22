@@ -102,9 +102,9 @@ resource "aws_wafv2_web_acl" "wacl" {
           name        = rule.value.aws_rg_name
           vendor_name = rule.value.aws_rg_vendor_name
         }
-    #     rule_group_reference_statement {
-    #       arn = aws_wafv2_rule_group.web_acl_rule_group.arn
-    #   }        
+        rule_group_reference_statement {
+          arn = aws_wafv2_rule_group.web_acl_rule_group.arn
+      }        
       }
 
       visibility_config {
