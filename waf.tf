@@ -2,7 +2,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   capacity  = 100
   name      = local.wacl_name[0]
   scope     = local.wacl_scope[0]
-
+  provider    = aws.virginia
 #   default_action {
 #     allow {}
 #   }
