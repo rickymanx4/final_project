@@ -41,23 +41,23 @@ variable "rules" {
   type    = list
   default = [
     {
-      name     = "AWS-AWSManagedRulesLinuxRuleSet"
+      name     = "AWSManagedRulesLinuxRuleSet"
       priority = 10
-      aws_rg_name = "AWS-AWSManagedRulesLinuxRuleSet"
+      aws_rg_name = "AWSManagedRulesLinuxRuleSet"
       aws_rg_vendor_name = "AWS"
-      metric_name = "AWS-AWSManagedRulesLinuxRuleSetMetric"
+      metric_name = "AWSManagedRulesLinuxRuleSetMetric"
     },
     {
-      name     = "AWS-AWSManagedRulesSQLiRuleSet"
+      name     = "AWSManagedRulesSQLiRuleSet"
       priority = 20
-      aws_rg_name = "AWS-AWSManagedRulesSQLiRuleSet"
+      aws_rg_name = "AWSManagedRulesSQLiRuleSet"
       aws_rg_vendor_name = "AWS"
       metric_name = "AWSManagedRulesSQLiRuleSetMetric"
     },
     {
-      name     = "AWS-AWSManagedRulesCommonRuleSet"
+      name     = "AWSManagedRulesCommonRuleSet"
       priority = 30
-      aws_rg_name = "AWS-AWSManagedRulesCommonRuleSet"
+      aws_rg_name = "AWSManagedRulesCommonRuleSet"
       aws_rg_vendor_name = "AWS"
       metric_name = "AWSManagedRulesCommonRuleSetMetric"
     }
