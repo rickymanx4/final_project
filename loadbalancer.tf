@@ -103,7 +103,7 @@ resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
 }
 
 resource "aws_lb" "dev_dmz_nexus_lb" {
-  name               = "${var.name[1]}-nexus-lb}"
+  name               = "${var.name[1]}-nexus-lb"
   load_balancer_type = "network"
   internal           = false
   subnets            = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
