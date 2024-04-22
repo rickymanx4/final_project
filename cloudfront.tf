@@ -58,7 +58,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   default_cache_behavior {
     allowed_methods = ["GET", "HEAD"]
     cached_methods = ["GET", "HEAD"]
-    target_origin_id = "user_dmz_alb_cf"
+    target_origin_id = local.cf_origin_name[0]
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 1800
