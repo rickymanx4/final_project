@@ -16,7 +16,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   }
 
   rule {
-    name     = "block_iphone"
+    name     = "block_mac"
     priority = 10
 
     action {
@@ -29,7 +29,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "iphone"
+        search_string         = "macintosh"
         positional_constraint = "CONTAINS"
         # rule_action_override {
         #   action_to_use{
@@ -50,7 +50,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "block_iphone"
+      metric_name                = "block_mac"
       sampled_requests_enabled   = true
     }
   }
@@ -98,7 +98,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
     Name = local.wacl_name[1]
   }
   rule {
-    name     = "block_iphone"
+    name     = "block_mac"
     priority = 10
 
     action {
@@ -111,7 +111,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "iphone"
+        search_string         = "macintosh"
         positional_constraint = "CONTAINS"
         text_transformation {
           priority = 0
@@ -121,7 +121,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
     } 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "block_iphone"
+      metric_name                = "block_mac"
       sampled_requests_enabled   = true
     }
   }  
