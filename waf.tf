@@ -19,7 +19,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
     name     = "block_iphone"
     priority = 10
 
-    action {
+    action_to_use {
       captcha {}
     }
     statement {
