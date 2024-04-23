@@ -130,12 +130,16 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
     priority = 20
 
     action {
-      allow {}
+      block {}
     }
 
-    statement {
-      geo_match_statement {
-        country_codes = ["KR"]
+    statement{
+      not_statement{
+        statement {
+          geo_match_statement {
+            country_codes = ["KR"]
+          }
+        }
       }
     }
 
@@ -268,14 +272,6 @@ resource "aws_wafv2_web_acl" "alb_wacl" {
   }
 }
 
-# resource "aws_wafv2_web_acl_association" "wacl_cf_asso" { 
-#   resource_arn = aws_cloudfront_distribution.user_dmz_alb_cf.arn
-#   web_acl_arn  = aws_wafv2_web_acl.cf_wacl.arn
-#   #web_acl_arn  = data.aws_wafv2_web_acl.cf_wacl.arn
-#   provider     = aws.virginia
-# }
-
-
 resource "aws_wafv2_web_acl_association" "wacl_user_lb_asso" { 
   count        = 2
   resource_arn = local.user_dmz_alb[count.index]
@@ -287,3 +283,6 @@ resource "aws_wafv2_web_acl_association" "wacl_dev_lb_asso" {
   resource_arn = local.dev_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.alb_wacl.arn
 }
+
+
+

@@ -41,7 +41,7 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   restrictions {
     geo_restriction {
         restriction_type = "blacklist"
-        locations        = ["CN","KP"]
+        locations        = ["KP"]
   }
   }
   origin_group {
