@@ -15,29 +15,8 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
     Name = local.wacl_name[0]
   }
   rule {
-    name     = "allow_kr"
-    priority = 10
-
-    action {
-      allow {}
-    }
-
-    statement {
-      geo_match_statement {
-        country_codes = ["KR"]
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "allow_kr"
-      sampled_requests_enabled   = true
-    }
-  }  
-
-  rule {
     name     = "block_iphone"
-    priority = 20
+    priority = 10
 
     action {
       block {}
@@ -57,6 +36,28 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
         }
       }
     }
+
+  rule {
+    name     = "allow_kr"
+    priority = 20
+
+    action {
+      allow {}
+    }
+
+    statement {
+      geo_match_statement {
+        country_codes = ["KR"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "allow_kr"
+      sampled_requests_enabled   = true
+    }
+  }  
+
 
   
     visibility_config {
@@ -83,26 +84,6 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
   tags = {
     Name = local.wacl_name[1]
   }
-  rule {
-    name     = "allow_kr"
-    priority = 10
-
-    action {
-      allow {}
-    }
-
-    statement {
-      geo_match_statement {
-        country_codes = ["KR"]
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "allow_kr"
-      sampled_requests_enabled   = true
-    }
-  }  
 
   rule {
     name     = "block_iphone"
@@ -125,9 +106,28 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
           type     = "LOWERCASE"
         }
       }
+    }  
+  rule {
+    name     = "allow_kr"
+    priority = 20
+
+    action {
+      allow {}
     }
 
-  
+    statement {
+      geo_match_statement {
+        country_codes = ["KR"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "allow_kr"
+      sampled_requests_enabled   = true
+    }
+  }  
+ 
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "block_iphone"
