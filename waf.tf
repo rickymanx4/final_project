@@ -259,7 +259,7 @@ resource "aws_wafv2_web_acl" "alb_wacl" {
 
 resource "aws_wafv2_web_acl_association" "wacl_cf_asso" { 
   resource_arn = aws_cloudfront_distribution.user_dmz_alb_cf.arn
-  web_acl_arn  = aws_wafv2.alb_wacl.arn
+  web_acl_arn  = aws_wafv2.cf_wacl.arn
   #web_acl_arn  = data.aws_wafv2_web_acl.cf_wacl.arn
   provider     = aws.virginia
 }
