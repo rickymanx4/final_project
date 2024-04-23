@@ -49,7 +49,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "iphone"
+        search_string         = "iPhone"
         positional_constraint = "CONTAINS"
         text_transformation {
           priority = 0
@@ -118,7 +118,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "iphone"
+        search_string         = "iPhone"
         positional_constraint = "CONTAINS"
         text_transformation {
           priority = 0
@@ -257,11 +257,12 @@ resource "aws_wafv2_web_acl" "alb_wacl" {
   }
 }
 
-# resource "aws_wafv2_web_acl_association" "wacl_cf_asso" { 
-#   resource_arn = aws_cloudfront_distribution.user_dmz_alb_cf.arn
-#   web_acl_arn  = data.aws_wafv2_web_acl.cf_wacl.arn
-#   provider     = aws.virginia
-# }
+resource "aws_wafv2_web_acl_association" "wacl_cf_asso" { 
+  resource_arn = aws_cloudfront_distribution.user_dmz_alb_cf.arn
+  web_acl_arn  = aws_wafv2.alb_wacl.arn
+  #web_acl_arn  = data.aws_wafv2_web_acl.cf_wacl.arn
+  provider     = aws.virginia
+}
 
 
 resource "aws_wafv2_web_acl_association" "wacl_user_lb_asso" { 
