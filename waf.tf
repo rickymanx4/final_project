@@ -20,7 +20,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
     priority = 10
 
     action {
-      Captcha {}
+      captcha {}
     }
     statement {
       byte_match_statement {          
