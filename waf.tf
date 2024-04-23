@@ -29,7 +29,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "iPhone"
+        search_string         = "iphone"
         positional_constraint = "CONTAINS"
         text_transformation {
           priority = 0
@@ -98,7 +98,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "iPhone"
+        search_string         = "iphone"
         positional_constraint = "CONTAINS"
         text_transformation {
           priority = 0
