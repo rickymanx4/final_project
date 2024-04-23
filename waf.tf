@@ -14,9 +14,10 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   tags = {
     Name = local.wacl_name[0]
   }
+
   rule {
     name     = "block_iphone"
-    priority = 10
+    priority = 20
 
     action {
       block {}
@@ -37,9 +38,17 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
       }
     }
 
+  
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "block_iphone"
+      sampled_requests_enabled   = true
+    }
+  }
+
   rule {
     name     = "allow_kr"
-    priority = 20
+    priority = 10
 
     action {
       allow {}
@@ -57,15 +66,6 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
       sampled_requests_enabled   = true
     }
   }  
-
-
-  
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "block_iphone"
-      sampled_requests_enabled   = true
-    }
-  }
 }
 
 resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
@@ -84,7 +84,6 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
   tags = {
     Name = local.wacl_name[1]
   }
-
   rule {
     name     = "block_iphone"
     priority = 20
@@ -106,10 +105,16 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
           type     = "LOWERCASE"
         }
       }
-    }  
+    } 
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "block_iphone"
+      sampled_requests_enabled   = true
+    }
+  }  
   rule {
     name     = "allow_kr"
-    priority = 20
+    priority = 10
 
     action {
       allow {}
@@ -127,13 +132,6 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
       sampled_requests_enabled   = true
     }
   }  
- 
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "block_iphone"
-      sampled_requests_enabled   = true
-    }
-  }
 }
 
 resource "aws_wafv2_web_acl" "cf_wacl" {
