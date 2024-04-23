@@ -20,7 +20,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
     priority = 10
 
     action {
-      block {}
+      captcha {}
     }
     statement {
       byte_match_statement {          
@@ -51,20 +51,23 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
     priority = 20
 
     action {
-      allow {}
+      block {}
     }
-
-    statement {
-      geo_match_statement {
-        country_codes = ["KR"]
+    statement{
+      not_statement{
+        statement {
+          geo_match_statement {
+            country_codes = ["KR"]
+          }
+        }
       }
     }
-
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "allow_kr"
       sampled_requests_enabled   = true
     }
+  
   }  
 }
 
@@ -250,7 +253,7 @@ resource "aws_wafv2_web_acl" "alb_wacl" {
   }
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "${local.wacl_name[0]}-metric"
+    metric_name                = "${local.wacl_name[1]}-metric"
     sampled_requests_enabled   = true
   }
 }
