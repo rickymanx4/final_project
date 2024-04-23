@@ -40,8 +40,8 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
     
   restrictions {
     geo_restriction {
-        restriction_type = "whitelist"
-        locations        = ["KR"]
+        restriction_type = "blacklist"
+        locations        = ["CN","KP"]
   }
   }
   origin_group {
@@ -78,8 +78,10 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
     ssl_support_method          = "sni-only"
     minimum_protocol_version    = "TLSv1.2_2021"
   }
-  
-  }
+  # depends_on = [
+  #   aws_wafv2_web_acl.cf_wacl
+  # ]
+}
 
 ###################### b. cloudfront heaers_policy ############################
 
