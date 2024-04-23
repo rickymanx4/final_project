@@ -37,7 +37,11 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
         }
       }
     }
-
+    captcha_config {
+      immunity_time_property {
+        immunity_time = 120
+      }
+    }
   
     visibility_config {
       cloudwatch_metrics_enabled = true
@@ -62,6 +66,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
         }
       }
     }
+    
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "allow_kr"
