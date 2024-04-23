@@ -72,17 +72,26 @@ count = 2
 data "aws_lb" "user_alb_arn" {
   count  = 2 
   name = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
+  depends_on = [ 
+    aws_lb.user_dmz_proxy_lb
+  ]  
 }
 
 data "aws_lb" "dev_alb_arn" {
   count  = 2 
   name = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
+  depends_on = [ 
+    aws_lb.dev_dmz_proxy_lb
+  ]  
 }
 
 # data "aws_wafv2_web_acl" "cf_wacl" {
 #   name      = "cf-wacl"
 #   scope     = "CLOUDFRONT"
 #   provider  = aws.virginia
+#   depends_on = [ 
+#     aws_wafv2_web_acl.cf_wacl
+#   ]
 # }
 
 
