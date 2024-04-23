@@ -19,8 +19,8 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
     name     = "block_iphone"
     priority = 10
 
-    action_to_use {
-      captcha {}
+    action {
+      Captcha {}
     }
     statement {
       byte_match_statement {          
@@ -31,17 +31,22 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
         }
         search_string         = "iphone"
         positional_constraint = "CONTAINS"
+        # rule_action_override {
+        #   action_to_use{
+        #     captcha {}
+        #   }  
+        # }        
         text_transformation {
           priority = 0
           type     = "LOWERCASE"
         }
       }
     }
-    captcha_config {
-      immunity_time_property {
-        immunity_time = 120
-      }
-    }
+    # captcha_config {
+    #   immunity_time_property {
+    #     immunity_time = 120
+    #   }
+    # }
   
     visibility_config {
       cloudwatch_metrics_enabled = true
