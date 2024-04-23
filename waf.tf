@@ -17,7 +17,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
 
   rule {
     name     = "block_iphone"
-    priority = 20
+    priority = 10
 
     action {
       block {}
@@ -48,7 +48,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
 
   rule {
     name     = "allow_kr"
-    priority = 10
+    priority = 20
 
     action {
       allow {}
@@ -86,7 +86,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
   }
   rule {
     name     = "block_iphone"
-    priority = 20
+    priority = 10
 
     action {
       block {}
@@ -114,7 +114,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
   }  
   rule {
     name     = "allow_kr"
-    priority = 10
+    priority = 20
 
     action {
       allow {}
