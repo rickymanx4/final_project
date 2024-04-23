@@ -40,6 +40,7 @@ variable "private_key_location" {
 variable "rules" {
   type    = list
   default = [
+    # linux os rule
     {
       name     = "AWSManagedRulesLinuxRuleSet"
       priority = 10
@@ -47,6 +48,7 @@ variable "rules" {
       aws_rg_vendor_name = "AWS"
       metric_name = "AWSManagedRulesLinuxRuleSetMetric"
     },
+    # SQL database rule (SQL injection)
     {
       name     = "AWSManagedRulesSQLiRuleSet"
       priority = 20
@@ -54,12 +56,37 @@ variable "rules" {
       aws_rg_vendor_name = "AWS"
       metric_name = "AWSManagedRulesSQLiRuleSetMetric"
     },
+    # core rule set (CRS) rule XSS
     {
       name     = "AWSManagedRulesCommonRuleSet"
       priority = 30
       aws_rg_name = "AWSManagedRulesCommonRuleSet"
       aws_rg_vendor_name = "AWS"
       metric_name = "AWSManagedRulesCommonRuleSetMetric"
-    }
+    },
+    # posix os rule
+    {
+      name     = "AWSManagedRulesUnixRuleSet"
+      priority = 40
+      aws_rg_name = "AWSManagedRulesUnixRuleSet"
+      aws_rg_vendor_name = "AWS"
+      metric_name = "AWSManagedRulesUnixRuleSetMetric"
+    },
+    # amazon IP reputation list managed rule
+    {
+      name     = "AWSManagedRulesAmazonIpReputationList"
+      priority = 50
+      aws_rg_name = "AWSManagedRulesAmazonIpReputationList"
+      aws_rg_vendor_name = "AWS"
+      metric_name = "AWSManagedRulesAmazonIpReputationListmetric"
+    },
+    # anonymous IP list rule
+    {
+      name     = "AWSManagedRulesAnonymousIpList"
+      priority = 60
+      aws_rg_name = "AWSManagedRulesAnonymousIpList"
+      aws_rg_vendor_name = "AWS"
+      metric_name = "AWSManagedRulesAnonymousIpList"
+    }             
   ]
 }

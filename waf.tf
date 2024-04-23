@@ -182,7 +182,7 @@ resource "aws_wafv2_web_acl" "cf_wacl" {
     }
   } 
   rule {
-    name     = "kr-iphone-rule-group"
+    name     = "kr-mac-rule-group"
     priority = 1
 
     override_action {
@@ -197,13 +197,13 @@ resource "aws_wafv2_web_acl" "cf_wacl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "kr-iphone-rule-group"
+      metric_name                = "kr-mac-rule-group"
       sampled_requests_enabled   = true
     }
   }  
    
   tags = {
-    Name = "kr-iphone-rule-group"
+    Name = "kr-mac-rule-group"
   }
   visibility_config {
     cloudwatch_metrics_enabled = true
