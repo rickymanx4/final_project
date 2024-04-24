@@ -171,7 +171,7 @@ resource "aws_route_table_association" "user_dmz_nat_tgw_rt_asso" {
 resource "aws_route_table_association" "user_dmz_lb_rt_asso" {
   count          = 2
   subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index + 4].id
-  route_table_id = aws_route_table.dmz_pub_rt[0].id
+  route_table_id = aws_route_table.dmz_lb_rt[0].id
 }
 
 resource "aws_route_table_association" "user_dmz_pri_rt_asso" {
@@ -191,7 +191,7 @@ resource "aws_route_table_association" "dev_dmz_nat_tgw_rt_asso" {
 resource "aws_route_table_association" "dev_dmz_lb_rt_asso" {
   count          = 2
   subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index + 4].id
-  route_table_id = aws_route_table.dmz_pub_rt[1].id
+  route_table_id = aws_route_table.dmz_lb_rt[1].id
 }
 
 resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
