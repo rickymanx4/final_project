@@ -20,7 +20,7 @@ resource "aws_ec2_transit_gateway" "tgw_main" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "user_dmz" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[0].id
-  subnet_ids          = aws_subnet.subnet_user_dmz_pri[*].id
+  subnet_ids          = [aws_subnet.subnet_user_dmz_pub[2].id, aws_subnet.subnet_user_dmz_pub[3].id]
 
   tags = {
     Name = "${local.names[0]}_tgw_attache"
@@ -31,7 +31,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "user_dmz" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "dev_dmz" { 
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[1].id
-  subnet_ids          = aws_subnet.subnet_dev_dmz_pri[*].id
+  subnet_ids          = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
 
   tags = {
     Name = "${local.names[1]}_tgw_attache"
@@ -52,7 +52,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "shared" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "product" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[3].id
-  subnet_ids          = aws_subnet.subnet_product_pri_01[*].id
+  subnet_ids          = [aws_subnet.subnet_product_pri[2].id, aws_subnet.subnet_product_pri[3].id]
 
   tags = {
     Name = "${local.names[3]}_tgw_attache"
@@ -63,7 +63,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "product" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "testdev" {  
   transit_gateway_id  = aws_ec2_transit_gateway.tgw_main.id
   vpc_id              = aws_vpc.project_vpc[4].id
-  subnet_ids          = aws_subnet.subnet_testdev_pri_01[*].id
+  subnet_ids          = [aws_subnet.subnet_testdev_pri[2].id, aws_subnet.subnet_testdev_pri[3].id]
 
   tags = {
     Name = "${local.names[4]}_tgw_attache"

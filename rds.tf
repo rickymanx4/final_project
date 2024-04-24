@@ -5,7 +5,7 @@
 # resource "aws_db_subnet_group" "product_rds_subnet" {  
 #   count = 2
 #   name       = "${local.names[3]}-subnetgroup"
-#   subnet_ids = [aws_subnet.subnet_product_pri_02[count.index].id]
+#   subnet_ids = [aws_subnet.subnet_product_pri_02[count.index + 4].id]
 #   tags = {
 #     Name = "${local.names[3]}-subnetgroup"
 # }
@@ -13,7 +13,7 @@
 # resource "aws_db_subnet_group" "testdev_rds_subnet" { 
 #   count      = 2
 #   name       = "${local.names[4]}-subnetgroup"
-#   subnet_ids = [aws_subnet.subnet_testdev_pri_02[count.index].id]
+#   subnet_ids = [aws_subnet.subnet_testdev_pri_02[count.index + 4].id]
 #   tags = {
 #     Name = "${local.names[4]}-subnetgroup"
 #   }
@@ -36,7 +36,7 @@
 #   multi_az = true
 #   publicly_accessible = false
 #   skip_final_snapshot = true
-#   db_subnet_group_name  = aws_db_subnet_group.product_rds_subnet.name
+#   db_subnet_group_name  = aws_db_subnet_group.product_rds_subnet[0].name
 #   vpc_security_group_ids = [ aws_security_group.product_rds_sg.id ]
 #   tags = {
 #       Name = "${local.names[3]}-rds"
@@ -56,7 +56,7 @@
 #   multi_az = true
 #   publicly_accessible = false
 #   skip_final_snapshot = true
-#   db_subnet_group_name  = aws_db_subnet_group.testdev_rds_subnet.name
+#   db_subnet_group_name  = aws_db_subnet_group.testdev_rds_subnet[0].name
 #   vpc_security_group_ids = [ aws_security_group.testdev_rds_sg.id ]
 #   tags = {
 #       Name = "${local.names[4]}-subnetgroup"

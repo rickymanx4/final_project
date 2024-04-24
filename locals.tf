@@ -28,8 +28,8 @@ locals {
     user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
     dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
 
-    # user_dev_tgw_rt         = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 0, 2))
-    # prod_test_tgw_rt        = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 3, 5))
+    user_dev_tgw_rt         = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 0, 2))
+    prod_test_tgw_rt        = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 3, 5))
 
     proxy_sg                = tolist(data.aws_security_group.proxy_sg[*].id)
 

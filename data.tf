@@ -36,25 +36,25 @@ count = 2
 }
 
 
-# data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
-#   count   = 5
-#   filter {
-#     name   = "tag:Name"
-#     values = ["${local.names[count.index]}_tgw_attache"]
-#   }
+data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
+  count   = 5
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[count.index]}_tgw_attache"]
+  }
 
-#   filter {
-#     name   = "state"
-#     values = ["available"]
-#   }
-#   depends_on = [ 
-#     aws_ec2_transit_gateway_vpc_attachment.user_dmz,
-#     aws_ec2_transit_gateway_vpc_attachment.dev_dmz,
-#     aws_ec2_transit_gateway_vpc_attachment.shared,
-#     aws_ec2_transit_gateway_vpc_attachment.product,
-#     aws_ec2_transit_gateway_vpc_attachment.testdev,
-#     ]  
-# }
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+  depends_on = [ 
+    aws_ec2_transit_gateway_vpc_attachment.user_dmz,
+    aws_ec2_transit_gateway_vpc_attachment.dev_dmz,
+    aws_ec2_transit_gateway_vpc_attachment.shared,
+    aws_ec2_transit_gateway_vpc_attachment.product,
+    aws_ec2_transit_gateway_vpc_attachment.testdev,
+    ]  
+}
 
 data "aws_network_interface" "lb_ni" {
 count = 2
@@ -93,6 +93,8 @@ data "aws_lb" "dev_alb_arn" {
 #     aws_wafv2_web_acl.cf_wacl
 #   ]
 # }
+
+
 
 
 # data "aws_instances" "shared_tg_att_a" {
