@@ -23,7 +23,7 @@ resource "aws_subnet" "subnet_user_dmz_pri" {
   availability_zone   = element(local.azs_2, count.index)
 
   tags = {
-    Name = "${local.names[0]}-subnet-pri-0${count.index+1}-${local.userdev_rt_name[4]}-${local.az_ac[count.index]}"
+    Name = "${local.names[0]}-subnet-pri-0${count.index+1}-${local.userdev_rt_name[6]}-${local.az_ac[count.index]}"
   }
   map_public_ip_on_launch = false
 }
@@ -50,7 +50,7 @@ resource "aws_subnet" "subnet_dev_dmz_pri" {
   availability_zone   = element(local.azs_2, count.index)
 
   tags = {
-    Name = "${local.names[1]}-subnet-pri-0${count.index+1}-${local.userdev_rt_name[4]}-${local.az_ac[count.index]}"
+    Name = "${local.names[1]}-subnet-pri-0${count.index+1}-${local.userdev_rt_name[6]}-${local.az_ac[count.index]}"
   }
   map_public_ip_on_launch = false
 }
