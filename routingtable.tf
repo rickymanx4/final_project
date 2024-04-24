@@ -231,7 +231,7 @@ resource "aws_route_table_association" "product_rds_rt_asso" {
 resource "aws_route_table_association" "product_tgw_rt_asso" {
   count          = 2 
   subnet_id      = aws_subnet.subnet_product_pri[count.index + 4].id
-  route_table_id = aws_route_table.prodtest_rds_rt[0].id
+  route_table_id = aws_route_table.prodtest_tgw_rt[0].id
 }
 
 # # ################################ e. testdev_zone ################################
@@ -251,6 +251,6 @@ resource "aws_route_table_association" "testdev_rds_rt_asso" {
 resource "aws_route_table_association" "testdev_tgw_rt_asso" {
   count          = 2 
   subnet_id      = aws_subnet.subnet_testdev_pri[count.index + 4].id
-  route_table_id = aws_route_table.prodtest_rds_rt[1].id
+  route_table_id = aws_route_table.prodtest_tgw_rt[1].id
 }
 
