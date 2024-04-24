@@ -56,34 +56,34 @@ count = 2
 #     ]  
 # }
 
-# data "aws_network_interface" "lb_ni" {
-# count = 2
+data "aws_network_interface" "lb_ni" {
+count = 2
 
-#   filter {
-#     name   = "description"
-#     values = ["ELB net/${aws_lb.shared_ext_lb[count.index].name}/*"]
-#   }
-#   filter {
-#     name   = "subnet-id"
-#     values = [aws_subnet.subnet_shared_pri_01[count.index].id]
-#   }
-# }
+  filter {
+    name   = "description"
+    values = ["ELB net/${aws_lb.shared_ext_lb[count.index].name}/*"]
+  }
+  filter {
+    name   = "subnet-id"
+    values = [aws_subnet.subnet_shared_pri_01[count.index].id]
+  }
+}
 
-# data "aws_lb" "user_alb_arn" {
-#   count  = 2 
-#   name = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
-#   depends_on = [ 
-#     aws_lb.user_dmz_proxy_lb
-#   ]  
-# }
+data "aws_lb" "user_alb_arn" {
+  count  = 2 
+  name = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
+  depends_on = [ 
+    aws_lb.user_dmz_proxy_lb
+  ]  
+}
 
-# data "aws_lb" "dev_alb_arn" {
-#   count  = 2 
-#   name = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
-#   depends_on = [ 
-#     aws_lb.dev_dmz_proxy_lb
-#   ]  
-# }
+data "aws_lb" "dev_alb_arn" {
+  count  = 2 
+  name = "dev-dmz-proxy-lb-${local.az_ac[count.index]}"
+  depends_on = [ 
+    aws_lb.dev_dmz_proxy_lb
+  ]  
+}
 
 # data "aws_wafv2_web_acl" "cf_wacl" {
 #   name      = "cf-wacl"
