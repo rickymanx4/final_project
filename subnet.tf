@@ -83,52 +83,52 @@ resource "aws_subnet" "subnet_shared_pri_02" {
 
 ################################ d. product ################################
 
-resource "aws_subnet" "subnet_product_pri_01" {
-  count               = length(local.product_01_subnet)
+resource "aws_subnet" "subnet_product_pri" {
+  count               = length(local.product_subnet)
   vpc_id              = aws_vpc.project_vpc[3].id
-  cidr_block          = element(local.product_01_subnet, count.index)
-  availability_zone   = element(local.azs_2, count.index)
+  cidr_block          = element(local.product_subnet, count.index)
+  availability_zone   = element(local.azs_6, count.index)
 
   tags = {
-    Name = "${local.names[3]}-subnet-pri-01-${local.prodtest_rt_name[0]}-${local.az_ac[count.index]}"
+    Name = "${local.names[3]}-subnet-pri-${local.prodtest_rt_name[0]}-${local.az_ac[count.index]}"
   }
   map_public_ip_on_launch = false
 }
 
-resource "aws_subnet" "subnet_product_pri_02" {
-  count               = length(local.product_02_subnet)
-  vpc_id              = aws_vpc.project_vpc[3].id
-  cidr_block          = element(local.product_02_subnet, count.index)
-  availability_zone   = element(local.azs_2, count.index)
+# resource "aws_subnet" "subnet_product_pri_02" {
+#   count               = length(local.product_subnet)
+#   vpc_id              = aws_vpc.project_vpc[3].id
+#   cidr_block          = element(local.product_subnet, count.index)
+#   availability_zone   = element(local.azs_6, count.index)
 
-  tags = {
-    Name = "${local.names[3]}-subnet-pri-02-${local.prodtest_rt_name[1]}-${local.az_ac[count.index]}"
-  }
-  map_public_ip_on_launch = false
-}
+#   tags = {
+#     Name = "${local.names[3]}-subnet-pri-${local.prodtest_rt_name[1]}-${local.az_ac[count.index]}"
+#   }
+#   map_public_ip_on_launch = false
+# }
 
 ################################ e. testdev ################################
 
-resource "aws_subnet" "subnet_testdev_pri_01" {
-  count               = length(local.testdev_01_subnet)
+resource "aws_subnet" "subnet_testdev_pri" {
+  count               = length(local.testdev_subnet)
   vpc_id              = aws_vpc.project_vpc[4].id
-  cidr_block          = element(local.testdev_01_subnet, count.index)
-  availability_zone   = element(local.azs_2, count.index)
+  cidr_block          = element(local.testdev_subnet, count.index)
+  availability_zone   = element(local.azs_6, count.index)
 
   tags = {
-    Name = "${local.names[4]}-subnet-pri-01-${local.prodtest_rt_name[0]}-${local.az_ac[count.index]}"
+    Name = "${local.names[4]}-subnet-pri-${local.prodtest_rt_name[0]}-${local.az_ac[count.index]}"
   }
   map_public_ip_on_launch = false
 }
 
-resource "aws_subnet" "subnet_testdev_pri_02" {
-  count               = length(local.testdev_02_subnet)
-  vpc_id              = aws_vpc.project_vpc[4].id
-  cidr_block          = element(local.testdev_02_subnet, count.index)
-  availability_zone   = element(local.azs_2, count.index)
+# resource "aws_subnet" "subnet_testdev_pri_02" {
+#   count               = length(local.testdev_02_subnet)
+#   vpc_id              = aws_vpc.project_vpc[4].id
+#   cidr_block          = element(local.testdev_02_subnet, count.index)
+#   availability_zone   = element(local.azs_2, count.index)
 
-  tags = {
-    Name = "${local.names[4]}-subnet-pri-02-${local.prodtest_rt_name[1]}-${local.az_ac[count.index]}"
-  }
-  map_public_ip_on_launch = false
-}
+#   tags = {
+#     Name = "${local.names[4]}-subnet-pri-02-${local.prodtest_rt_name[1]}-${local.az_ac[count.index]}"
+#   }
+#   map_public_ip_on_launch = false
+# }

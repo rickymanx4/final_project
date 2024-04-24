@@ -10,6 +10,3 @@ output "dev_dmz_dns_name" {
   value = aws_lb.dev_dmz_proxy_lb[*].dns_name
 }
 
-output "cf_wacl_arn" {
-  value = aws_wafv2_web_acl.cf_wacl.arn
-}
