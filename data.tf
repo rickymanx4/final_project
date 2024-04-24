@@ -22,18 +22,18 @@ data "aws_ami" "amazon_linux_2023" {
   }
 }
 
-# data "aws_security_group" "proxy_sg" {
-# count = 2
+data "aws_security_group" "proxy_sg" {
+count = 2
 
-#   filter {
-#     name   = "tag:Name"
-#     values = ["${local.names[count.index]}_proxy_sg"]
-#   }
-#   depends_on = [ 
-#     aws_security_group.user_dmz_sg,
-#     aws_security_group.dev_dmz_sg
-#     ]    
-# }
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[count.index]}_proxy_sg"]
+  }
+  depends_on = [ 
+    aws_security_group.user_dmz_sg,
+    aws_security_group.dev_dmz_sg
+    ]    
+}
 
 
 # data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
