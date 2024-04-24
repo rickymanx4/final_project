@@ -90,7 +90,7 @@ resource "aws_subnet" "subnet_product_pri" {
   availability_zone   = element(local.azs_6, count.index)
 
   tags = {
-    Name = "${local.names[3]}-subnet-pri-${local.prodtest_rt_name[0]}-${local.az_ac_6[count.index]}"
+    Name = "${local.names[3]}-subnet-pri-${local.prodtest_rt_name[count.index]}-${local.az_ac_6[count.index]}"
   }
   map_public_ip_on_launch = false
 }
@@ -116,7 +116,7 @@ resource "aws_subnet" "subnet_testdev_pri" {
   availability_zone   = element(local.azs_6, count.index)
 
   tags = {
-    Name = "${local.names[4]}-subnet-pri-${local.prodtest_rt_name[0]}-${local.az_ac_6[count.index]}"
+    Name = "${local.names[4]}-subnet-pri-${local.prodtest_rt_name[count.index]}-${local.az_ac_6[count.index]}"
   }
   map_public_ip_on_launch = false
 }
