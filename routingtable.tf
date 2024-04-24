@@ -67,7 +67,7 @@ resource "aws_route_table" "user_dmz_rt" {
   #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   # }  
   tags = {
-    Name = "${local.names[0]}_pri_rt_${local.userdev_rt_name[5]}_${local.az_ac[count.index]}"
+    Name = "${local.names[0]}_pri_rt_${local.userdev_rt_name[6]}_${local.az_ac[count.index]}"
   }
 }
 
@@ -85,7 +85,7 @@ resource "aws_route_table" "dev_dmz_rt" {
   #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   # }  
   tags = {
-    Name = "${local.names[1]}_pri_rt_${local.userdev_rt_name[5]}_${local.az_ac[count.index]}"
+    Name = "${local.names[1]}_pri_rt_${local.userdev_rt_name[6]}_${local.az_ac[count.index]}"
   }
 }
 
