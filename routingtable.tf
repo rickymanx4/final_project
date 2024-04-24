@@ -23,10 +23,10 @@ resource "aws_route_table" "dmz_nat_tgw_rt" {
 resource "aws_route_table" "dmz_lb_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[count.index]
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.gw_internet[count.index].id
-  # }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw_internet[count.index].id
+  }
   route {
     cidr_block = "10.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
