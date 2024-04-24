@@ -8,10 +8,10 @@ resource "aws_subnet" "subnet_user_dmz_pub" {
   count               = length(local.user_dmz_pub_subnet)
   vpc_id              = aws_vpc.project_vpc[0].id
   cidr_block          = element(local.user_dmz_pub_subnet, count.index)
-  availability_zone   = element(local.azs_4, count.index)
+  availability_zone   = element(local.azs_6, count.index)
 
   tags = {
-    Name = "${local.names[0]}-pub-0${count.index+1}-${local.userdev_rt_name[count.index]}-${local.az_ac_4[count.index]}"
+    Name = "${local.names[0]}-pub-0${count.index+1}-${local.userdev_rt_name[count.index]}-${local.az_ac_6[count.index]}"
   }
   map_public_ip_on_launch = true
 }
@@ -36,10 +36,10 @@ resource "aws_subnet" "subnet_dev_dmz_pub" {
   count               = length(local.dev_dmz_pub_subnet)
   vpc_id              = aws_vpc.project_vpc[1].id
   cidr_block          = element(local.dev_dmz_pub_subnet, count.index)
-  availability_zone   = element(local.azs_4, count.index)
+  availability_zone   = element(local.azs_6, count.index)
 
   tags = {
-    Name = "${local.names[1]}-subnet-pub-0${count.index+1}-${local.userdev_rt_name[count.index]}-${local.az_ac_4[count.index]}"
+    Name = "${local.names[1]}-subnet-pub-0${count.index+1}-${local.userdev_rt_name[count.index]}-${local.az_ac_6[count.index]}"
   }
   map_public_ip_on_launch = true
 }
