@@ -33,7 +33,7 @@ resource "aws_internet_gateway" "gw_internet" {
 
 resource "aws_nat_gateway" "gw_user_nat" {
   count         = length(aws_eip.dmz_eip)
-  allocation_id = aws_eip.dmz_eip[count.index]
+  allocation_id = aws_eip.dmz_eip[count.index].id
   subnet_id     = local.nat_subnet[count.index]
   tags = {
     Name = "${local.names[count.index]}_ngw"

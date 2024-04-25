@@ -24,9 +24,6 @@ locals {
 
     nat_subnet              = tolist(data.aws_subnet.nat_subnet[*].id)
 
-    user_eip                = tolist(slice(aws_eip.dmz_eip[*].id, 0, 2))
-    dev_eip                 = tolist(slice(aws_eip.dmz_eip[*].id, 2, 4))
-
     user_dev_tgw_rt         = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 0, 2))
     prod_test_tgw_rt        = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 3, 5))
 
