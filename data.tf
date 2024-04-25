@@ -36,14 +36,14 @@ count = 2
 }
 
 
-data "aws_security_group" "proxy_sg" {
-count = 2
-  filter {
-    name   = "tag:Name"
-    values = ["${local.names[count.index]}_proxy_sg"]
-  }
-  depends_on = [ aws_security_group.dmz_proxy_sg ]    
-}
+# data "aws_security_group" "proxy_sg" {
+# count = 2
+#   filter {
+#     name   = "tag:Name"
+#     values = ["${local.names[count.index]}_proxy_sg"]
+#   }
+#   depends_on = [ aws_security_group.dmz_proxy_sg ]    
+# }
 
 
 data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {

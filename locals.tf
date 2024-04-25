@@ -32,7 +32,7 @@ locals {
     user_dev_tgw_rt         = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 0, 2))
     prod_test_tgw_rt        = tolist(slice(data.aws_ec2_transit_gateway_vpc_attachment.shared_tgw_rt[*], 3, 5))
 
-    proxy_sg                = tolist(data.aws_security_group.proxy_sg[*].id)
+    #proxy_sg                = tolist(data.aws_security_group.proxy_sg[*].id)
 
     user_dmz_alb            = tolist(data.aws_lb.user_alb_arn[*].arn)
     dev_dmz_alb             = tolist(data.aws_lb.dev_alb_arn[*].arn)
