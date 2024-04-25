@@ -23,7 +23,7 @@ resource "aws_subnet" "subnet_user_dmz_pri" {
   availability_zone   = element(local.azs_6, count.index)
 
   tags = {
-    Name = "${local.names[0]}-pri-${local.userdev_pri_name[count.index]}-${local.az_ac_6[count.index]}"
+    Name = "${local.names[0]}-pri-${local.userdev_pri_name[count.index + 2]}-${local.az_ac_6[count.index]}"
   }
   map_public_ip_on_launch = false
 }
