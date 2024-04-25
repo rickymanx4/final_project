@@ -36,15 +36,23 @@ count = 2
 }
 
 
-# data "aws_security_group" "proxy_sg" {
-# count = 2
-#   filter {
-#     name   = "tag:Name"
-#     values = ["${local.names[count.index]}_proxy_sg"]
-#   }
-#   depends_on = [ aws_security_group.dmz_proxy_sg ]    
-# }
+data "aws_subnet" "user_nwf_subnet" {
+count = 2
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[0]}_pub_nwf_*"]
+  }
+  depends_on = [ aws_subnet.subnet_user_dmz_pub ]    
+}
 
+data "aws_subnet" "dev_nwf_subnet" {
+count = 2
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[1]}_pub_nwf_${local.az_ac[count.index]}"]
+  }
+  depends_on = [ aws_subnet.subnet_dev_dmz_pub ]    
+}
 
 data "aws_ec2_transit_gateway_vpc_attachment" "shared_tgw_rt" {
   count   = 5
