@@ -34,7 +34,7 @@ resource "aws_route_table" "dmz_lb_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_rt_name[4]}_pub_rt"
+    Name = "${local.names[count.index]}_${local.userdev_pub_name[4]}_pub_rt"
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_route_table" "dmz_proxy_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_rt_name[2]}_pri_rt"
+    Name = "${local.names[count.index]}_${local.userdev_pri_name[2]}_pri_rt"
   }
 }
 
@@ -84,7 +84,7 @@ resource "aws_route_table" "shared_nexus_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }    
   tags = {
-    Name = "${local.names[2]}_pri_rt_${local.shared_rt_name[0]}"
+    Name = "${local.names[2]}_pri_rt_${local.shared_name[0]}"
   }
 }
 
@@ -95,7 +95,7 @@ resource "aws_route_table" "shared_control_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[2]}_pri_rt_${local.shared_rt_name[1]}"
+    Name = "${local.names[2]}_pri_rt_${local.shared_name[1]}"
   }
 }
 
@@ -109,7 +109,7 @@ resource "aws_route_table" "prodtest_node_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }   
   tags = {
-    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_rt_name[0]}"
+    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_name[0]}"
   }
 }
 
@@ -123,7 +123,7 @@ resource "aws_route_table" "prodtest_rds_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_rt_name[2]}"
+    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_name[2]}"
   }
 }
 
@@ -137,7 +137,7 @@ resource "aws_route_table" "prodtest_tgw_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_rt_name[4]}"
+    Name = "${local.names[count.index + 3]}_pri_rt_${local.prodtest_name[4]}"
   }
 }
 
