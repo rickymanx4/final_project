@@ -54,7 +54,7 @@ resource "aws_security_group" "dmz_lb_sg" {
 }
 
 resource "aws_security_group_rule" "user_dmz_lb_SG" {
-  security_group_id        = aws_security_group.dmz_lb_sg[1].id
+  security_group_id        = aws_security_group.dmz_lb_sg[0].id
   type                     = "ingress"
   protocol                 = "tcp"
   from_port                = local.dmz_ports[1]
@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "user_dmz_lb_SG" {
 }  
 resource "aws_security_group_rule" "dev_dmz_lb_SG" {
   count                    = 3
-  security_group_id        = aws_security_group.dmz_lb_sg[0].id
+  security_group_id        = aws_security_group.dmz_lb_sg[1].id
   type                     = "ingress"
   protocol                 = "tcp"
   from_port                = local.dmz_ports[count.index +1]
