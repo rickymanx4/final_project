@@ -22,6 +22,20 @@ data "aws_ami" "amazon_linux_2023" {
   }
 }
 
+data "aws_subnet" "nat_subnet" {
+count = 2
+
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[count.index]}_pub_nat_a"]
+  }
+  depends_on = [ 
+    aws_subnet.subnet_user_dmz_pub,
+    aws_subnet.subnet_dev_dmz_pub
+    ]    
+}
+
+
 data "aws_security_group" "proxy_sg" {
 count = 2
 

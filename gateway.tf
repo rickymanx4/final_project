@@ -3,7 +3,7 @@
 ##############################################################################
 resource "aws_eip" "dmz_eip" {
   #domain = "vpc"
-  count =  4
+  count =  2
   lifecycle {
     create_before_destroy = true
   }
@@ -32,23 +32,22 @@ resource "aws_internet_gateway" "gw_internet" {
 ################################ a. user_dmz ################################
 
 resource "aws_nat_gateway" "gw_user_nat" {
-  count = 2
-  allocation_id = local.user_eip[count.index]
-  subnet_id     = aws_subnet.subnet_user_dmz_pub[count.index]
+  count         = length(aws_eip.dmz_eip)
+  allocation_id = aws_eip.dmz_eip[count.index]
+  subnet_id     = local.nat_subnet[count.index]
   tags = {
-    Name = "${local.names[0]}_ngw_${local.az_ac[count.index]}"
+    Name = "${local.names[count.index]}_ngw"
  }
  depends_on = [aws_internet_gateway.gw_internet]
 }
 
-# ################################ b. dev_dmz ################################
+# # ################################ b. dev_dmz ################################
 
-resource "aws_nat_gateway" "gw_dev_nat" {
-  count = 2
-  allocation_id = local.dev_eip[count.index]
-  subnet_id     = aws_subnet.subnet_dev_dmz_pub[count.index]
-  tags = {
-    Name = "${local.names[1]}_ngw_${local.az_ac[count.index]}"
- }
- depends_on = [aws_internet_gateway.gw_internet]
-}
+# resource "aws_nat_gateway" "gw_dev_nat" {
+#   allocation_id = aws_eip.dmz_eip[1]
+#   subnet_id     = aws_subnet.subnet_dev_dmz_pub[0]
+#   tags = {
+#     Name = "${local.names[1]}_ngw"
+#  }
+#  depends_on = [aws_internet_gateway.gw_internet]
+# }
