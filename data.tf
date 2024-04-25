@@ -27,7 +27,7 @@ count = 2
 
   filter {
     name   = "tag:Name"
-    values = ["${local.names[count.index]}_pub_nat_a"]
+    values = ["${local.names[count.index]}-pub-nat-a"]
   }
   depends_on = [ 
     aws_subnet.subnet_user_dmz_pub,
