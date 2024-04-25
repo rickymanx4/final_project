@@ -4,7 +4,8 @@
 
 ################################ a. dmz_public ################################
 
-resource "aws_route_table" "dmz_nat_tgw_rt" {
+# 내부 서브넷(lb, tgw의 cidr 을 nwf eni에 붙여야함)
+resource "aws_route_table" "dmz_nat_nwf_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[count.index]
   route {
@@ -16,13 +17,14 @@ resource "aws_route_table" "dmz_nat_tgw_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_rt_name[0]}_${local.userdev_rt_name[2]}_pub_rt"
+    Name = "${local.names[count.index]}_${local.userdev_pub_name[0]}_${local.userdev_pub_name[2]}_pub_rt"
   }
 }
 
 resource "aws_route_table" "dmz_lb_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[count.index]
+  # NWF 적용시 igw 삭제, nwf eni로 라우팅
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw_internet[count.index].id
@@ -36,11 +38,29 @@ resource "aws_route_table" "dmz_lb_rt" {
   }
 }
 
-################################ b. user_dmz_pri ################################
+################################ b. dmz_pri_proxy ################################
 
-resource "aws_route_table" "user_dmz_rt" {
+resource "aws_route_table" "dmz_proxy_rt" {
   count = 2
-  vpc_id = aws_vpc.project_vpc[0].id
+  vpc_id = aws_vpc.project_vpc[cont.index].id
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
+  # }
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
+  tags = {
+    Name = "${local.names[count.index]}_${local.userdev_rt_name[2]}_pri_rt"
+  }
+}
+
+################################ c. dmz_pri_tgw ################################
+
+resource "aws_route_table" "dmz_twg_rt" {
+  count = 2
+  vpc_id = aws_vpc.project_vpc[count.index].id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
@@ -51,25 +71,7 @@ resource "aws_route_table" "user_dmz_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[0]}_pri_rt_${local.userdev_rt_name[6]}_${local.az_ac[count.index]}"
-  }
-}
-
-################################ c. dev_dmz_pri ################################
-
-resource "aws_route_table" "dev_dmz_rt" {
-  count = 2
-  vpc_id = aws_vpc.project_vpc[1].id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
-  }
-  route {
-    cidr_block = "10.0.0.0/8"
-    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  }  
-  tags = {
-    Name = "${local.names[1]}_pri_rt_${local.userdev_rt_name[6]}_${local.az_ac[count.index]}"
+    Name = "${local.names[count.index]}_${local.userdev_pri_name[1]}_pri_rt"
   }
 }
 
@@ -146,10 +148,10 @@ resource "aws_route_table" "prodtest_tgw_rt" {
 
 # ################################ a. user_dmz ################################
 
-resource "aws_route_table_association" "user_dmz_nat_tgw_rt_asso" {
+resource "aws_route_table_association" "user_dmz_nat_nwf_rt_asso" {
   count          = 4
   subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index].id
-  route_table_id = aws_route_table.dmz_nat_tgw_rt[0].id
+  route_table_id = aws_route_table.dmz_nat_nwf_rt[0].id
 }
 
 resource "aws_route_table_association" "user_dmz_lb_rt_asso" {
@@ -158,10 +160,16 @@ resource "aws_route_table_association" "user_dmz_lb_rt_asso" {
   route_table_id = aws_route_table.dmz_lb_rt[0].id
 }
 
-resource "aws_route_table_association" "user_dmz_pri_rt_asso" {
+resource "aws_route_table_association" "user_dmz_proxy_rt_asso" {
   count          = 2
   subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index].id
-  route_table_id = aws_route_table.user_dmz_rt[count.index].id
+  route_table_id = aws_route_table.dmz_proxy_rt[0].id
+}
+
+resource "aws_route_table_association" "user_dmz_tgw_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index + 2].id
+  route_table_id = aws_route_table.dmz_tgw_rt[0].id
 }
 
 # # ################################ b. dev_dmz ################################
@@ -178,10 +186,16 @@ resource "aws_route_table_association" "dev_dmz_lb_rt_asso" {
   route_table_id = aws_route_table.dmz_lb_rt[1].id
 }
 
-resource "aws_route_table_association" "dev_dmz_pri_rt_asso" {
+resource "aws_route_table_association" "dev_dmz_proxy_rt_asso" {
   count          = 2
   subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index].id
-  route_table_id = aws_route_table.dev_dmz_rt[count.index].id
+  route_table_id = aws_route_table.dmz_proxy_rt[1].id
+}
+
+resource "aws_route_table_association" "dev_dmz_tgw_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index + 2].id
+  route_table_id = aws_route_table.dmz_tgw_rt[1].id
 }
 
 # # ################################ c. shared_zone ################################

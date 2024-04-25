@@ -5,14 +5,14 @@ locals {
 
     names                   = ["user_dmz", "dev_dmz", "shared", "product", "testdev"]
 
-    user_dmz_pub_subnet     = ["10.10.10.0/24", "10.10.20.0/24", "10.10.210.0/24", "10.10.220.0/24", "10.10.110.0/24", "10.10.120.0/24"]
-    user_dmz_pri_subnet     = ["10.10.50.0/24", "10.10.150.0/24"]
-    dev_dmz_pub_subnet      = ["10.30.10.0/24", "10.30.20.0/24", "10.30.210.0/24", "10.30.220.0/24", "10.30.110.0/24", "10.30.120.0/24"]
-    dev_dmz_pri_subnet      = ["10.30.50.0/24", "10.30.150.0/24"]    
+    user_dmz_pub_subnet     = ["10.10.10.0/24", "10.10.20.0/24", "10.10.200.0/28", "10.10.200.16/28", "10.10.110.0/24", "10.10.120.0/24"]
+    user_dmz_pri_subnet     = ["10.10.50.0/24", "10.10.60.0/24", "10.10.210.0/28", "10.10.220.0/28"]
+    dev_dmz_pub_subnet      = ["10.30.10.0/24", "10.30.20.0/24", "10.20.200.0/28", "10.20.200.16/28", "10.30.110.0/24", "10.30.120.0/24"]
+    dev_dmz_pri_subnet      = ["10.30.50.0/24", "10.30.60.0/24", "10.30.210.0/28", "10.30.220.0/28"]    
     shared_01_subnet        = ["10.100.10.0/24", "10.100.20.0/24"]
     shared_02_subnet        = ["10.100.110.0/24", "10.100.120.0/24"]   
-    product_subnet          = ["10.210.50.0/24", "10.210.60.0/24","10.210.150.0/24", "10.210.160.0/24", "10.210.210.0/24", "10.210.220.0/24" ]
-    testdev_subnet          = ["10.230.50.0/24", "10.230.60.0/24", "10.230.150.0/24", "10.230.160.0/24", "10.230.210.0/24", "10.230.220.0/24"]
+    product_subnet          = ["10.210.10.0/24", "10.210.20.0/24","10.210.110.0/24", "10.210.120.0/24", "10.210.210.0/24", "10.210.220.0/24" ]
+    testdev_subnet          = ["10.230.10.0/24", "10.230.20.0/24", "10.230.110.0/24", "10.230.120.0/24", "10.230.210.0/24", "10.230.220.0/24"]
     
     azs_2                   = ["ap-northeast-2a", "ap-northeast-2c"]
     azs_6                   = ["ap-northeast-2a", "ap-northeast-2c",  "ap-northeast-2a", "ap-northeast-2c", "ap-northeast-2a", "ap-northeast-2c",]
@@ -46,9 +46,10 @@ locals {
     shared_ec2_name         = ["prometheus", "grafana", "elk", "eks"]
     prodtest_ec2_name       = ["node-1", "node-2", "rds-primary", "rds-stanby"]
 
-    userdev_rt_name         = ["nat", "nat", "tgw", "tgw", "lb", "lb",  "proxy"]
-    shared_rt_name          = ["nexus", "control"]
-    prodtest_rt_name        = ["node", "node", "rds", "rds", "tgw", "tgw"]
+    userdev_pub_name        = ["nat", "nat", "nwf", "nwf", "lb", "lb"]
+    userdev_pri_name        = ["proxy", "proxy", "tgw", "tgw"]    
+    shared_name             = ["nexus", "control"]
+    prodtest_name           = ["node", "node", "rds", "rds", "tgw", "tgw"]
     cf_origin_name          = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
 
     domain_name             = "nadri-project.com"
