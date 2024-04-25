@@ -45,7 +45,7 @@ resource "aws_route_table" "dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[count.index].id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
+    gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
   }
   route {
     cidr_block = "10.0.0.0/8"
