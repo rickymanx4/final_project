@@ -22,11 +22,25 @@ data "aws_ami" "amazon_linux_2023" {
   }
 }
 
+data "aws_subnet" "nat_subnet" {
+count = 2
+
+  filter {
+    name   = "tag:Name"
+    values = ["${local.names[count.index]}-subnet-nat-a"]
+  }
+  depends_on = [ 
+    aws_subnet.subnet_user_dmz_pub,
+    aws_subnet.subnet_dev_dmz_pub
+    ]    
+}
+
+
 data "aws_subnet" "user_nwf_subnet" {
 count = 2
   filter {
     name   = "tag:Name"
-    values = ["${local.names[0]}-subnet_nat_*"]
+    values = ["${local.names[0]}-subnet-nat-*"]
   }
   depends_on = [ aws_subnet.subnet_user_dmz_pub ]    
 }
@@ -35,7 +49,7 @@ data "aws_subnet" "dev_nwf_subnet" {
 count = 2
   filter {
     name   = "tag:Name"
-    values = ["${local.names[1]}-subnet_nat_*"]
+    values = ["${local.names[1]}-subnet-nat-*"]
   }
   depends_on = [ aws_subnet.subnet_dev_dmz_pub ]    
 }
