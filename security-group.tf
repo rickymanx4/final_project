@@ -5,7 +5,7 @@
 ################################ a. user_dmz_sg ################################
 resource "aws_security_group" "user_dmz_sg" {
   count       = 2
-  name        = "${local.names[0]}_${local.userdev_pub_name[count.index + 4]}_sg" 
+  name        = "${local.names[0]}_${local.userdev_pub_name[count.index + 3]}_sg" 
   description = "Security Group for ngninx_proxy_instance in dmz" 
   vpc_id      = aws_vpc.project_vpc[0].id
  
@@ -16,7 +16,7 @@ resource "aws_security_group" "user_dmz_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "${local.names[0]}_${local.userdev_pub_name[count.index + 4]}_sg"
+    Name = "${local.names[0]}_${local.userdev_pub_name[count.index + 3]}_sg"
   }
 }
 
@@ -43,7 +43,7 @@ resource "aws_security_group_rule" "user_dmz_ssh_SG" {
 
 resource "aws_security_group" "dev_dmz_sg" {
   count       = 2
-  name        = "${local.names[1]}_${local.userdev_pub_name[count.index + 4]}_sg" 
+  name        = "${local.names[1]}_${local.userdev_pub_name[count.index + 3]}_sg" 
   description = "Security Group for ngninx_proxy_instance in dmz" 
   vpc_id      = aws_vpc.project_vpc[1].id
  
@@ -54,7 +54,7 @@ resource "aws_security_group" "dev_dmz_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "${local.names[1]}_${local.userdev_pub_name[count.index + 4]}_sg"
+    Name = "${local.names[1]}_${local.userdev_pub_name[count.index + 3]}_sg"
   }
 }
 
