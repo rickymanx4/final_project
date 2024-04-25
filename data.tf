@@ -38,7 +38,6 @@ count = 2
 
 data "aws_security_group" "proxy_sg" {
 count = 2
-
   filter {
     name   = "tag:Name"
     values = ["${local.names[count.index]}_proxy_sg"]

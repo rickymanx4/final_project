@@ -2,12 +2,45 @@
 ################################## 1.(user/dev)_dmz_sg #######################
 ##############################################################################
 
-################################ a. user_dmz_sg ################################
-resource "aws_security_group" "user_dmz_sg" {
+################################ a. dmz_proxy_sg ################################
+resource "aws_security_group" "dmz_proxy_sg" {
   count       = 2
-  name        = "${local.names[0]}_${local.userdev_pub_name[count.index + 3]}_sg" 
+  name        = "${local.names[count.index]}_${local.userdev_pri_name[0]}_sg" 
   description = "Security Group for ngninx_proxy_instance in dmz" 
-  vpc_id      = aws_vpc.project_vpc[0].id
+  vpc_id      = aws_vpc.project_vpc[count.index].id
+ 
+  ingress {
+  from_port     = local.dmz_ports[0]
+  to_port       = local.dmz_ports[0]
+  protocol      = "tcp"
+  security_groups =["10.100.0.0/16"]
+  }
+
+  ingress {
+  from_port     = local.dmz_ports[1]
+  to_port       = local.dmz_ports[1]
+  protocol      = "tcp"
+  security_groups = aws_security_group.dmz_lb_sg[count.index].id
+  }
+
+  egress {
+  from_port     = 0
+  to_port       = 0
+  protocol      = "-1"
+  cidr_blocks   = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "${local.names[count.index]}_${local.userdev_pri_name[0]}_sg"
+  }
+}
+
+################################ b. dmz_lb_sg ################################
+
+resource "aws_security_group" "dmz_lb_sg" {
+  count       = 2
+  name        = "${local.names[count.index]}_${local.userdev_pub_name[4]}_sg" 
+  description = "Security Group for alb in dmz" 
+  vpc_id      = aws_vpc.project_vpc[count.index].id
  
   egress {
   from_port     = 0
@@ -16,76 +49,19 @@ resource "aws_security_group" "user_dmz_sg" {
   cidr_blocks   = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "${local.names[0]}_${local.userdev_pub_name[count.index + 3]}_sg"
-  }
-}
-
-resource "aws_security_group_rule" "user_dmz_lb_SG" {
-  count                    = 2
-  security_group_id        = aws_security_group.user_dmz_sg[count.index].id
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = local.dmz_ports[1]
-  to_port                  = local.dmz_ports[1]
-  cidr_blocks              = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "user_dmz_ssh_SG" {
-  security_group_id        = aws_security_group.user_dmz_sg[1].id
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = local.dmz_ports[0]
-  to_port                  = local.dmz_ports[0]
-  cidr_blocks              = ["10.100.0.0/16"]
-}
-
-################################ b. dev_dmz_sg ################################
-
-resource "aws_security_group" "dev_dmz_sg" {
-  count       = 2
-  name        = "${local.names[1]}_${local.userdev_pub_name[count.index + 3]}_sg" 
-  description = "Security Group for ngninx_proxy_instance in dmz" 
-  vpc_id      = aws_vpc.project_vpc[1].id
- 
-  egress {
-  from_port     = 0
-  to_port       = 0
-  protocol      = "-1"
-  cidr_blocks   = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "${local.names[1]}_${local.userdev_pub_name[count.index + 3]}_sg"
+    Name = "${local.names[count.index]}_${local.userdev_pub_name[4]}_sg" 
   }
 }
 
 resource "aws_security_group_rule" "dev_dmz_lb_SG" {
   count                    = 3
-  security_group_id        = aws_security_group.dev_dmz_sg[0].id
+  security_group_id        = aws_security_group.dmz_lb_sg[count.index].id
   type                     = "ingress"
   protocol                 = "tcp"
   from_port                = local.dmz_ports[count.index +1]
   to_port                  = local.dmz_ports[count.index +1]
   cidr_blocks              = ["0.0.0.0/0"]
 }
-
-resource "aws_security_group_rule" "dev_dmz_proxy_SG" {
-  security_group_id        = aws_security_group.dev_dmz_sg[1].id
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = local.dmz_ports[1]
-  to_port                  = local.dmz_ports[1]
-  source_security_group_id = aws_security_group.dev_dmz_sg[0].id
-}
-
-resource "aws_security_group_rule" "dev_dmz_ssh_SG" {
-  security_group_id        = aws_security_group.dev_dmz_sg[1].id
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = local.dmz_ports[0]
-  to_port                  = local.dmz_ports[0]
-  cidr_blocks              = ["10.100.0.0/16"]
-}
-
 
 ##############################################################################
 ################################## 2. shared_sg ##############################
