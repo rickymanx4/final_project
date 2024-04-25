@@ -40,7 +40,7 @@ data "aws_subnet" "user_nwf_subnet" {
 count = 2
   filter {
     name   = "tag:Name"
-    values = ["${local.names[0]}-pub-nwf-0${count.index + 1 }"]
+    values = ["${local.names[0]}-pub-nwf-${local.az_ac[count.index]}"]
   }
   depends_on = [ aws_subnet.subnet_user_dmz_pub ]    
 }
@@ -49,7 +49,7 @@ data "aws_subnet" "dev_nwf_subnet" {
 count = 2
   filter {
     name   = "tag:Name"
-    values = ["${local.names[1]}-pub-nwf-0${count.index + 1 }"]
+    values = ["${local.names[1]}-pub-nwf-${local.az_ac[count.index]}"]
   }
   depends_on = [ aws_subnet.subnet_dev_dmz_pub ]    
 }
