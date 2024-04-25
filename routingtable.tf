@@ -59,6 +59,7 @@ resource "aws_route_table" "dmz_proxy_rt" {
 ################################ c. dmz_pri_tgw ################################
 
 resource "aws_route_table" "dmz_tgw_rt" {
+  count  = 2
   vpc_id = aws_vpc.project_vpc[count.index].id
   route {
     cidr_block = "0.0.0.0/0"
