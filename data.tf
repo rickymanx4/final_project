@@ -42,10 +42,7 @@ count = 2
     name   = "tag:Name"
     values = ["${local.names[count.index]}_proxy_sg"]
   }
-  depends_on = [ 
-    aws_security_group.user_dmz_sg,
-    aws_security_group.dev_dmz_sg
-    ]    
+  depends_on = [ aws_security_group.dmz_proxy_sg ]    
 }
 
 
