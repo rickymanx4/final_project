@@ -27,7 +27,6 @@ locals {
     user_dev_vpc            = tolist(slice(aws_vpc.project_vpc[*].id, 0, 2))
     prod_test_vpc           = tolist(slice(aws_vpc.project_vpc[*].id, 3, 5))
 
-    nat_subnet              = tolist(data.aws_subnet.nat_subnet[*].id)
     user_nwf_subnet         = tolist(data.aws_subnet.user_nwf_subnet[*].id)
     dev_nwf_subnet          = tolist(data.aws_subnet.dev_nwf_subnet[*].id)
 
