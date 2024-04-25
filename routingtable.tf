@@ -42,7 +42,7 @@ resource "aws_route_table" "dmz_lb_rt" {
 
 resource "aws_route_table" "dmz_proxy_rt" {
   count = 2
-  vpc_id = aws_vpc.project_vpc[conut.index].id
+  vpc_id = aws_vpc.project_vpc[count.index].id
   # route {
   #   cidr_block = "0.0.0.0/0"
   #   gateway_id = aws_nat_gateway.gw_dev_nat[count.index].id
@@ -174,10 +174,10 @@ resource "aws_route_table_association" "user_dmz_tgw_rt_asso" {
 
 # # ################################ b. dev_dmz ################################
 
-resource "aws_route_table_association" "dev_dmz_nat_tgw_rt_asso" {
+resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_asso" {
   count          = 4
   subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index].id
-  route_table_id = aws_route_table.dmz_nat_tgw_rt[1].id
+  route_table_id = aws_route_table.dmz_nat_nwf_rt[1].id
 }
 
 resource "aws_route_table_association" "dev_dmz_lb_rt_asso" {
