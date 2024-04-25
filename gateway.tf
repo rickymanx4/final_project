@@ -34,7 +34,7 @@ resource "aws_internet_gateway" "gw_internet" {
 resource "aws_nat_gateway" "gw_user_nat" {
   count = 2
   allocation_id = local.user_eip[count.index]
-  subnet_id     = local.user_pub_sub[count.index]
+  subnet_id     = aws_subnet.subnet_user_dmz_pub[count.index]
   tags = {
     Name = "${local.names[0]}_ngw_${local.az_ac[count.index]}"
  }
@@ -46,7 +46,7 @@ resource "aws_nat_gateway" "gw_user_nat" {
 resource "aws_nat_gateway" "gw_dev_nat" {
   count = 2
   allocation_id = local.dev_eip[count.index]
-  subnet_id     = local.dev_pub_sub[count.index]
+  subnet_id     = aws_subnet.subnet_dev_dmz_pub[count.index]
   tags = {
     Name = "${local.names[1]}_ngw_${local.az_ac[count.index]}"
  }
