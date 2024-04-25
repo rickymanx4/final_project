@@ -28,7 +28,7 @@ resource "aws_lb" "user_dmz_proxy_lb" {
   load_balancer_type = "application"
   internal           = false
   subnets            = [aws_subnet.subnet_user_dmz_pub[4].id, aws_subnet.subnet_user_dmz_pub[5].id]
-  security_groups    = [aws_security_group.user_dmz_sg[0].id]
+  security_groups    = [aws_security_group.dmz_lb_sg[0].id]
 }
 
 resource "aws_lb_listener" "user_proxy_lb_listener_80" {
@@ -89,7 +89,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
   load_balancer_type = "application"
   internal           = false
   subnets            = [aws_subnet.subnet_dev_dmz_pub[4].id, aws_subnet.subnet_dev_dmz_pub[5].id]
-  security_groups    = [aws_security_group.dev_dmz_sg[0].id]
+  security_groups    =  [aws_security_group.dmz_lb_sg[1].id]
 }
 
 resource "aws_lb_listener" "dev_proxy_lb_listener_80" {
@@ -108,7 +108,7 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
   load_balancer_type = "network"
   internal           = false
   subnets            = [aws_subnet.subnet_dev_dmz_pub[4].id, aws_subnet.subnet_dev_dmz_pub[5].id]
-  security_groups    = [aws_security_group.dev_dmz_sg[0].id]
+  security_groups    =  [aws_security_group.dmz_lb_sg[1].id]
 }
 
 
