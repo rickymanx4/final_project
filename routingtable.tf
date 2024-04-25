@@ -52,7 +52,7 @@ resource "aws_route_table" "dmz_proxy_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_pri_name[2]}_pri_rt"
+    Name = "${local.names[count.index]}_${local.userdev_pri_name[0]}_pri_rt"
   }
 }
 
@@ -71,20 +71,6 @@ resource "aws_route_table" "dmz_tgw_rt" {
   }  
   tags = {
     Name = "${local.names[count.index]}_${local.userdev_pri_name[2]}_pri_rt"
-  }
-}
-
-################################ c. dmz_pri_proxy ################################
-resource "aws_route_table" "dmz_proxy_rt" {
-  count = 2
-  vpc_id = aws_vpc.project_vpc[count.index].id
-
-  route {
-    cidr_block = "10.0.0.0/8"
-    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  }  
-  tags = {
-    Name = "${local.names[count.index]}_${local.userdev_pri_name[0]}_pri_rt"
   }
 }
 
