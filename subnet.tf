@@ -76,7 +76,7 @@ resource "aws_subnet" "subnet_shared_pri_02" {
   availability_zone   = element(local.azs_2, count.index)
 
   tags = {
-    Name = "${local.names[2]}-pri-02-${local.userdev_name[1]}-${local.az_ac[count.index]}"
+    Name = "${local.names[2]}-pri-02-${local.shared_name[1]}-${local.az_ac[count.index]}"
   }
   map_public_ip_on_launch = false
 }
