@@ -88,22 +88,22 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
     # HTTP 봇넷을 탐지하는 서명
     stateful_rule_group_reference {
       priority     = 2          
-      resource_arn = arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetWebStrictOrder
+      resource_arn = "arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetWebStrictOrder"
     }
     # 코인 채굴을 수행하는 악성 코드를 탐지하는 규칙이 포함된 서명
     stateful_rule_group_reference {
       priority     = 3          
-      resource_arn = arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/ThreatSignaturesMalwareCoinminingStrictOrder
+      resource_arn = "arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/ThreatSignaturesMalwareCoinminingStrictOrder"
     }         
     # 합법적이지만 손상되어 멜웨어를 호스팅을 할 수 있는 도메인 클래스에 대한 차단
     stateful_rule_group_reference {
       priority     = 4            
-      resource_arn = arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/AbusedLegitMalwareDomainsStrictOrder
+      resource_arn = "arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/AbusedLegitMalwareDomainsStrictOrder"
     }    
     # 봇넷을 호스팅하는 것으로 알려진 도메인에 대한 요청을 차단
     stateful_rule_group_reference {
       priority     = 5      
-      resource_arn = arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/BotNetCommandAndControlDomainsStrictOrder
+      resource_arn = "arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/BotNetCommandAndControlDomainsStrictOrder"
     }    
   }
 }
