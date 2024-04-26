@@ -223,14 +223,14 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 
     stateful_rule_group_reference {     
       resource_arn = [
-        "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetStrictOrder",
-        "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetWebStrictOrder",
-        "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesMalwareCoinminingStrictOrder",
-        "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/AbusedLegitMalwareDomainsStrictOrder",
-        "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/BotNetCommandAndControlDomainsStrictOrder"
+        "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetStrictOrder"
       ]
     }    
     
+        # "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetWebStrictOrder",
+        # "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesMalwareCoinminingStrictOrder",
+        # "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/AbusedLegitMalwareDomainsStrictOrder",
+        # "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/BotNetCommandAndControlDomainsStrictOrder"    
     #알려지고 확인된 활성 봇넷과 기타 명령 및 제어(C2) 호스트의 여러 소스에서 자동 생성된 서명
     # stateful_rule_group_reference {
     #   priority     = 1        
