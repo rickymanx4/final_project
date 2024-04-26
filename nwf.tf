@@ -18,7 +18,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
                 to_port   = 9999
               }
               destination {
-                address_definition = "0.0.0.0/0"
+                address_definition = aws_subnet.subnet_dev_dmz_pub[4]
               }
               destination_port {
                 from_port = 9999
@@ -32,32 +32,34 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
             }     
           }
         }   
-      }
+        stateless_rule {
+          priority = 2
+          rule_definition {
+            actions = ["aws:pass"]
+            match_attributes {
+              source {
+                address_definition = "213.0.113.0/24"
+              }
+              source_port {
+                from_port = 8888
+                to_port   = 8888
+              }
+              destination {
+                address_definition = aws_subnet.subnet_dev_dmz_pub[5]
+              }
+              destination_port {
+                from_port = 8888
+                to_port   = 8888
+              }
+              protocols = [6]              
+            }     
+          }
+        }            
+      }      
     }
   }
 }        
-        # stateless_rule {
-        #   priority = 2
-        #   rule_definition {
-        #     actions = ["aws:pass"]
-        #     match_attributes {
-        #       source {
-        #         address_definition = "213.0.113.0/24"
-        #       }
-        #       source_port {
-        #         from_port = 9999
-        #         to_port   = 9999
-        #       }
-        #       destination {
-        #         address_definition = "data.aws_network_interface.nexus_alb_ni.association.public_ip"
-        #       }
-        #       destination_port {
-        #         from_port = 9999
-        #         to_port   = 9999
-        #       }
-        #     }     
-        #   }
-        # }    
+
 
 resource "aws_networkfirewall_rule_group" "allow-local" {
   capacity = 1000
