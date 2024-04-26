@@ -96,7 +96,7 @@ resource "aws_networkfirewall_rule_group" "deny-http-domains" {
       rules_source_list {
         generated_rules_type = "DENYLIST"
         target_types         = ["HTTP_HOST"]
-        targets              = [local.domain_name[*]]
+        targets              = ["local.domain_name[*]"]
       }
     }
   }
@@ -115,7 +115,7 @@ resource "aws_networkfirewall_rule_group" "deny-https-domains" {
       rules_source_list {
         generated_rules_type = "DENYLIST"
         target_types         = ["TLS_SNI"]
-        targets              = [local.domain_name[*]]
+        targets              = ["local.domain_name[*]"]
       }
     }
   }
@@ -177,7 +177,7 @@ resource "aws_networkfirewall_rule_group" "deny-ssh" {
       stateful_rule {
         action = "DROP"
         header {
-          destination      = aws_subnet.application.cidr_block
+          destination      = aws_subnet.subnet_user_dmz_pri[0].cidr_block
           destination_port = 22
           direction        = "ANY"
           protocol         = "SSH"
@@ -188,6 +188,20 @@ resource "aws_networkfirewall_rule_group" "deny-ssh" {
           keyword = "sid:1"
         }
       }
+      stateful_rule {
+        action = "DROP"
+        header {
+          destination      = aws_subnet.subnet_user_dmz_pri[0].cidr_block
+          destination_port = 80
+          direction        = "ANY"
+          protocol         = "HTTP"
+          source           = "0.0.0.0/0"
+          source_port      = 80
+        }
+        rule_option {
+          keyword = "sid:1"
+        }
+      }       
     }
   }
 
