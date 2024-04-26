@@ -87,7 +87,7 @@ count = 2
   }
 }
 
-data "aws_network_interfaces" "nexus_nlb_ni" {
+data "aws_network_interface" "nexus_nlb_ni" {
   filter {
     name   = "description"
     values = ["ELB net/dev-dmz-nexus-lb/*"]
