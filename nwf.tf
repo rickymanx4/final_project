@@ -78,7 +78,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 
     stateless_rule_group_reference {
       priority     = 1  
-      resource_arn = aws_networkfirewall_rule_group.nwf_rule_group.arn
+      resource_arn = "aws_networkfirewall_rule_group.nwf_rule_group.arn"
     }
     # 알려지고 확인된 활성 봇넷과 기타 명령 및 제어(C2) 호스트의 여러 소스에서 자동 생성된 서명
     stateful_rule_group_reference {
