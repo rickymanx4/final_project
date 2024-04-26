@@ -22,8 +22,8 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
                 address_definition = "213.0.113.0/24"
               }
               source_port {
-                from_port = 9999
-                to_port   = 9999
+                from_port = 22
+                to_port   = 22
               }
               destination {
                 address_definition = "0.0.0.0/0"
@@ -32,7 +32,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
                 from_port = 9999
                 to_port   = 9999
               }
-              protocols = [TCP]
+            #   protocols = [TCP]
             #   tcp_flag {
             #     flags = ["SYN"]
             #     masks = ["SYN", "ACK"]                   
