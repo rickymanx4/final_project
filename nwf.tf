@@ -98,8 +98,8 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
     #   priority     = 5      
     #   resource_arn = "arn:aws:network-firewall:us-east-1:aws-managed:stateful-rulegroup/BotNetCommandAndControlDomainsStrictOrder"
     # }    
-  }
-}
+#   }
+# }
 
 
 # resource "aws_networkfirewall_firewall" "user_network_firewall" { 
