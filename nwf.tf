@@ -78,7 +78,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 
     stateless_rule_group_reference {
       priority     = 1  
-      resource_arn = aws_networkfirewall_rule_group.nwf_rule_group.arn
+      resource_arn = "aws_networkfirewall_rule_group.nwf_rule_group.arn"
     }
 
 
