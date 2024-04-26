@@ -19,7 +19,8 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
             actions = ["aws:forward_to_sfe"]
             rule_options {
                 protocols = ["TCP"]
-                source_ports = [9999]            
+                source_ports = [9999] 
+            }               
             match_attributes {
               source {
                 address_definition = "213.0.113.0/24"
