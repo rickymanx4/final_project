@@ -32,7 +32,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
                 from_port = 9999
                 to_port   = 9999
               }
-              #protocols = [6]
+              protocols = [TCP]
             #   tcp_flag {
             #     flags = ["SYN"]
             #     masks = ["SYN", "ACK"]                   
