@@ -16,7 +16,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
         stateless_rule {
           priority = 1
           rule_definition {
-            actions = ["aws:pass"]
+            actions = ["aws:forward_to_sfe"]
             match_attributes {
               source {
                 address_definition = "213.0.113.0/24"
@@ -24,15 +24,13 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
               source_port {
                 from_port = 22
                 to_port   = 22
-                protocols = "TCP"
               }
               destination {
                 address_definition = "0.0.0.0/0"
               }
               destination_port {
-                from_port = 9999
-                to_port   = 9999
-                protocols = "TCP"
+                from_port = 22
+                to_port   = 22
               }
             #   protocols = [TCP]
             #   tcp_flag {
