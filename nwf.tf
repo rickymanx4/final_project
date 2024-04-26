@@ -218,7 +218,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 
     stateless_rule_group_reference {
       priority     = 1  
-      resource_arn = "aws_networkfirewall_rule_group.nwf_rule_group.arn"
+      resource_arn = aws_networkfirewall_rule_group.nwf_rule_group.arn
     }
     # stateful_default_actions = ["aws:drop_strict"]
     # stateful_rule_group_reference {     
