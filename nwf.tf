@@ -4,70 +4,68 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
   type     = "STATEFUL"
   rule_group {
     rules_source {
-      rules_string = <<-EOF
-        pass tcp from any to any port 80
-        pass tcp from any to any port 443
-        pass tcp from 213.0.113.3 to any port 22
-        drop tcp from any to any port 53
-        drop tcp from any to any port 25
-        drop tcp from any to any port 22
-      EOF         
-    #   stateless_rules_and_custom_actions {
-    #     stateless_rule {
-    #       priority = 1
-    #       rule_definition {
-    #         actions = ["aws:pass"]
-    #         match_attributes {
-    #           source {
-    #             address_definition = "213.0.113.0/24"
-    #           }
-    #           source_port {
-    #             from_port = 9999
-    #             to_port   = 9999
-    #           }
-    #           destination {
-    #             address_definition = "data.aws_network_interface.nexus_alb_ni.association.public_ip"
-    #           }
-    #           destination_port {
-    #             from_port = 9999
-    #             to_port   = 9999
-    #           }
-    #           #protocols = [6]
-    #         #   tcp_flag {
-    #         #     flags = ["SYN"]
-    #         #     masks = ["SYN", "ACK"]                   
-    #         # }
-    #         }     
-    #       }
-    #     }   
-    #     stateless_rule {
-    #       priority = 2
-    #       rule_definition {
-    #         actions = ["aws:pass"]
-    #         match_attributes {
-    #           source {
-    #             address_definition = "213.0.113.0/24"
-    #           }
-    #           source_port {
-    #             from_port = 9999
-    #             to_port   = 9999
-    #           }
-    #           destination {
-    #             address_definition = "data.aws_network_interface.nexus_alb_ni.association.public_ip"
-    #           }
-    #           destination_port {
-    #             from_port = 9999
-    #             to_port   = 9999
-    #           }
+    #   rules_string = <<-EOF
+    #     pass tcp from any to any port 80
+    #     pass tcp from any to any port 443
+    #     pass tcp from 213.0.113.3 to any port 22
+    #     drop tcp from any to any port 53
+    #     drop tcp from any to any port 25
+    #     drop tcp from any to any port 22
+    #   EOF         
+      stateless_rules_and_custom_actions {
+        stateless_rule {
+          priority = 1
+          rule_definition {
+            actions = ["aws:pass"]
+            match_attributes {
+              source {
+                address_definition = "213.0.113.0/24"
+              }
+              source_port {
+                from_port = 9999
+                to_port   = 9999
+              }
+              destination {
+                address_definition = "data.aws_network_interface.nexus_alb_ni.association.public_ip"
+              }
+              destination_port {
+                from_port = 9999
+                to_port   = 9999
+              }
               #protocols = [6]
             #   tcp_flag {
             #     flags = ["SYN"]
             #     masks = ["SYN", "ACK"]                   
             # }
-          }     
+            }     
+          }
+        }   
+        stateless_rule {
+          priority = 2
+          rule_definition {
+            actions = ["aws:pass"]
+            match_attributes {
+              source {
+                address_definition = "213.0.113.0/24"
+              }
+              source_port {
+                from_port = 9999
+                to_port   = 9999
+              }
+              destination {
+                address_definition = "data.aws_network_interface.nexus_alb_ni.association.public_ip"
+              }
+              destination_port {
+                from_port = 9999
+                to_port   = 9999
+              }
+            }     
+          }
+        }    
       }
-    }    
-
+    }
+  }
+}
 resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
   name = "nwf-policy"
   firewall_policy {
