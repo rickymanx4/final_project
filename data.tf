@@ -87,6 +87,13 @@ count = 2
   }
 }
 
+data "aws_network_interface" "nexus_alb_ni" {
+  filter {
+    name   = "description"
+    values = ["ELB net/${aws_lb.dev_dmz_nexus_lb[1].name}/*"]
+  }
+}
+
 data "aws_lb" "user_alb_arn" {
   count  = 2 
   name = "user-dmz-proxy-lb-${local.az_ac[count.index]}"
