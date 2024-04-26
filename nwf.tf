@@ -15,12 +15,12 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
       stateless_rules_and_custom_actions {
         stateless_rule {
           priority = 1
+          rule_options {
+              protocols = ["TCP"]
+              source_ports = [9999] 
+          }           
           rule_definition {
-            actions = ["aws:forward_to_sfe"]
-            rule_options {
-                protocols = ["TCP"]
-                source_ports = [9999] 
-            }               
+            actions = ["aws:forward_to_sfe"]             
             match_attributes {
               source {
                 address_definition = "213.0.113.0/24"
