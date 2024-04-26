@@ -90,7 +90,7 @@ count = 2
 data "aws_network_interface" "nexus_alb_ni" {
   filter {
     name   = "description"
-    values = ["ELB net/${aws_lb.dev_dmz_nexus_lb[1].name}/*"]
+    values = ["ELB net/${aws_lb.dev_dmz_nexus_lb.name}/*"]
   }
 }
 
