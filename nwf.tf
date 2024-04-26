@@ -1,6 +1,6 @@
 resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
   capacity = 100
-  name     = "nwf_rule_group"
+  name     = "nwf-rule-group"
   type     = "STATELESS"
   rule_group {
     rules_source {
@@ -17,7 +17,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
 }
 
 resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
-  name = "nwf_policy"
+  name = "nwf-policy"
   firewall_policy {
     stateless_default_actions          = ["aws:forward_to_sfe"]
     stateless_fragment_default_actions = ["aws:forward_to_sfe"]
