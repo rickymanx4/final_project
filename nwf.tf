@@ -1,9 +1,20 @@
 resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
-  capacity = 100
+  capacity = 1000
   name     = "nwf-rule-group"
   type     = "STATELESS"
   rule_group {
     rules_source {
+      stateless_rules_and_custom_actions {
+        stateless_rule {
+          priority = 1
+          rule_definition {
+            actions = ["aws:forward_to_sfe"]
+            match_attributes {
+              protocols = [1]                    
+            }
+          }
+        }
+      }    
       rules_string = <<-EOF
         pass tcp from any to any port 80
         pass tcp from any to any port 443
@@ -11,10 +22,11 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
         drop tcp from any to any port 53
         drop tcp from any to any port 25
         drop tcp from any to any port 22
-      EOF
+      EOF       
+      }
     }
   }
-}
+
 
 resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
   name = "nwf-policy"
