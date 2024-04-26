@@ -94,7 +94,7 @@ resource "aws_networkfirewall_rule_group" "deny-http-domains" {
   rule_group {
     rules_source {
       rules_source_list {
-        generated_rules_type = "DENYLIST"
+        generated_rules_type = "ALLOWLIST"
         target_types         = ["HTTP_HOST"]
         targets              = [local.domain_name[0], local.domain_name[1]]
       }
@@ -102,7 +102,7 @@ resource "aws_networkfirewall_rule_group" "deny-http-domains" {
   }
 
   tags = {
-    "Name" = "deny-http-domains"
+    "Name" = "allow-http-domains"
   }
 }
 
@@ -113,7 +113,7 @@ resource "aws_networkfirewall_rule_group" "deny-https-domains" {
   rule_group {
     rules_source {
       rules_source_list {
-        generated_rules_type = "DENYLIST"
+        generated_rules_type = "ALLOWLIST"
         target_types         = ["TLS_SNI"]
         targets              = [local.domain_name[0], local.domain_name[1]]
       }
@@ -121,7 +121,7 @@ resource "aws_networkfirewall_rule_group" "deny-https-domains" {
   }
 
   tags = {
-    "Name" = "deny-https-domains"
+    "Name" = "allow-https-domains"
   }
 }
 
@@ -156,7 +156,7 @@ resource "aws_networkfirewall_rule_group" "deny-http" {
           source_port      = 80
         }
         rule_option {
-          keyword = "sid:1"
+          keyword = "sid:2"
         }
       }      
     }
@@ -199,7 +199,7 @@ resource "aws_networkfirewall_rule_group" "deny-ssh" {
           source_port      = 22
         }
         rule_option {
-          keyword = "sid:1"
+          keyword = "sid:2"
         }
       }       
     }
