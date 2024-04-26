@@ -87,16 +87,16 @@ count = 2
   }
 }
 
-data "aws_network_interface" "nexus_nlb_ni" {
-  count =2
+data "aws_network_interfaces" "nexus_nlb_ni" {
+  # count =2
   filter {
     name   = "description"
     values = ["ELB net/dev-dmz-nexus-lb/*"]
   }
-  filter {
-    name   = "subnet-id"
-    values = [aws_subnet.subnet_dev_dmz_pub[count.index+4].id]
-  }
+  # filter {
+  #   name   = "subnet-id"
+  #   values = [aws_subnet.subnet_dev_dmz_pub[count.index+4].id]
+  # }
 }  
 
 
