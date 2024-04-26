@@ -72,7 +72,7 @@ resource "aws_networkfirewall_firewall" "user_network_firewall" {
     subnet_id = [aws_subnet.subnet_user_dmz_pub[2].id, aws_subnet.subnet_user_dmz_pub[3].id]
   }
   tags = {
-    Name = "${var.name[0]-nwf}" 
+    Name = "${var.name[0]}-nwf" 
   }
   timeouts {
     create = "20m"
@@ -92,7 +92,7 @@ resource "aws_networkfirewall_firewall" "dev_network_firewall" {
     subnet_id = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
   }
   tags = {
-    Name = "${var.name[1]-nwf}" 
+    Name = "${var.name[1]}-nwf" 
   }
   timeouts {
     create = "20m"
