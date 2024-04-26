@@ -7,5 +7,5 @@ output "dev_dmz_nexus_dns_name" {
 }
 
 output "dev_dmz_nexus_eni_pub_ip" {
-  value = data.aws_network_interfaces.nexus_nlb_ni.id
+  value = data.aws_network_interface.nexus_nlb_ni.id
 }
