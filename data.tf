@@ -94,7 +94,7 @@ data "aws_network_interface" "nexus_alb_ni" {
   }
   filter {
     name   = "subnet-id"
-    values = [aws_subnet.subnet_dev_dmz_[3].id]
+    values = [aws_subnet.subnet_dev_dmz[3].id]
   }
 }  
 
