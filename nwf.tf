@@ -97,9 +97,9 @@ resource "aws_networkfirewall_firewall" "dev_network_firewall" {
   tags = {
     Name = "${var.name[1]}-nwf" 
   }
+}  
 #   timeouts {
 #     create = "20m"
 #     update = "20m"
 #     delete = "20m"
 #   }
-# }
