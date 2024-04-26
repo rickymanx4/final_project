@@ -220,7 +220,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
     #   priority     = 1  
     #   resource_arn = "aws_networkfirewall_rule_group.nwf_rule_group.arn"
     # }
-
+    stateful_default_actions = ["aws:forward_to_sfe"]
     stateful_rule_group_reference {     
       resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetStrictOrder"
     }    
