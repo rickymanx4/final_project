@@ -9,7 +9,6 @@ resource "aws_subnet" "subnet_user_dmz_pub" {
   vpc_id              = aws_vpc.project_vpc[0].id
   cidr_block          = element(local.user_dmz_pub_subnet, count.index)
   availability_zone   = element(local.azs_6, count.index)
-
   tags = {
     Name = "${local.names[0]}-pub-${local.userdev_pub_name[count.index]}-${local.az_ac_6[count.index]}"
   }

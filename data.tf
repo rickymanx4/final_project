@@ -92,7 +92,12 @@ data "aws_network_interface" "nexus_alb_ni" {
     name   = "description"
     values = ["ELB net/${aws_lb.dev_dmz_nexus_lb.name}/*"]
   }
-}
+  filter {
+    name   = "subnet-id"
+    values = [aws_subnet.subnet_dev_dmz_[3].id]
+  }
+}  
+
 
 data "aws_lb" "user_alb_arn" {
   count  = 2 
