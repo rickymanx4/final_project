@@ -94,7 +94,7 @@ data "aws_network_interface" "nexus_nlb_ni" {
   }
   filter {
     name   = "subnet-id"
-    values = [aws_subnet.subnet_dev_dmz_pub[3].id]
+    values = [aws_subnet.subnet_dev_dmz_pub[4].id]
   }
 }  
 
