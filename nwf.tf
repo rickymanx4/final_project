@@ -4,17 +4,17 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
   type     = "STATELESS"
   rule_group {
     rules_source {
-      stateless_rules_and_custom_actions {
-        stateless_rule {
-          priority = 1
-          rule_definition {
-            actions = ["aws:forward_to_sfe"]
-            match_attributes {
-              protocols = [1]                    
-            }
-          }
-        }
-      }    
+    #   stateless_rules_and_custom_actions {
+    #     stateless_rule {
+    #       priority = 1
+    #       rule_definition {
+    #         actions = ["aws:forward_to_sfe"]
+    #         match_attributes {
+    #           protocols = [1]                    
+    #         }
+    #       }
+    #     }
+    #   }    
       rules_string = <<-EOF
         pass tcp from any to any port 80
         pass tcp from any to any port 443
