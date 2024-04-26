@@ -192,11 +192,11 @@ resource "aws_networkfirewall_rule_group" "deny-ssh" {
         action = "DROP"
         header {
           destination      = aws_subnet.subnet_user_dmz_pri[1].cidr_block
-          destination_port = 80
+          destination_port = 22
           direction        = "ANY"
           protocol         = "HTTP"
           source           = "0.0.0.0/0"
-          source_port      = 80
+          source_port      = 22
         }
         rule_option {
           keyword = "sid:1"
