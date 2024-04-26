@@ -222,9 +222,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
     # }
 
     stateful_rule_group_reference {     
-      resource_arn = [
-        "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetStrictOrder"
-      ]
+      resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetStrictOrder"
     }    
     
         # "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetWebStrictOrder",
