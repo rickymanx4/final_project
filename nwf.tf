@@ -18,7 +18,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
                 to_port   = 9999
               }
               destination {
-                address_definition = aws_subnet.subnet_dev_dmz_pub[4]
+                address_definition = "aws_subnet.subnet_dev_dmz_pub[4]"
               }
               destination_port {
                 from_port = 9999
@@ -45,7 +45,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
                 to_port   = 8888
               }
               destination {
-                address_definition = aws_subnet.subnet_dev_dmz_pub[5]
+                address_definition = "aws_subnet.subnet_dev_dmz_pub[5]"
               }
               destination_port {
                 from_port = 8888
