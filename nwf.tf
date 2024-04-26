@@ -15,10 +15,10 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
       stateless_rules_and_custom_actions {
         stateless_rule {
           priority = 1
-          rule_options {
-              protocols = ["TCP"]
-              source_ports = [9999] 
-          }           
+        #   rule_options {
+        #       protocols = ["TCP"]
+        #       source_ports = [9999] 
+        #   }           
           rule_definition {
             actions = ["aws:forward_to_sfe"]             
             match_attributes {
@@ -36,7 +36,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
                 from_port = 9999
                 to_port   = 9999
               }
-            #   protocols = [TCP]
+              protocols = [6]
             #   tcp_flag {
             #     flags = ["SYN"]
             #     masks = ["SYN", "ACK"]                   
