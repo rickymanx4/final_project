@@ -1,7 +1,7 @@
 resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
   capacity = 1000
   name     = "nwf-rule-group"
-  type     = "STATEFUL"
+  type     = "STATELESS"
   rule_group {
     rules_source {
     #   rules_string = <<-EOF
