@@ -39,7 +39,7 @@ locals {
     user_dmz_alb            = tolist(data.aws_lb.user_alb_arn[*].arn)
     dev_dmz_alb             = tolist(data.aws_lb.dev_alb_arn[*].arn)
 
-    nexus_nlb               = tolist(data.aws_network_interface[*].nexus_nlb_ni.association.public_ip)
+    nexus_nlb               = tolist(data.aws_network_interface.nexus_nlb_ni[*].association.public_ip)
 
     dmz_ports               = [22, 80, 9999, 8888]    
     shared_ext_ports        = [5555, 6666]
