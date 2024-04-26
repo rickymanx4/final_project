@@ -6,6 +6,6 @@ output "dev_dmz_nexus_dns_name" {
   value = aws_lb.dev_dmz_nexus_lb.dns_name
 }
 
-output "dev_dmz_nexus_eni_pub_ip" {
-  value = tolist(data.aws_network_interface.nexus_alb_ni.*.public_ip)
-}
+# output "dev_dmz_nexus_eni_pub_ip" {
+#   value = tolist(data.aws_network_interface.nexus_alb_ni.*.public_ip)
+# }
