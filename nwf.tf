@@ -64,7 +64,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 resource "aws_networkfirewall_firewall" "user_network_firewall" { 
   name                               = "${var.name[0]}-nwf"
   firewall_policy_arn                = aws_networkfirewall_firewall_policy.nwf_policy.arn
-  vpc_id                             = aws_vpc.project_vpc[0]
+  vpc_id                             = aws_vpc.project_vpc[0].id
   # 나중에 true로 변경
   firewall_policy_change_protection  = false
   subnet_change_protection           = false
@@ -87,7 +87,7 @@ resource "aws_networkfirewall_firewall" "user_network_firewall" {
 resource "aws_networkfirewall_firewall" "dev_network_firewall" { 
   name                               = "${var.name[1]}-nwf"
   firewall_policy_arn                = aws_networkfirewall_firewall_policy.nwf_policy.arn
-  vpc_id                             = aws_vpc.project_vpc[1]
+  vpc_id                             = aws_vpc.project_vpc[1].id
   # 나중에 true로 변경
   firewall_policy_change_protection  = false
   subnet_change_protection           = false
