@@ -6,7 +6,7 @@
 
 resource "aws_route53_record" "nadri" {
   zone_id        = local.host_zone
-  name           = local.domain_name
+  name           = local.domain_name[0]
   type           = "A"
   # set_identifier = "nadri-${local.az_ac[count.index]}"
   # records        = [aws_lb.user_dmz_proxy_lb.dns_name]
@@ -23,7 +23,7 @@ resource "aws_route53_record" "nadri" {
 
 resource "aws_route53_record" "www_nadri" {
   zone_id        = local.host_zone
-  name           = "www.${local.domain_name}"
+  name           = local.domain_name[1]
   type           = "A"
   alias {
     name                   = aws_cloudfront_distribution.user_dmz_alb_cf.domain_name
@@ -74,8 +74,8 @@ resource "aws_route53_record" "no_acm_record" {
 
 ######################### b. ACM create ################################
 resource "aws_acm_certificate" "cert" {
-  domain_name                = local.domain_name
-  subject_alternative_names  = ["www.${local.domain_name}"]
+  domain_name                = local.domain_name[0]
+  subject_alternative_names  = [local.domain_name[1]]
   validation_method          = "DNS"
   provider                   = aws.virginia
   tags = {

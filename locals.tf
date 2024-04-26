@@ -53,7 +53,7 @@ locals {
 
     cf_origin_name          = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
 
-    domain_name             = "nadri-project.com"
+    domain_name             = ["nadri-project.com", "www.nadri-project.com"]
     host_zone               = "Z07664632DQ4G268CW0D1"
     acm_cert                = "arn:aws:acm:us-east-1:707677861059:certificate/9f1b94c3-b1cd-4de1-b080-20094264264e"
 
