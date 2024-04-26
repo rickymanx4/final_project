@@ -6,7 +6,7 @@
 resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   comment = "nadri-project-cf"
-  aliases = [local.domain_name[*]]
+  aliases = ["local.domain_name[*]"]
   web_acl_id = aws_wafv2_web_acl.cf_wacl.arn
   provider     = aws.virginia
   origin {
