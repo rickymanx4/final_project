@@ -62,14 +62,14 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 
 
 resource "aws_networkfirewall_firewall" "user_network_firewall" { 
-  name                               = "${var.name[0]-nwf}"
+  name                               = "${var.name[0]}-nwf"
   firewall_policy_arn                = aws_networkfirewall_firewall_policy.nwf_policy.arn
   vpc_id                             = aws_vpc.project_vpc[0]
   # 나중에 true로 변경
   firewall_policy_change_protection  = false
   subnet_change_protection           = false
   subnet_mapping {
-    subnet_id = aws_subnet.subnet_user_dmz_pub[count.index + 2].id
+    subnet_id = [aws_subnet.subnet_user_dmz_pub[2].id, aws_subnet.subnet_user_dmz_pub[3].id]
   }
   tags = {
     Name = "${var.name[0]-nwf}" 
@@ -82,14 +82,14 @@ resource "aws_networkfirewall_firewall" "user_network_firewall" {
 }
 
 resource "aws_networkfirewall_firewall" "dev_network_firewall" { 
-  name                               = "${var.name[1]-nwf}"
+  name                               = "${var.name[1]}-nwf"
   firewall_policy_arn                = aws_networkfirewall_firewall_policy.nwf_policy.arn
   vpc_id                             = aws_vpc.project_vpc[1]
   # 나중에 true로 변경
   firewall_policy_change_protection  = false
   subnet_change_protection           = false
   subnet_mapping {
-    subnet_id = aws_subnet.subnet_dev_dmz_pub[count.index + 2].id
+    subnet_id = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
   }
   tags = {
     Name = "${var.name[1]-nwf}" 
