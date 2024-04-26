@@ -73,13 +73,13 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
 resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
   name = "nwf-policy"
   firewall_policy {
-    stateless_default_actions          = ["aws:forward_to_sfe"]
-    stateless_fragment_default_actions = ["aws:forward_to_sfe"]
+    # stateless_default_actions          = ["aws:forward_to_sfe"]
+    # stateless_fragment_default_actions = ["aws:forward_to_sfe"]
 
-    stateless_rule_group_reference {
-      priority     = 1  
-      resource_arn = aws_networkfirewall_rule_group.nwf_rule_group.arn
-    }
+    # stateless_rule_group_reference {
+    #   priority     = 1  
+    #   resource_arn = aws_networkfirewall_rule_group.nwf_rule_group.arn
+    # }
 
 
     # 알려지고 확인된 활성 봇넷과 기타 명령 및 제어(C2) 호스트의 여러 소스에서 자동 생성된 서명
