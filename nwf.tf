@@ -182,7 +182,7 @@ resource "aws_networkfirewall_rule_group" "deny-ssh" {
           direction        = "ANY"
           protocol         = "SSH"
           source           = "0.0.0.0/0"
-          source_port      = "ANY"
+          source_port      = 22
         }
         rule_option {
           keyword = "sid:1"
@@ -194,7 +194,7 @@ resource "aws_networkfirewall_rule_group" "deny-ssh" {
           destination      = aws_subnet.subnet_user_dmz_pri[1].cidr_block
           destination_port = 22
           direction        = "ANY"
-          protocol         = "HTTP"
+          protocol         = "SSH"
           source           = "0.0.0.0/0"
           source_port      = 22
         }
