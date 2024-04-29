@@ -228,12 +228,12 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 
     stateful_default_actions = ["aws:forward_to_sfe"]
 
-    stateless_rule_group_reference {
+    stateful_rule_group_reference {
       priority     = 1  
       resource_arn = aws_networkfirewall_rule_group.deny-ssh.arn
     }  
 
-    stateless_rule_group_reference {
+    stateful_rule_group_reference {
       priority     = 2  
       resource_arn = aws_networkfirewall_rule_group.deny-http.arn
     }      
