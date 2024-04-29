@@ -215,7 +215,8 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
   firewall_policy {
     stateless_default_actions          = ["aws:forward_to_sfe"]
     stateless_fragment_default_actions = ["aws:forward_to_sfe"]
-
+    stateful_default_actions           = ["aws:forward_to_sfe"]
+    
     stateless_rule_group_reference {
       priority     = 1  
       resource_arn = aws_networkfirewall_rule_group.nwf_rule_group.arn
@@ -225,8 +226,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
       priority     = 2  
       resource_arn = aws_networkfirewall_rule_group.allow-local.arn
     }  
-
-    stateful_default_actions = ["aws:forward_to_sfe"]
+   
 
     stateful_rule_group_reference {    
       resource_arn = aws_networkfirewall_rule_group.deny-ssh.arn
