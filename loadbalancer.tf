@@ -107,7 +107,7 @@ resource "aws_lb" "dev_dmz_nexus_lb" {
   name               = "${var.name[1]}-nexus-lb"
   load_balancer_type = "network"
   internal           = false
-  subnets            = [aws_subnet.subnet_dev_dmz_pub[4].id, aws_subnet.subnet_dev_dmz_pub[5].id]
+  subnets            = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
   security_groups    =  [aws_security_group.dmz_lb_sg[1].id]
 }
 
