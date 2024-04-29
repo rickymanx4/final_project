@@ -239,7 +239,7 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy_statefull" {
     stateless_fragment_default_actions = ["aws:forward_to_sfe"]
     stateful_default_actions           = ["aws:forward_to_sfe"]
     stateful_engine_options {
-      rule_order = "ACTION_ORDER"
+      rule_order = "DEFAULT_ACTION_ORDER"
     }
 
     stateful_rule_group_reference {    
