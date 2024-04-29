@@ -229,17 +229,28 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
       priority     = 2  
       resource_arn = aws_networkfirewall_rule_group.allow-local.arn
     }  
-   
+  }
+}   
 
-    # stateful_rule_group_reference {    
-    #   priority     = 1      
-    #   resource_arn = arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-ssh
-    # }  
+resource "aws_networkfirewall_firewall_policy" "nwf_policy_statefull" {
+  name = "nwf-policy-statefull"
+  firewall_policy {
+    # stateless_default_actions          = ["aws:forward_to_sfe"]
+    # stateless_fragment_default_actions = ["aws:forward_to_sfe"]
+    stateful_default_actions           = ["aws:forward_to_sfe"]
+    stateful_engine_options {
+      rule_order = "STRICT_ORDER"
+    }
 
-    # stateful_rule_group_reference {
-    #   priority     = 2      
-    #   resource_arn = arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-http
-    # }      
+    stateful_rule_group_reference {    
+      priority     = 1      
+      resource_arn = arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-ssh
+    }  
+
+    stateful_rule_group_reference {
+      priority     = 2      
+      resource_arn = arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-http
+    }      
     # # 알려지고 확인된 활성 봇넷과 기타 명령 및 제어(C2) 호스트의 여러 소스에서 자동 생성된 서명(s)
     # stateful_rule_group_reference {
     #   priority     = 1        
