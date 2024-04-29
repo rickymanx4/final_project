@@ -232,63 +232,54 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
 
     stateful_rule_group_reference {    
       # priority     = 1      
-      resource_arn = "arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-ssh"
+      resource_arn = aws_networkfirewall_rule_group.deny_ssh.arn
     }  
 
     stateful_rule_group_reference {
       # priority     = 2      
-      resource_arn = "arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-http"
+      resource_arn = aws_networkfirewall_rule_group.deny_http.arn
     }  
 
   }
 }   
 
-# resource "aws_networkfirewall_firewall_policy" "nwf_policy_statefull" {
-#   name = "nwf-policy-statefull"
-#   firewall_policy {
-#     stateless_default_actions          = ["aws:forward_to_sfe"]
-#     stateless_fragment_default_actions = ["aws:forward_to_sfe"]
-#     # stateful_default_actions           = ["aws:forward_to_sfe"]
-#     stateful_engine_options {
-#       rule_order = "DEFAULT_ACTION_ORDER"
-#     }
-
-#     stateful_rule_group_reference {    
-#       # priority     = 1      
-#       resource_arn = "arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-ssh"
-#     }  
-
-#     stateful_rule_group_reference {
-#       # priority     = 2      
-#       resource_arn = "arn:aws:network-firewall:ap-northeast-2:707677861059:stateful-rulegroup/deny-http"
-#     }      
-    # # 알려지고 확인된 활성 봇넷과 기타 명령 및 제어(C2) 호스트의 여러 소스에서 자동 생성된 서명(s)
-    # stateful_rule_group_reference {
-    #   priority     = 1        
-    #   resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetStrictOrder"
-    # }
-    # # HTTP 봇넷을 탐지하는 서명
-    # stateful_rule_group_reference {
-    #   priority     = 2          
-    #   resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetWebStrictOrder"
-    # }
-    # # 코인 채굴을 수행하는 악성 코드를 탐지하는 규칙이 포함된 서명
-    # stateful_rule_group_reference {
-    #   priority     = 3          
-    #   resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesMalwareCoinminingStrictOrder"
-    # }         
-    # # 합법적이지만 손상되어 멜웨어를 호스팅을 할 수 있는 도메인 클래스에 대한 차단
-    # stateful_rule_group_reference {
-    #   priority     = 4            
-    #   resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/AbusedLegitMalwareDomainsStrictOrder"
-    # }    
-    # # 봇넷을 호스팅하는 것으로 알려진 도메인에 대한 요청을 차단
-    # stateful_rule_group_reference {
-    #   priority     = 5      
-    #   resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/BotNetCommandAndControlDomainsStrictOrder"
-    # }    
-#   }
-# }
+resource "aws_networkfirewall_firewall_policy" "nwf_policy_aws_managed" {
+  name = "nwf-policy-aws-managed"
+  firewall_policy {
+    stateless_default_actions          = ["aws:forward_to_sfe"]
+    stateless_fragment_default_actions = ["aws:forward_to_sfe"]
+    # stateful_default_actions           = ["aws:forward_to_sfe"]
+    stateful_engine_options {
+      rule_order = "STRICT_ORDER"
+    }
+     
+    # 알려지고 확인된 활성 봇넷과 기타 명령 및 제어(C2) 호스트의 여러 소스에서 자동 생성된 서명(s)
+    stateful_rule_group_reference {
+      priority     = 1        
+      resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetStrictOrder"
+    }
+    # HTTP 봇넷을 탐지하는 서명
+    stateful_rule_group_reference {
+      priority     = 2          
+      resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetWebStrictOrder"
+    }
+    # 코인 채굴을 수행하는 악성 코드를 탐지하는 규칙이 포함된 서명
+    stateful_rule_group_reference {
+      priority     = 3          
+      resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesMalwareCoinminingStrictOrder"
+    }         
+    # 합법적이지만 손상되어 멜웨어를 호스팅을 할 수 있는 도메인 클래스에 대한 차단
+    stateful_rule_group_reference {
+      priority     = 4            
+      resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/AbusedLegitMalwareDomainsStrictOrder"
+    }    
+    # 봇넷을 호스팅하는 것으로 알려진 도메인에 대한 요청을 차단
+    stateful_rule_group_reference {
+      priority     = 5      
+      resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/BotNetCommandAndControlDomainsStrictOrder"
+    }    
+  }
+}
 
 
 # resource "aws_networkfirewall_firewall" "user_network_firewall" { 
