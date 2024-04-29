@@ -282,28 +282,28 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy_aws_managed" {
 }
 
 
-# resource "aws_networkfirewall_firewall" "user_network_firewall" { 
-#   name                               = "${var.name[0]}-nwf"
-#   firewall_policy_arn                = aws_networkfirewall_firewall_policy.nwf_policy.arn
-#   vpc_id                             = aws_vpc.project_vpc[0].id
-#   # 나중에 true로 변경
-#   firewall_policy_change_protection  = false
-#   subnet_change_protection           = false
-#   subnet_mapping {
-#     subnet_id = aws_subnet.subnet_user_dmz_pub[2].id
+resource "aws_networkfirewall_firewall" "user_network_firewall" { 
+  name                               = "${var.name[0]}-nwf"
+  firewall_policy_arn                = aws_networkfirewall_firewall_policy.nwf_policy.arn
+  vpc_id                             = aws_vpc.project_vpc[0].id
+  # 나중에 true로 변경
+  firewall_policy_change_protection  = false
+  subnet_change_protection           = false
+  subnet_mapping {
+    subnet_id = aws_subnet.subnet_user_dmz_pub[2].id
+  }
+  subnet_mapping {
+    subnet_id = aws_subnet.subnet_user_dmz_pub[3].id    
+  }
+  tags = {
+    Name = "${var.name[0]}-nwf" 
+  }
+#   timeouts {
+#     create = "20m"
+#     update = "20m"
+#     delete = "20m"
 #   }
-#   subnet_mapping {
-#     subnet_id = aws_subnet.subnet_user_dmz_pub[3].id    
-#   }
-#   tags = {
-#     Name = "${var.name[0]}-nwf" 
-#   }
-# #   timeouts {
-# #     create = "20m"
-# #     update = "20m"
-# #     delete = "20m"
-# #   }
-# }
+}
 
 # resource "aws_networkfirewall_firewall" "dev_network_firewall" { 
 #   name                               = "${var.name[1]}-nwf"
