@@ -137,11 +137,11 @@ data "aws_vpc_endpoint" "user_nwf_endpoints" {
 data "aws_vpc_endpoint" "dev_nwf_endpoints" {
   count =2
   vpc_id   = aws_vpc.project_vpc[1].id
-  subnet_ids = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]
-  # filter {
-  #   name   = "cidr_blocks"
-  #   values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].cidr_block]
-  # }
+  #subnet_ids = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]
+  filter {
+    name   = "subnet-id"
+    values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].cidr_block]
+  }
 }  
 
 
