@@ -129,8 +129,7 @@ data "aws_vpc_endpoint" "user_nwf_endpoints" {
   vpc_id   = aws_vpc.project_vpc[0].id
  
   filter {
-    name   = "cidr-blocks"
-    values = [aws_subnet.subnet_user_dmz_pub[count.index + 2].cidr_block]
+    cidr-blocks = aws_subnet.subnet_user_dmz_pub[count.index + 2].cidr_block
   }
 }  
 
