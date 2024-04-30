@@ -18,11 +18,11 @@ resource "aws_route_table" "user_dmz_igw_rt" {
   }
 }
 
-resource "aws_route" "route_igw" {
-  route_table_id            = aws_route_table.user_dmz_igw_rt.id
-  destination_cidr_block    = "0.0.0.0/0"
-  gateway_id                = aws_internet_gateway.gw_internet[0].id
-}
+# resource "aws_route" "route_igw" {
+#   route_table_id            = aws_route_table.user_dmz_igw_rt.id
+#   destination_cidr_block    = "0.0.0.0/0"
+#   gateway_id                = aws_internet_gateway.gw_internet[0].id
+# }
 
 resource "aws_route_table" "user_dmz_nat_nwf_rt" {
   count = 2
@@ -97,6 +97,21 @@ resource "aws_route_table" "user_dmz_tgw_rt" {
 
 
 ################################ a. dev_dmz_public(nat_nwf, lb) ################################
+resource "aws_route_table" "dev_dmz_igw_rt" {
+  vpc_id = local.user_dev_vpc[1]
+  route {
+    cidr_block = local.dev_dmz_pub_subnet[2]
+    network_interface_id = local.dev_dmz_end[0]
+  }
+  route {
+    cidr_block = local.dev_dmz_pub_subnet[3]
+    network_interface_id = local.dev_dmz_end[1]
+  }
+  tags = {
+    Name = "${local.names[1]}_igw_rt"
+  }
+}
+
 
 resource "aws_route_table" "dev_dmz_nat_nwf_rt" {
   count = 2
@@ -243,6 +258,11 @@ resource "aws_route_table" "prodtest_tgw_rt" {
 
 ################################ a. user_dmz ################################
 
+resource "aws_route_table_association" "user_dmz_igw_rt_asso" {
+  gateway_id     = aws_internet_gateway.gw_internet[0].id
+  route_table_id = aws_route_table.user_dmz_igw_rt.id
+}
+
 resource "aws_route_table_association" "user_dmz_nat_nwf_rt_a_asso" {
   count          = 2
   subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index * 2].id
@@ -274,6 +294,11 @@ resource "aws_route_table_association" "user_dmz_tgw_rt_asso" {
 }
 
 # # ################################ b. dev_dmz ################################
+
+resource "aws_route_table_association" "dev_dmz_igw_rt_asso" {
+  gateway_id     = aws_internet_gateway.gw_internet[1].id
+  route_table_id = aws_route_table.dev_dmz_igw_rt.id
+}
 
 resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_a_asso" {
   count          = 2
