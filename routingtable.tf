@@ -97,7 +97,7 @@ resource "aws_route_table" "dev_dmz_lb_rt" {
   vpc_id = local.user_dev_vpc[1]
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = aws_networkfirewall_firewall.dev_network_firewall.firewall_status.endpoint_id[count.index]
+    vpc_endpoint_id = aws_networkfirewall_firewall.dev_network_firewall.endpoint_id[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
