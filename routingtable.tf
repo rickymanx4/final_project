@@ -24,7 +24,7 @@ resource "aws_route_table" "user_dmz_lb_rt" {
   vpc_id = local.user_dev_vpc[0]
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id =  aws_networkfirewall_firewall.user_network_firewall.*.firewall_status[count.index].*.sync_states[count.index].*.attachment[count.index].*.endpoint_id[count.index]
+    network_interface_id = local.user_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
@@ -42,7 +42,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[0].id
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = aws_networkfirewall_firewall.user_network_firewall.*.firewall_status[count.index].*.sync_states[count.index].*.attachment[count.index].*.endpoint_id[count.index]
+    network_interface_id = local.user_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
@@ -98,7 +98,7 @@ resource "aws_route_table" "dev_dmz_lb_rt" {
   vpc_id = local.user_dev_vpc[1]
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = aws_networkfirewall_firewall.dev_network_firewall.*.firewall_status[count.index].*.sync_states[count.index].*.attachment[count.index].*.endpoint_id[count.index]
+    network_interface_id = local.dev_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
@@ -116,7 +116,7 @@ resource "aws_route_table" "dev_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[1].id
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = aws_networkfirewall_firewall.dev_network_firewall.*.firewall_status[count.index].*.sync_states[count.index].*.attachment[count.index].*.endpoint_id[count.index]
+    network_interface_id = local.dev_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
