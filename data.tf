@@ -129,7 +129,7 @@ data "aws_vpc_endpoint" "user_nwf_endpoints" {
   vpc_id   = aws_vpc.project_vpc[0].id
 #  subnet_ids = [aws_subnet.subnet_user_dmz_pub[count.index + 2].id]
   filter {
-    name   = "subnet-id"
+    name   = "subnet_ids"
     values = [aws_subnet.subnet_user_dmz_pub[count.index + 2].id]
   }
 }  
@@ -139,7 +139,7 @@ data "aws_vpc_endpoint" "dev_nwf_endpoints" {
   vpc_id   = aws_vpc.project_vpc[1].id
   #subnet_ids = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]
   filter {
-    name   = "subnet-id"
+    name   = "subnet_ids"
     values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].cidr_block]
   }
 }  
