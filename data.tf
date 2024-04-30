@@ -127,20 +127,21 @@ data "aws_wafv2_web_acl" "cf_wacl" {
 data "aws_vpc_endpoint" "user_nwf_endpoints" {
   count =2
   vpc_id   = aws_vpc.project_vpc[0].id
- 
-  filter {
-    cidr_blocks = aws_subnet.subnet_user_dmz_pub[count.index + 2].cidr_block
-  }
+  subnet_id = aws_subnet.user_dmz_pub[count.index + 2].id
+  # filter {
+  #   name   = "cidr_blocks"
+  #   values = [aws_subnet.subnet_user_dmz_pub[count.index + 2].cidr_block]
+  # }
 }  
 
 data "aws_vpc_endpoint" "dev_nwf_endpoints" {
   count =2
   vpc_id   = aws_vpc.project_vpc[1].id
-
-  filter {
-    name   = "cidr-blocks"
-    values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].cidr_block]
-  }
+  subnet_id = aws_subnet.dev_dmz_pub[count.index + 2].id
+  # filter {
+  #   name   = "cidr_blocks"
+  #   values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].cidr_block]
+  # }
 }  
 
 
