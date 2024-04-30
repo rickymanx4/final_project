@@ -132,7 +132,7 @@ data "aws_network_interface" "user_nwf_endpoints" {
   }
   filter {
     name   = "subnet-id"
-    values = [aws_subnet.subnet_user_dmz_pub[count.index + 2]]
+    values = [aws_subnet.subnet_user_dmz_pub[count.index + 2].id]
   }
 }  
 
@@ -145,7 +145,7 @@ data "aws_network_interface" "dev_nwf_endpoints" {
   #cidr_blocks = [local.dev_dmz_pub_subnet[count.index + 2]]
   filter {
     name   = "subnet-id"
-    values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2]]
+    values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]
   }
 }  
 
