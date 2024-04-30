@@ -55,7 +55,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
 
 ################################ c. user_dmz_pri_tgw ################################
 
-resource "aws_route_table" "dmz_tgw_rt" {
+resource "aws_route_table" "user_dmz_tgw_rt" {
   count  = 2
   vpc_id = aws_vpc.project_vpc[0].id
   
@@ -128,7 +128,7 @@ resource "aws_route_table" "dev_dmz_proxy_rt" {
 
 ################################ c. dev_dmz_pri_tgw ################################
 
-resource "aws_route_table" "dmz_tgw_rt" {
+resource "aws_route_table" "dev_dmz_tgw_rt" {
   count  = 2
   vpc_id = aws_vpc.project_vpc[1].id
 
