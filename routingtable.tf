@@ -6,11 +6,11 @@
 resource "aws_route_table" "user_dmz_igw_rt" {
   vpc_id = local.user_dev_vpc[0]
   route {
-    cidr_block = local.user_dmz_pub_subnet[2]
+    cidr_block = local.user_dmz_pub_subnet[4]
     network_interface_id = local.user_dmz_end[0]
   }
   route {
-    cidr_block = local.user_dmz_pub_subnet[3]
+    cidr_block = local.user_dmz_pub_subnet[5]
     network_interface_id = local.user_dmz_end[1]
   }
   tags = {
@@ -100,11 +100,11 @@ resource "aws_route_table" "user_dmz_tgw_rt" {
 resource "aws_route_table" "dev_dmz_igw_rt" {
   vpc_id = local.user_dev_vpc[1]
   route {
-    cidr_block = local.dev_dmz_pub_subnet[2]
+    cidr_block = local.dev_dmz_pub_subnet[4]
     network_interface_id = local.dev_dmz_end[0]
   }
   route {
-    cidr_block = local.dev_dmz_pub_subnet[3]
+    cidr_block = local.dev_dmz_pub_subnet[5]
     network_interface_id = local.dev_dmz_end[1]
   }
   tags = {
