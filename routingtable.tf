@@ -43,14 +43,15 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   route {
     cidr_block = "0.0.0.0/0"
     vpc_endpoint_id = aws_networkfirewall_firewall.user_network_firewall.firewall_status[count.index].sync_states[count.index].attachment[count.index].endpoint_id[count.index]
+  }
   # route {
   #   cidr_block = "10.0.0.0/8"
   #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   # }  
+
   tags = {
     Name = "${local.names[0]}_${local.userdev_pri_name[0]}_rt_${local.az_ac[count.index]}"
-    }
-  }
+  }  
 }
 
 ################################ c. user_dmz_pri_tgw ################################
