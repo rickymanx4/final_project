@@ -124,25 +124,25 @@ data "aws_wafv2_web_acl" "cf_wacl" {
     aws_wafv2_web_acl.cf_wacl
   ]
 }
-data "aws_vpc_endpoint" "user_nwf_endpoints" {
-  count =2
-  vpc_id   = aws_vpc.project_vpc[0].id
-  # cidr_blocks = [local.user_dmz_pub_subnet[count.index + 2]]
-  filter {
-    name   = "cidr-block"
-    values = [local.user_dmz_pub_subnet[count.index + 2]]
-  }
-}  
+# data "aws_vpc_endpoint" "user_nwf_endpoints" {
+#   count =2
+#   vpc_id   = aws_vpc.project_vpc[0].id
+#   # cidr_blocks = [local.user_dmz_pub_subnet[count.index + 2]]
+#   filter {
+#     name   = "cidr-block"
+#     values = [local.user_dmz_pub_subnet[count.index + 2]]
+#   }
+# }  
 
-data "aws_vpc_endpoint" "dev_nwf_endpoints" {
-  count =2
-  vpc_id   = aws_vpc.project_vpc[1].id
-  #cidr_blocks = [local.dev_dmz_pub_subnet[count.index + 2]]
-  filter {
-    name   = "cidr-block"
-    values = [local.dev_dmz_pub_subnet[count.index + 2]]
-  }
-}  
+# data "aws_vpc_endpoint" "dev_nwf_endpoints" {
+#   count =2
+#   vpc_id   = aws_vpc.project_vpc[1].id
+#   #cidr_blocks = [local.dev_dmz_pub_subnet[count.index + 2]]
+#   filter {
+#     name   = "cidr-block"
+#     values = [local.dev_dmz_pub_subnet[count.index + 2]]
+#   }
+# }  
 
 
 
