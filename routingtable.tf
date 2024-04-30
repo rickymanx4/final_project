@@ -24,7 +24,7 @@ resource "aws_route_table" "user_dmz_lb_rt" {
   vpc_id = local.user_dev_vpc[0]
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = data.aws_vpc_endpoint.user_nwf_endpoints[count.index]
+    vpc_endpoint_id = local.user_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
@@ -42,7 +42,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[0].id
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = data.aws_vpc_endpoint.user_nwf_endpoints[count.index]
+    vpc_endpoint_id = local.user_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
@@ -97,7 +97,7 @@ resource "aws_route_table" "dev_dmz_lb_rt" {
   vpc_id = local.user_dev_vpc[1]
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = data.aws_vpc_endpoint.dev_nwf_endpoints[count.index]
+    vpc_endpoint_id = local.dev_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
@@ -115,7 +115,7 @@ resource "aws_route_table" "dev_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[1].id
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = data.aws_vpc_endpoint.dev_nwf_endpoints[count.index]
+    vpc_endpoint_id = local.dev_dmz_end[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
