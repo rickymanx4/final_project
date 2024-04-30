@@ -220,57 +220,69 @@ resource "aws_route_table" "prodtest_tgw_rt" {
 # ############################# 2. Routing Association #########################
 # ##############################################################################
 
-# ################################ a. user_dmz ################################
+################################ a. user_dmz ################################
 
-# resource "aws_route_table_association" "user_dmz_nat_nwf_rt_asso" {
-#   count          = 4
-#   subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index].id
-#   route_table_id = aws_route_table.dmz_nat_nwf_rt[0].id
-# }
+resource "aws_route_table_association" "user_dmz_nat_nwf_rt_a_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index * 2].id
+  route_table_id = aws_route_table.user_dmz_nat_nwf_rt[0].id
+}
 
-# resource "aws_route_table_association" "user_dmz_lb_rt_asso" {
-#   count          = 2
-#   subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index + 4].id
-#   route_table_id = aws_route_table.dmz_lb_rt[0].id
-# }
+resource "aws_route_table_association" "user_dmz_nat_nwf_rt_c_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index * 2 + 1].id
+  route_table_id = aws_route_table.user_dmz_nat_nwf_rt[1].id
+}
 
-# resource "aws_route_table_association" "user_dmz_proxy_rt_asso" {
-#   count          = 2
-#   subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index].id
-#   route_table_id = aws_route_table.dmz_proxy_rt[0].id
-# }
+resource "aws_route_table_association" "user_dmz_lb_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index + 4].id
+  route_table_id = aws_route_table.user_dmz_lb_rt[count.index].id
+}
 
-# resource "aws_route_table_association" "user_dmz_tgw_rt_asso" {
-#   count          = 2
-#   subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index + 2].id
-#   route_table_id = aws_route_table.dmz_tgw_rt[0].id
-# }
+resource "aws_route_table_association" "user_dmz_proxy_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index].id
+  route_table_id = aws_route_table.user_dmz_proxy_rt[count.index].id
+}
 
-# # # ################################ b. dev_dmz ################################
+resource "aws_route_table_association" "user_dmz_tgw_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_user_dmz_pri[count.index + 2].id
+  route_table_id = aws_route_table.user_dmz_tgw_rt[count.index].id
+}
 
-# resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_asso" {
-#   count          = 4
-#   subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index].id
-#   route_table_id = aws_route_table.dmz_nat_nwf_rt[1].id
-# }
+# # ################################ b. dev_dmz ################################
 
-# resource "aws_route_table_association" "dev_dmz_lb_rt_asso" {
-#   count          = 2
-#   subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index + 4].id
-#   route_table_id = aws_route_table.dmz_lb_rt[1].id
-# }
+resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_a_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index * 2].id
+  route_table_id = aws_route_table.dev_dmz_nat_nwf_rt[0].id
+}
 
-# resource "aws_route_table_association" "dev_dmz_proxy_rt_asso" {
-#   count          = 2
-#   subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index].id
-#   route_table_id = aws_route_table.dmz_proxy_rt[1].id
-# }
+resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_c_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index * 2 + 1].id
+  route_table_id = aws_route_table.dev_dmz_nat_nwf_rt[1].id
+}
 
-# resource "aws_route_table_association" "dev_dmz_tgw_rt_asso" {
-#   count          = 2
-#   subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index + 2].id
-#   route_table_id = aws_route_table.dmz_tgw_rt[1].id
-# }
+resource "aws_route_table_association" "dev_dmz_lb_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index + 4].id
+  route_table_id = aws_route_table.dev_dmz_lb_rt[count.index].id
+}
+
+resource "aws_route_table_association" "dev_dmz_proxy_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index].id
+  route_table_id = aws_route_table.dev_dmz_proxy_rt[count.index].id
+}
+
+resource "aws_route_table_association" "dev_dmz_tgw_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_dev_dmz_pri[count.index + 2].id
+  route_table_id = aws_route_table.dev_dmz_tgw_rt[count.index].id
+}
 
 # # ################################ c. shared_zone ################################
 
