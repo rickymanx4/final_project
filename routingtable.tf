@@ -2,65 +2,64 @@
 ################################ 1. Routing Table ############################
 ##############################################################################
 
-################################ a. dmz_public ################################
-
-# 내부 서브넷(lb, tgw의 cidr 을 nwf eni에 붙여야함)
-resource "aws_route_table" "dmz_nat_nwf_rt" {
+################################ a. dev_dmz_public(nat_nwf, lb) ################################
+resource "aws_route_table" "dev_dmz_nat_nwf_rt" {
   count = 2
-  vpc_id = local.user_dev_vpc[count.index]
+  vpc_id = local.user_dev_vpc[1]
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw_internet[count.index].id
+    gateway_id = aws_internet_gateway.gw_internet[1].id
   }
   route {
     cidr_block = "10.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_pub_name[0]}_${local.userdev_pub_name[2]}_pub_rt"
+    Name = "${local.names[1]}_${local.userdev_pub_name[0]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
   }
 }
 
-resource "aws_route_table" "dmz_lb_rt" {
+resource "aws_route_table" "dev_dmz_lb_rt" {
   count = 2
-  vpc_id = local.user_dev_vpc[count.index]
+  vpc_id = local.user_dev_vpc[1]
   # NWF 적용시 igw 삭제, nwf eni로 라우팅
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw_internet[count.index].id
+    vpc_endpoint_id = data.aws_vpc_endpoint.dev_nwf_endpoints[count.index]
   }
-  route {
-    cidr_block = "10.0.0.0/8"
-    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  }
+  # route {
+  #   cidr_block = "10.0.0.0/8"
+  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  # }
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_pub_name[4]}_pub_rt"
+    Name = "${local.names[1]}_${local.userdev_pub_name[4]}_rt_${local.az_ac[count.index]}"
   }
 }
 
-################################ b. dmz_pri_proxy ################################
+################################ b. dev_dmz_proxy ################################
 
-resource "aws_route_table" "dmz_proxy_rt" {
+resource "aws_route_table" "dev_dmz_proxy_rt" {
   count = 2
-  vpc_id = aws_vpc.project_vpc[count.index].id
+  vpc_id = aws_vpc.project_vpc[1].id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
+    vpc_endpoint_id = data.aws_vpc_endpoint.dev_nwf_endpoints[count.index]
   }
-  route {
-    cidr_block = "10.0.0.0/8"
-    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  }  
+  # route {
+  #   cidr_block = "10.0.0.0/8"
+  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  # }  
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_pri_name[0]}_pri_rt"
+    Name = "${local.names[1]}_${local.userdev_pri_name[0]}_rt_${local.az_ac[count.index]}"
   }
 }
 
-################################ c. dmz_pri_tgw ################################
+################################ c. dev_dmz_pri_tgw ################################
 
 resource "aws_route_table" "dmz_tgw_rt" {
   count  = 2
-  vpc_id = aws_vpc.project_vpc[count.index].id
+  vpc_id = aws_vpc.project_vpc[1].id
+  
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
@@ -71,9 +70,86 @@ resource "aws_route_table" "dmz_tgw_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }  
   tags = {
-    Name = "${local.names[count.index]}_${local.userdev_pri_name[2]}_pri_rt"
+    Name = "${local.names[1]}_${local.userdev_pri_name[2]}_rt_${local.az_ac[count.index]}"
   }
 }
+
+
+################################ a. dev_dmz_public(nat_nwf, lb) ################################
+
+# 내부 서브넷(lb, tgw의 cidr 을 nwf eni에 붙여야함)
+resource "aws_route_table" "dev_dmz_nat_nwf_rt" {
+  count = 2
+  vpc_id = local.user_dev_vpc[1]
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw_internet[1].id
+  }
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }
+  tags = {
+    Name = "${local.names[1]}_${local.userdev_pub_name[0]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
+  }
+}
+
+resource "aws_route_table" "dev_dmz_lb_rt" {
+  count = 2
+  vpc_id = local.user_dev_vpc[1]
+  # NWF 적용시 igw 삭제, nwf eni로 라우팅
+  route {
+    cidr_block = "0.0.0.0/0"
+    vpc_endpoint_id = data.aws_vpc_endpoint.dev_nwf_endpoints[count.index]
+  }
+  # route {
+  #   cidr_block = "10.0.0.0/8"
+  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  # }
+  tags = {
+    Name = "${local.names[1]}_${local.userdev_pub_name[4]}_rt_${local.az_ac[count.index]}"
+  }
+}
+
+################################ b. dev_dmz_proxy ################################
+
+resource "aws_route_table" "dev_dmz_proxy_rt" {
+  count = 2
+  vpc_id = aws_vpc.project_vpc[1].id
+  route {
+    cidr_block = "0.0.0.0/0"
+    vpc_endpoint_id = data.aws_vpc_endpoint.dev_nwf_endpoints[count.index]
+  }
+  # route {
+  #   cidr_block = "10.0.0.0/8"
+  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  # }  
+  tags = {
+    Name = "${local.names[1]}_${local.userdev_pri_name[0]}_rt_${local.az_ac[count.index]}"
+  }
+}
+
+################################ c. dev_dmz_pri_tgw ################################
+
+resource "aws_route_table" "dmz_tgw_rt" {
+  count  = 2
+  vpc_id = aws_vpc.project_vpc[1].id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
+  }
+
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }  
+  tags = {
+    Name = "${local.names[1]}_${local.userdev_pri_name[2]}_rt_${local.az_ac[count.index]}"
+  }
+}
+
+
 
 # ################################ d. shared_zone ################################
 
