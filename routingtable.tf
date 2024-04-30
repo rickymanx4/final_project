@@ -42,7 +42,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[0].id
   route {
     cidr_block = "0.0.0.0/0"
-    vpc_endpoint_id = aws_networkfirewall_firewall.user_network_firewall.firewall_status.sync_states.attachment.endpoint_id[count.index]
+    vpc_endpoint_id = aws_networkfirewall_firewall.user_network_firewall.firewall_status_sync_states_attachment_endpoint_id[count.index]
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
