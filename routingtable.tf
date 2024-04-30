@@ -63,7 +63,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[0].id
   route {
     cidr_block = "0.0.0.0/0"
-    network_interface_id = local.user_dmz_end[count.index]
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
@@ -152,7 +152,7 @@ resource "aws_route_table" "dev_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[1].id
   route {
     cidr_block = "0.0.0.0/0"
-    network_interface_id = local.dev_dmz_end[count.index]
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   # route {
   #   cidr_block = "10.0.0.0/8"
