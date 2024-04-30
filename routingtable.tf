@@ -49,6 +49,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   # }  
   tags = {
     Name = "${local.names[0]}_${local.userdev_pri_name[0]}_rt_${local.az_ac[count.index]}"
+    }
   }
 }
 
