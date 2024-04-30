@@ -126,24 +126,24 @@ data "aws_wafv2_web_acl" "cf_wacl" {
 }
 data "aws_vpc_endpoint" "user_nwf_endpoints" {
   count =2
-  # filter {
-  #   name   = "description"
-  #   values = ["ELB net/dev-dmz-nexus-lb/*"]
-  # }
   filter {
-    name   = "subnet-id"
+    name   = "vpc_id"
+    values = [aws_vpc.project_vpc[0]]
+  }
+  filter {
+    name   = "subnet_ids"
     values = [aws_subnet.subnet_user_dmz_pub[count.index + 2].id]
   }
 }  
 
 data "aws_vpc_endpoint" "dev_nwf_endpoints" {
   count =2
-  # filter {
-  #   name   = "description"
-  #   values = ["ELB net/dev-dmz-nexus-lb/*"]
-  # }
   filter {
-    name   = "subnet-id"
+    name   = "vpc_id"
+    values = [aws_vpc.project_vpc[1]]
+  }
+  filter {
+    name   = "subnet_ids"
     values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]
   }
 }  
