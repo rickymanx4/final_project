@@ -126,7 +126,7 @@ data "aws_wafv2_web_acl" "cf_wacl" {
 }
 data "aws_vpc_endpoint" "user_nwf_endpoints" {
   count =2
-  vpc_id   = [aws_vpc.project_vpc[0]]
+  vpc_id   = aws_vpc.project_vpc[0]
  
   filter {
     name   = "subnet_ids"
