@@ -83,7 +83,7 @@ resource "aws_route_table" "user_dmz_tgw_rt" {
   
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
+    gateway_id = aws_nat_gateway.gw_user_nat[0].id
   }
 
   route {
@@ -156,7 +156,7 @@ resource "aws_route_table" "dev_dmz_tgw_rt" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.gw_user_nat[count.index].id
+    gateway_id = aws_nat_gateway.gw_user_nat[1].id
   }
 
   route {
@@ -283,7 +283,7 @@ resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_a_asso" {
 
 resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_c_asso" {
   count          = 2
-  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index * 2 + 1].id
+  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.(index * 2) + 1].id
   route_table_id = aws_route_table.dev_dmz_nat_nwf_rt[1].id
 }
 
