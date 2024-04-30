@@ -134,6 +134,9 @@ data "aws_network_interface" "user_nwf_endpoints" {
     name   = "subnet-id"
     values = [aws_subnet.subnet_user_dmz_pub[count.index + 2].id]
   }
+  depends_on = [ 
+    aws_networkfirewall_firewall.user_network_firewall
+  ]  
 }  
 
 data "aws_network_interface" "dev_nwf_endpoints" {
@@ -147,6 +150,9 @@ data "aws_network_interface" "dev_nwf_endpoints" {
     name   = "subnet-id"
     values = [aws_subnet.subnet_dev_dmz_pub[count.index + 2].id]
   }
+  depends_on = [ 
+    aws_networkfirewall_firewall.dev_network_firewall
+  ]  
 }  
 
 
