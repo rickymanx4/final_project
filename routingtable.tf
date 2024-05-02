@@ -2,7 +2,7 @@
 ################################ 1. Routing Table ############################
 ##############################################################################
 
-################################ a. dev_dmz_public(nat_nwf, lb) ################################
+################################ a. dmz_public_igw_rt ################################
 resource "aws_route_table" "user_dmz_igw_rt" {
   vpc_id = local.user_dev_vpc[0]
   route {
@@ -23,7 +23,7 @@ resource "aws_route_table" "user_dmz_igw_rt" {
 #   destination_cidr_block    = "0.0.0.0/0"
 #   gateway_id                = aws_internet_gateway.gw_internet[0].id
 # }
-
+################################ a. user_dmz_public(nat_nwf, lb, igw) ################################
 resource "aws_route_table" "user_dmz_nat_nwf_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[0]

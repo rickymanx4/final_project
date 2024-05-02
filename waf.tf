@@ -1,3 +1,9 @@
+##############################################################################
+################################# 1. Rule_group ##############################
+##############################################################################
+
+####################### a. block iphone, allow kr for cf ########################
+
 resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   capacity  = 100
   name      = local.wacl_name[0]
@@ -16,7 +22,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   }
 
   rule {
-    name     = "block_mac"
+    name     = "block_iphone"
     priority = 10
 
     action {
@@ -29,7 +35,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "macintosh"
+        search_string         = "iphone"
         positional_constraint = "CONTAINS"
         # rule_action_override {
         #   action_to_use{
@@ -50,7 +56,7 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "block_mac"
+      metric_name                = "block_iphone"
       sampled_requests_enabled   = true
     }
   }
@@ -81,6 +87,8 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   }  
 }
 
+####################### b. block mac, allow kr for lb ########################
+
 resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
   capacity  = 100
   name      = local.wacl_name[1]
@@ -98,7 +106,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
     Name = local.wacl_name[1]
   }
   rule {
-    name     = "block_mac"
+    name     = "block_iphone"
     priority = 10
 
     action {
@@ -111,7 +119,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
             name = "user-agent"
           }
         }
-        search_string         = "macintosh"
+        search_string         = "iphone"
         positional_constraint = "CONTAINS"
         text_transformation {
           priority = 0
@@ -121,7 +129,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
     } 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "block_mac"
+      metric_name                = "block_iphone"
       sampled_requests_enabled   = true
     }
   }  
@@ -151,6 +159,11 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
   }  
 }
 
+##############################################################################
+########################## 1. Web Application Firewall #######################
+##############################################################################
+
+####################### a. waf for cf ########################
 resource "aws_wafv2_web_acl" "cf_wacl" {
   name        = local.wacl_name[0]
   scope       = local.wacl_scope[0]
@@ -212,6 +225,8 @@ resource "aws_wafv2_web_acl" "cf_wacl" {
   }
 }
 
+####################### b. waf for lb ########################
+
 resource "aws_wafv2_web_acl" "alb_wacl" {
   name        = local.wacl_name[1]
   scope       = local.wacl_scope[1]
@@ -271,6 +286,8 @@ resource "aws_wafv2_web_acl" "alb_wacl" {
     sampled_requests_enabled   = true
   }
 }
+
+####################### c. attach waf for lb ########################
 
 resource "aws_wafv2_web_acl_association" "wacl_user_lb_asso" { 
   count        = 2

@@ -1,3 +1,8 @@
+##############################################################################
+########################### 1. NWF rule group #############################
+##############################################################################
+
+####################### a. nwf deafault ssh ########################
 resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
   capacity = 1000
   name     = "nwf-rule-group"
@@ -60,7 +65,7 @@ resource "aws_networkfirewall_rule_group" "nwf_rule_group" {
   }
 }        
 
-
+####################### b. allow local rule ########################
 resource "aws_networkfirewall_rule_group" "allow-local" {
   capacity = 1000
   name     = "allow-local-ranges"
@@ -87,44 +92,45 @@ resource "aws_networkfirewall_rule_group" "allow-local" {
   }
 }
 
-resource "aws_networkfirewall_rule_group" "deny-http-domains" {
-  capacity = 100
-  name     = "deny-http-domains"
-  type     = "STATEFUL"
-  rule_group {
-    rules_source {
-      rules_source_list {
-        generated_rules_type = "ALLOWLIST"
-        target_types         = ["HTTP_HOST"]
-        targets              = [local.domain_name[0], local.domain_name[1]]
-      }
-    }
-  }
 
-  tags = {
-    "Name" = "allow-http-domains"
-  }
-}
+# resource "aws_networkfirewall_rule_group" "deny-http-domains" {
+#   capacity = 100
+#   name     = "deny-http-domains"
+#   type     = "STATEFUL"
+#   rule_group {
+#     rules_source {
+#       rules_source_list {
+#         generated_rules_type = "ALLOWLIST"
+#         target_types         = ["HTTP_HOST"]
+#         targets              = [local.domain_name[0], local.domain_name[1]]
+#       }
+#     }
+#   }
 
-resource "aws_networkfirewall_rule_group" "deny-https-domains" {
-  capacity = 100
-  name     = "deny-https-domains"
-  type     = "STATEFUL"
-  rule_group {
-    rules_source {
-      rules_source_list {
-        generated_rules_type = "ALLOWLIST"
-        target_types         = ["TLS_SNI"]
-        targets              = [local.domain_name[0], local.domain_name[1]]
-      }
-    }
-  }
+#   tags = {
+#     "Name" = "allow-http-domains"
+#   }
+# }
 
-  tags = {
-    "Name" = "allow-https-domains"
-  }
-}
+# resource "aws_networkfirewall_rule_group" "deny-https-domains" {
+#   capacity = 100
+#   name     = "deny-https-domains"
+#   type     = "STATEFUL"
+#   rule_group {
+#     rules_source {
+#       rules_source_list {
+#         generated_rules_type = "ALLOWLIST"
+#         target_types         = ["TLS_SNI"]
+#         targets              = [local.domain_name[0], local.domain_name[1]]
+#       }
+#     }
+#   }
 
+#   tags = {
+#     "Name" = "allow-https-domains"
+#   }
+# }
+####################### c. deny all http ########################
 resource "aws_networkfirewall_rule_group" "deny-http" {
   capacity = 100
   name     = "deny-http"
@@ -167,7 +173,7 @@ resource "aws_networkfirewall_rule_group" "deny-http" {
   }
 }
 
-
+####################### d. deny all ssh ########################
 resource "aws_networkfirewall_rule_group" "deny-ssh" {
   capacity = 100
   name     = "deny-ssh"
@@ -209,6 +215,10 @@ resource "aws_networkfirewall_rule_group" "deny-ssh" {
     "Name" = "deny-ssh"
   }
 }        
+
+##############################################################################
+############################### 2. NWF Policy ################################
+##############################################################################
 
 resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
   name = "nwf-policy"
@@ -261,6 +271,10 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
     }
   }
 }   
+
+##############################################################################
+############################ 3. Network Firewall #############################
+##############################################################################
 
 resource "aws_networkfirewall_firewall" "user_network_firewall" { 
   name                               = "${var.name[0]}-nwf"
