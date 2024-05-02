@@ -1,0 +1,27 @@
+plugin: aws_ec2
+
+regions:  
+  - us-west-2
+
+cache: true
+
+cache_max_age: 3600
+
+filters:
+  tag:Name:
+    - prometheus
+    - grafana
+
+  instance-state-name: running
+
+keyed_groups:
+  - prefix: tags
+    key: tags
+
+compose:
+  ansible_host: dns-name
+
+hostnames:
+  - network-interface.association.public-ip
+  - network-interface.addresses.private-ip-address
+  - dns-name
