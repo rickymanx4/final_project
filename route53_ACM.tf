@@ -6,14 +6,9 @@
 
 resource "aws_route53_record" "nadri" {
   zone_id        = local.host_zone
+# domain_name    = ["nadri-project.com", "www.nadri-project.com"]  
   name           = local.domain_name[0]
   type           = "A"
-  # set_identifier = "nadri-${local.az_ac[count.index]}"
-  # records        = [aws_lb.user_dmz_proxy_lb.dns_name]
-  # ttl            = 7200
-  # weighted_routing_policy {
-  #   weight = local.weight[count.index]
-  # }
   alias {
     name                   = aws_cloudfront_distribution.user_dmz_alb_cf.domain_name
     zone_id                = aws_cloudfront_distribution.user_dmz_alb_cf.hosted_zone_id
@@ -22,7 +17,7 @@ resource "aws_route53_record" "nadri" {
 }
 
 resource "aws_route53_record" "www_nadri" {
-  zone_id        = local.host_zone
+  zone_id        = local.host_zone  
   name           = local.domain_name[1]
   type           = "A"
   alias {
@@ -50,27 +45,11 @@ resource "aws_route53_record" "no_acm_record" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
+  # route 53의 hosting zone은 고정으로 되어있음.
   zone_id         = local.host_zone
   depends_on = [ aws_acm_certificate.cert ]
 }
 
-# resource "aws_route53_record" "example" {
-#   for_each = {
-#     for dvo in aws_acm_certificate.example.domain_validation_options : dvo.domain_name => {
-#       name    = dvo.resource_record_name
-#       record  = dvo.resource_record_value
-#       type    = dvo.resource_record_type
-#       zone_id = dvo.domain_name == "example.org" ? data.aws_route53_zone.example_org.zone_id : data.aws_route53_zone.example_com.zone_id
-#     }
-#   }
-
-#   allow_overwrite = true
-#   name            = each.value.name
-#   records         = [each.value.record]
-#   ttl             = 60
-#   type            = each.value.type
-#   zone_id         = each.value.zone_id
-# }
 
 ######################### b. ACM create ################################
 resource "aws_acm_certificate" "cert" {
