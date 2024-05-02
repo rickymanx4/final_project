@@ -64,6 +64,14 @@ resource "aws_lb_target_group_attachment" "dev_dmz_proxy_tg_att_80" {
   port             = 80
 }
 
+resource "aws_lb_target_group" "dev_dmz_prom-grafa" {
+  for_each    = { for k, v in var.shared_int : k => v if lookup(v, "listener", null) != null }
+  name        = "dev-dmz-${each.value.svc_name}-target-group"
+  port        = each.value.listener
+  protocol    = "TCP"
+  target_type = "ip"
+  vpc_id      = aws_vpc.project_vpc[1].id
+}
 
 resource "aws_lb_target_group" "dev_dmz_nexus_tg" {
   count       = 2
@@ -205,7 +213,7 @@ resource "aws_lb" "shared_ext_lb" {
 resource "aws_lb_listener" "nexus_listener" {
   count             = 2
   load_balancer_arn = aws_lb.shared_ext_lb[count.index].arn
-  port              = 5555
+  port              = local.shared_ext_ports[1]
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   # alpn_policy       = "HTTP2Preferred"
