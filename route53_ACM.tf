@@ -6,7 +6,7 @@
 
 resource "aws_route53_record" "nadri" {
   zone_id        = local.host_zone
-# domain_name    = ["nadri-project.com", "www.nadri-project.com"]  
+# local.domain_name = ["nadri-project.com", "www.nadri-project.com"]  
   name           = local.domain_name[0]
   type           = "A"
   alias {
