@@ -270,10 +270,10 @@ resource "aws_route_table" "prodtest_tgw_rt" {
 
 ################################ a. user_dmz ################################
 
-resource "aws_route_table_association" "user_dmz_igw_rt_asso" {
-  gateway_id     = aws_internet_gateway.gw_internet[0].id
-  route_table_id = aws_route_table.user_dmz_igw_rt.id
-}
+# resource "aws_route_table_association" "user_dmz_igw_rt_asso" {
+#   gateway_id     = aws_internet_gateway.gw_internet[0].id
+#   route_table_id = aws_route_table.user_dmz_igw_rt.id
+# }
 
 resource "aws_route_table_association" "user_dmz_nat_nwf_rt_a_asso" {
   count          = 2
@@ -307,10 +307,10 @@ resource "aws_route_table_association" "user_dmz_tgw_rt_asso" {
 
 # # ################################ b. dev_dmz ################################
 
-resource "aws_route_table_association" "dev_dmz_igw_rt_asso" {
-  gateway_id     = aws_internet_gateway.gw_internet[1].id
-  route_table_id = aws_route_table.dev_dmz_igw_rt.id
-}
+# resource "aws_route_table_association" "dev_dmz_igw_rt_asso" {
+#   gateway_id     = aws_internet_gateway.gw_internet[1].id
+#   route_table_id = aws_route_table.dev_dmz_igw_rt.id
+# }
 
 resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_a_asso" {
   count          = 2

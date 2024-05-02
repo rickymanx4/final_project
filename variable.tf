@@ -90,3 +90,45 @@ variable "rules" {
     }             
   ]
 }
+
+
+variable "shared_int" {
+  type = map(object({
+    name        = string
+    svc_name    = optional(string)
+    port        = optional(string)
+    svc_port    = optional(string)
+    listener    = optional(string)
+    dmz_listen  = optional(string)
+    instance    = bool
+  }))
+  default = {
+    "prom-grafa" = {
+      name        = "prom-grafa"
+      svc_name    = "prometheus"
+      port        = "1000"
+      svc_port    = "9090"
+      listener    = "1000"
+      dmz_listen  = "6666"
+      instance    = true
+    },
+    "grafana" = {
+      name        = "grafana"
+      svc_name    = "grafana"
+      svc_port    = "3000"
+      listener    = "2000"
+      dmz_listen  = "7777"
+      instance    = false
+    },
+    "eks_master" = {
+      name        = "eks-master"
+      port        = "3000"
+      instance    = true
+    },
+    # "ELK" = {
+    #   name        = "elk"
+    #   port        = "4000"
+    #   instance    = true
+    # },
+  }
+}
