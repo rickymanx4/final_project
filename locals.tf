@@ -47,7 +47,7 @@ locals {
     dmz_ports               = [22, 80, 9999, 8888]    
     shared_ext_ports        = [5555, 6666, 7777]
     shared_int_ports        = [1111, 2222, 3333, 4444]               
-#    prodtest_lb_ports       = [7777, 8888]             
+    prodtest_lb_ports       = [7777, 8888]             
     product_int_ports       = [1001, 2002, 3003, 4004]             
     testdev_int_ports       = [5005, 6006, 7007, 8008]
 
