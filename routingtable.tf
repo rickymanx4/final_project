@@ -6,13 +6,22 @@
 resource "aws_route_table" "user_dmz_igw_rt" {
   vpc_id = local.user_dev_vpc[0]
   route {
-    cidr_block = local.user_dmz_pub_subnet[4]
+    cidr_block = local.user_dmz_pub_subnet[0]
     network_interface_id = local.user_dmz_end[0]
+  }
+  route {
+    cidr_block = local.user_dmz_pub_subnet[1]
+    network_interface_id = local.user_dmz_end[1]
   }
   route {
     cidr_block = local.user_dmz_pub_subnet[5]
     network_interface_id = local.user_dmz_end[1]
   }
+  route {
+    cidr_block = local.user_dmz_pub_subnet[5]
+    network_interface_id = local.user_dmz_end[1]
+  }  
+
   tags = {
     Name = "${local.names[0]}_igw_rt"
   }
@@ -77,7 +86,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[0].id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.gw_user_nat[0].id
+    network_interface_id = local.user_dmz_end[count.index]
   }
   route {
     cidr_block = "10.0.0.0/8"
@@ -114,13 +123,21 @@ resource "aws_route_table" "user_dmz_tgw_rt" {
 resource "aws_route_table" "dev_dmz_igw_rt" {
   vpc_id = local.user_dev_vpc[1]
   route {
+    cidr_block = local.dev_dmz_pub_subnet[0]
+    network_interface_id = local.dev_dmz_end[0]
+  }
+  route {
+    cidr_block = local.dev_dmz_pub_subnet[1]
+    network_interface_id = local.dev_dmz_end[1]
+  }
+  route {
     cidr_block = local.dev_dmz_pub_subnet[4]
     network_interface_id = local.dev_dmz_end[0]
   }
   route {
     cidr_block = local.dev_dmz_pub_subnet[5]
     network_interface_id = local.dev_dmz_end[1]
-  }
+  }  
   tags = {
     Name = "${local.names[1]}_igw_rt"
   }
