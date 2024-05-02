@@ -93,43 +93,6 @@ resource "aws_networkfirewall_rule_group" "allow-local" {
 }
 
 
-# resource "aws_networkfirewall_rule_group" "deny-http-domains" {
-#   capacity = 100
-#   name     = "deny-http-domains"
-#   type     = "STATEFUL"
-#   rule_group {
-#     rules_source {
-#       rules_source_list {
-#         generated_rules_type = "ALLOWLIST"
-#         target_types         = ["HTTP_HOST"]
-#         targets              = [local.domain_name[0], local.domain_name[1]]
-#       }
-#     }
-#   }
-
-#   tags = {
-#     "Name" = "allow-http-domains"
-#   }
-# }
-
-# resource "aws_networkfirewall_rule_group" "deny-https-domains" {
-#   capacity = 100
-#   name     = "deny-https-domains"
-#   type     = "STATEFUL"
-#   rule_group {
-#     rules_source {
-#       rules_source_list {
-#         generated_rules_type = "ALLOWLIST"
-#         target_types         = ["TLS_SNI"]
-#         targets              = [local.domain_name[0], local.domain_name[1]]
-#       }
-#     }
-#   }
-
-#   tags = {
-#     "Name" = "allow-https-domains"
-#   }
-# }
 ####################### c. deny all http ########################
 resource "aws_networkfirewall_rule_group" "deny-http" {
   capacity = 100
