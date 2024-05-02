@@ -5,7 +5,7 @@
 #   name_prefix = "user_dmz_proxy-" 
 #   image_id = data.aws_ami.amazon_linux_2023.id
 #   instance_type = "t2.small"
-#   key_name = aws_key_pair.terraform_key.key_name
+#   key_name = aws_key_pair.ec2_key.key_name
 #   security_groups = [aws_security_group.dmz_proxy_sg[0].id]
 #   associate_public_ip_address = false
 #   root_block_device {
