@@ -96,7 +96,7 @@ resource "aws_lb" "dev_dmz_proxy_lb" {
   name               = "${var.name[1]}-proxy-lb-${local.az_ac[count.index]}"
   load_balancer_type = "application"
   internal           = false
-  subnets            = [aws_subnet.subnet_dev_dmz_pub[4].id, aws_subnet.subnet_dev_dmz_pub[5].id]
+  subnets            = [aws_subnet.subnet_dev_dmz_pub[2].id, aws_subnet.subnet_dev_dmz_pub[3].id]
   security_groups    =  [aws_security_group.dmz_lb_sg[1].id]
 }
 
