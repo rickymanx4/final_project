@@ -6,11 +6,13 @@
 resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   enabled = true
   comment = "nadri-project-cf"
+  #  domain_name = ["nadri-project.com", "www.nadri-project.com"]
   aliases = [local.domain_name[0], local.domain_name[1]]
   web_acl_id = aws_wafv2_web_acl.cf_wacl.arn
   provider     = aws.virginia
   origin {
     domain_name = aws_lb.user_dmz_proxy_lb[0].dns_name
+    # cf_origin_name = ["user_dmz_lb_a", "user_dmz_lb_c", "user_dmz_group"]
     origin_id = local.cf_origin_name[0]
     origin_shield {
       origin_shield_region = local.region
@@ -41,11 +43,12 @@ resource "aws_cloudfront_distribution" "user_dmz_alb_cf" {
   restrictions {
     geo_restriction {
         restriction_type = "blacklist"
-        locations        = ["KP"]
+        locations        = ["KP", "CN"]
   }
   }
   origin_group {
     origin_id = local.cf_origin_name[2]
+    # memeber 1이 메인 접속, member2가 1이 criteria 상태일 때 접속가능
     failover_criteria {
       status_codes = [403, 404, 500, 502, 500]
     }

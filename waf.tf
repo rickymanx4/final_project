@@ -6,18 +6,22 @@
 
 resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
   capacity  = 100
+  # cf-wacl
   name      = local.wacl_name[0]
+  # CLOUDFRONT
   scope     = local.wacl_scope[0]
-  provider    = aws.virginia
+  provider  = aws.virginia
 #   default_action {
 #     allow {}
 #   }
   visibility_config {
     cloudwatch_metrics_enabled = true
+    # cf-wacl
     metric_name                = local.wacl_name[0]
     sampled_requests_enabled   = true
   }
   tags = {
+    # cf-wacl
     Name = local.wacl_name[0]
   }
 
@@ -91,7 +95,9 @@ resource "aws_wafv2_rule_group" "cf_web_acl_rule_group" {
 
 resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
   capacity  = 100
+  # lb-wacl
   name      = local.wacl_name[1]
+  # REGIONAL
   scope     = local.wacl_scope[1]
 
 #   default_action {
@@ -99,10 +105,12 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
 #   }
   visibility_config {
     cloudwatch_metrics_enabled = true
+    # lb-wacl
     metric_name                = local.wacl_name[1]
     sampled_requests_enabled   = true
   }
   tags = {
+    # lb-wacl
     Name = local.wacl_name[1]
   }
   rule {
@@ -140,7 +148,7 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
     action {
       block {}
     }
-
+    # 국가 코드가 KR이 아니면 차단
     statement{
       not_statement{
         statement {
@@ -165,7 +173,9 @@ resource "aws_wafv2_rule_group" "alb_web_acl_rule_group" {
 
 ####################### a. waf for cf ########################
 resource "aws_wafv2_web_acl" "cf_wacl" {
+  # lb-wacl
   name        = local.wacl_name[0]
+  # CLOUDFRONT 
   scope       = local.wacl_scope[0]
   description = "${local.wacl_scope[0]}_wacl"
   provider    = aws.virginia
@@ -291,12 +301,14 @@ resource "aws_wafv2_web_acl" "alb_wacl" {
 
 resource "aws_wafv2_web_acl_association" "wacl_user_lb_asso" { 
   count        = 2
+  # local.user_dmz_alb = tolist(data.aws_lb.user_alb_arn[*].arn) -> aws_lb.user_dmz_proxy_lb[count.index] 대체가능할듯?
   resource_arn = local.user_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.alb_wacl.arn
 }
 
 resource "aws_wafv2_web_acl_association" "wacl_dev_lb_asso" { 
   count        = 2
+  # local.dev_dmz_alb = tolist(data.aws_lb.dev_alb_arn[*].arn) -> aws_lb.dev_dmz_proxy_lb[count.index] 대체가능할듯?
   resource_arn = local.dev_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.alb_wacl.arn
 }

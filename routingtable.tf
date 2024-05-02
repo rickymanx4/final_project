@@ -2,29 +2,24 @@
 ################################ 1. Routing Table ############################
 ##############################################################################
 
-################################ a. dmz_public_igw_rt ################################
-# resource "aws_route_table" "user_dmz_igw_rt" {
-#   vpc_id = local.user_dev_vpc[0]
-#   route {
-#     cidr_block = local.user_dmz_pub_subnet[4]
-#     network_interface_id = local.user_dmz_end[0]
-#   }
-#   route {
-#     cidr_block = local.user_dmz_pub_subnet[5]
-#     network_interface_id = local.user_dmz_end[1]
-#   }
-#   tags = {
-#     Name = "${local.names[0]}_igw_rt"
-#   }
-# }
+################################ a. user_dmz_igw_rt ################################
+resource "aws_route_table" "user_dmz_igw_rt" {
+  vpc_id = local.user_dev_vpc[0]
+  route {
+    cidr_block = local.user_dmz_pub_subnet[4]
+    network_interface_id = local.user_dmz_end[0]
+  }
+  route {
+    cidr_block = local.user_dmz_pub_subnet[5]
+    network_interface_id = local.user_dmz_end[1]
+  }
+  tags = {
+    Name = "${local.names[0]}_igw_rt"
+  }
+}
 
-# resource "aws_route" "route_igw" {
-#   route_table_id            = aws_route_table.user_dmz_igw_rt.id
-#   destination_cidr_block    = "0.0.0.0/0"
-#   gateway_id                = aws_internet_gateway.gw_internet[0].id
-# }
-################################ a. user_dmz_public(nat_nwf, lb, igw) ################################
-resource "aws_route_table" "user_dmz_nat_nwf_rt" {
+################################ a. user_dmz_public(nat, nwf, lb) ################################
+resource "aws_route_table" "user_dmz_nwf_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[0]
   route {
@@ -36,21 +31,36 @@ resource "aws_route_table" "user_dmz_nat_nwf_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   tags = {
-    Name = "${local.names[0]}_${local.userdev_pub_name[0]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
+    Name = "${local.names[0]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
+  }
+}
+resource "aws_route_table" "user_dmz_nat_rt" {
+  count = 2
+  vpc_id = local.user_dev_vpc[0]
+  route {
+    cidr_block = "0.0.0.0/0"
+    network_interface_id = local.user_dmz_end[count.index]
+  }
+  # route {
+  #   cidr_block = "10.0.0.0/8"
+  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  # }
+  tags = {
+    Name = "${local.names[0]}_${local.userdev_pub_name[0]}_rt_${local.az_ac[count.index]}"
   }
 }
 
 resource "aws_route_table" "user_dmz_lb_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[0]
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   network_interface_id = local.user_dmz_end[count.index]
-  # }
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw_internet[0].id    
-  }  
+    network_interface_id = local.user_dmz_end[count.index]
+  }
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   gateway_id = aws_internet_gateway.gw_internet[0].id    
+  # }  
   route {
     cidr_block = "10.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
@@ -100,24 +110,24 @@ resource "aws_route_table" "user_dmz_tgw_rt" {
 }
 
 
-################################ a. dev_dmz_public(nat_nwf, lb) ################################
-# resource "aws_route_table" "dev_dmz_igw_rt" {
-#   vpc_id = local.user_dev_vpc[1]
-#   route {
-#     cidr_block = local.dev_dmz_pub_subnet[4]
-#     network_interface_id = local.dev_dmz_end[0]
-#   }
-#   route {
-#     cidr_block = local.dev_dmz_pub_subnet[5]
-#     network_interface_id = local.dev_dmz_end[1]
-#   }
-#   tags = {
-#     Name = "${local.names[1]}_igw_rt"
-#   }
-# }
+################################ a. dev_dmz_igw_rt ################################
+resource "aws_route_table" "dev_dmz_igw_rt" {
+  vpc_id = local.user_dev_vpc[1]
+  route {
+    cidr_block = local.dev_dmz_pub_subnet[4]
+    network_interface_id = local.dev_dmz_end[0]
+  }
+  route {
+    cidr_block = local.dev_dmz_pub_subnet[5]
+    network_interface_id = local.dev_dmz_end[1]
+  }
+  tags = {
+    Name = "${local.names[1]}_igw_rt"
+  }
+}
 
-
-resource "aws_route_table" "dev_dmz_nat_nwf_rt" {
+################################ b. dev_dmz_public(nat, nwf, lb) ################################
+resource "aws_route_table" "dev_dmz_nwf_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[1]
   route {
@@ -129,21 +139,37 @@ resource "aws_route_table" "dev_dmz_nat_nwf_rt" {
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   }
   tags = {
-    Name = "${local.names[1]}_${local.userdev_pub_name[0]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
+    Name = "${local.names[1]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
+  }
+}
+
+resource "aws_route_table" "dev_dmz_nat_rt" {
+  count = 2
+  vpc_id = local.user_dev_vpc[1]
+  route {
+    cidr_block = "0.0.0.0/0"
+    network_interface_id = local.dev_dmz_end[count.index]
+  }
+  # route {
+  #   cidr_block = "10.0.0.0/8"
+  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  # }
+  tags = {
+    Name = "${local.names[1]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
   }
 }
 
 resource "aws_route_table" "dev_dmz_lb_rt" {
   count = 2
   vpc_id = local.user_dev_vpc[1]
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   network_interface_id = local.dev_dmz_end[count.index]
-  # }
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw_internet[1].id    
-  }    
+    network_interface_id = local.dev_dmz_end[count.index]
+  }
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   gateway_id = aws_internet_gateway.gw_internet[1].id    
+  # }    
   route {
     cidr_block = "10.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
@@ -153,7 +179,7 @@ resource "aws_route_table" "dev_dmz_lb_rt" {
   }
 }
 
-################################ b. dev_dmz_proxy ################################
+################################ c. dev_dmz_proxy ################################
 
 resource "aws_route_table" "dev_dmz_proxy_rt" {
   count = 2
@@ -175,7 +201,7 @@ resource "aws_route_table" "dev_dmz_proxy_rt" {
   }
 }
 
-################################ c. dev_dmz_pri_tgw ################################
+################################ d. dev_dmz_pri_tgw ################################
 
 resource "aws_route_table" "dev_dmz_tgw_rt" {
   count  = 2
@@ -270,21 +296,21 @@ resource "aws_route_table" "prodtest_tgw_rt" {
 
 ################################ a. user_dmz ################################
 
-# resource "aws_route_table_association" "user_dmz_igw_rt_asso" {
-#   gateway_id     = aws_internet_gateway.gw_internet[0].id
-#   route_table_id = aws_route_table.user_dmz_igw_rt.id
-# }
-
-resource "aws_route_table_association" "user_dmz_nat_nwf_rt_a_asso" {
-  count          = 2
-  subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index * 2].id
-  route_table_id = aws_route_table.user_dmz_nat_nwf_rt[0].id
+resource "aws_route_table_association" "user_dmz_igw_rt_asso" {
+  gateway_id     = aws_internet_gateway.gw_internet[0].id
+  route_table_id = aws_route_table.user_dmz_igw_rt.id
 }
 
-resource "aws_route_table_association" "user_dmz_nat_nwf_rt_c_asso" {
+resource "aws_route_table_association" "user_dmz_nwf_rt_asso" {
   count          = 2
-  subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index * 2 + 1].id
-  route_table_id = aws_route_table.user_dmz_nat_nwf_rt[1].id
+  subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index + 2].id
+  route_table_id = aws_route_table.user_dmz_nwf_rt[count.index].id
+}
+
+resource "aws_route_table_association" "user_dmz_nat_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_user_dmz_pub[count.index].id
+  route_table_id = aws_route_table.user_dmz_nat_rt[count.index].id
 }
 
 resource "aws_route_table_association" "user_dmz_lb_rt_asso" {
@@ -307,21 +333,21 @@ resource "aws_route_table_association" "user_dmz_tgw_rt_asso" {
 
 # # ################################ b. dev_dmz ################################
 
-# resource "aws_route_table_association" "dev_dmz_igw_rt_asso" {
-#   gateway_id     = aws_internet_gateway.gw_internet[1].id
-#   route_table_id = aws_route_table.dev_dmz_igw_rt.id
-# }
-
-resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_a_asso" {
-  count          = 2
-  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index * 2].id
-  route_table_id = aws_route_table.dev_dmz_nat_nwf_rt[0].id
+resource "aws_route_table_association" "dev_dmz_igw_rt_asso" {
+  gateway_id     = aws_internet_gateway.gw_internet[1].id
+  route_table_id = aws_route_table.dev_dmz_igw_rt.id
 }
 
-resource "aws_route_table_association" "dev_dmz_nat_nwf_rt_c_asso" {
+resource "aws_route_table_association" "dev_dmz_nwf_rt_asso" {
   count          = 2
-  subnet_id      = aws_subnet.subnet_dev_dmz_pub[(count.index * 2) + 1].id
-  route_table_id = aws_route_table.dev_dmz_nat_nwf_rt[1].id
+  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index + 2].id
+  route_table_id = aws_route_table.dev_dmz_nwf_rt[count.index].id
+}
+
+resource "aws_route_table_association" "dev_dmz_nat_rt_asso" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index + 4 ].id
+  route_table_id = aws_route_table.dev_dmz_nat_rt[count.index].id
 }
 
 resource "aws_route_table_association" "dev_dmz_lb_rt_asso" {
