@@ -346,7 +346,7 @@ resource "aws_route_table_association" "dev_dmz_nwf_rt_asso" {
 
 resource "aws_route_table_association" "dev_dmz_nat_rt_asso" {
   count          = 2
-  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index + 4 ].id
+  subnet_id      = aws_subnet.subnet_dev_dmz_pub[count.index].id
   route_table_id = aws_route_table.dev_dmz_nat_rt[count.index].id
 }
 
