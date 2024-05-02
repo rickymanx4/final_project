@@ -155,7 +155,7 @@ resource "aws_route_table" "dev_dmz_nat_rt" {
   #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
   # }
   tags = {
-    Name = "${local.names[1]}_${local.userdev_pub_name[2]}_rt_${local.az_ac[count.index]}"
+    Name = "${local.names[1]}_${local.userdev_pub_name[0]}_rt_${local.az_ac[count.index]}"
   }
 }
 

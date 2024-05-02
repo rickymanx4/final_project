@@ -213,7 +213,7 @@ resource "aws_lb" "shared_ext_lb" {
 resource "aws_lb_listener" "nexus_listener" {
   count             = 2
   load_balancer_arn = aws_lb.shared_ext_lb[count.index].arn
-  port              = local.shared_ext_ports[1]
+  port              = local.shared_ext_ports[0]
   protocol          = "TCP"
   # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
   # alpn_policy       = "HTTP2Preferred"
