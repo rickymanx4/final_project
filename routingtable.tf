@@ -50,10 +50,10 @@ resource "aws_route_table" "user_dmz_nat_rt" {
     cidr_block = "0.0.0.0/0"
     network_interface_id = local.user_dmz_end[count.index]
   }
-  # route {
-  #   cidr_block = "10.0.0.0/8"
-  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  # }
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }
   tags = {
     Name = "${local.names[0]}_${local.userdev_pub_name[0]}_rt_${local.az_ac[count.index]}"
   }
@@ -66,10 +66,6 @@ resource "aws_route_table" "user_dmz_lb_rt" {
     cidr_block = "0.0.0.0/0"
     network_interface_id = local.user_dmz_end[count.index]
   }
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.gw_internet[0].id    
-  # }  
   route {
     cidr_block = "10.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
@@ -86,7 +82,7 @@ resource "aws_route_table" "user_dmz_proxy_rt" {
   vpc_id = aws_vpc.project_vpc[0].id
   route {
     cidr_block = "0.0.0.0/0"
-    network_interface_id = local.user_dmz_end[count.index]
+    gateway_id = aws_nat_gateway.gw_user_nat[0].id
   }
   route {
     cidr_block = "10.0.0.0/8"
@@ -167,10 +163,10 @@ resource "aws_route_table" "dev_dmz_nat_rt" {
     cidr_block = "0.0.0.0/0"
     network_interface_id = local.dev_dmz_end[count.index]
   }
-  # route {
-  #   cidr_block = "10.0.0.0/8"
-  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  # }
+  route {
+    cidr_block = "10.0.0.0/8"
+    transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
+  }
   tags = {
     Name = "${local.names[1]}_${local.userdev_pub_name[0]}_rt_${local.az_ac[count.index]}"
   }
@@ -183,10 +179,7 @@ resource "aws_route_table" "dev_dmz_lb_rt" {
     cidr_block = "0.0.0.0/0"
     network_interface_id = local.dev_dmz_end[count.index]
   }
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.gw_internet[1].id    
-  # }    
+   
   route {
     cidr_block = "10.0.0.0/8"
     transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
@@ -201,10 +194,7 @@ resource "aws_route_table" "dev_dmz_lb_rt" {
 resource "aws_route_table" "dev_dmz_proxy_rt" {
   count = 2
   vpc_id = aws_vpc.project_vpc[1].id
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   transit_gateway_id = aws_ec2_transit_gateway.tgw_main.id
-  # }
+
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.gw_user_nat[1].id  
