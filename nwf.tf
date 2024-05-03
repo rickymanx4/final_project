@@ -94,47 +94,47 @@ resource "aws_networkfirewall_rule_group" "allow-local" {
 
 
 ####################### c. deny all http ########################
-resource "aws_networkfirewall_rule_group" "deny-http" {
-  capacity = 100
-  name     = "deny-http"
-  type     = "STATEFUL"
-  rule_group {
-    rules_source {
-      stateful_rule {
-        action = "DROP"
-        header {
-          destination      = aws_subnet.subnet_user_dmz_pri[0].cidr_block
-          destination_port = 80
-          direction        = "ANY"
-          protocol         = "HTTP"
-          source           = "0.0.0.0/0"
-          source_port      = 80
-        }
-        rule_option {
-          keyword = "sid:1"
-        }
-      }
-      stateful_rule {
-        action = "DROP"
-        header {
-          destination      = aws_subnet.subnet_user_dmz_pri[1].cidr_block
-          destination_port = 80
-          direction        = "ANY"
-          protocol         = "HTTP"
-          source           = "0.0.0.0/0"
-          source_port      = 80
-        }
-        rule_option {
-          keyword = "sid:2"
-        }
-      }      
-    }
-  }
+# resource "aws_networkfirewall_rule_group" "deny-http" {
+#   capacity = 100
+#   name     = "deny-http"
+#   type     = "STATEFUL"
+#   rule_group {
+#     rules_source {
+#       stateful_rule {
+#         action = "DROP"
+#         header {
+#           destination      = aws_subnet.subnet_user_dmz_pri[0].cidr_block
+#           destination_port = 80
+#           direction        = "ANY"
+#           protocol         = "HTTP"
+#           source           = "0.0.0.0/0"
+#           source_port      = 80
+#         }
+#         rule_option {
+#           keyword = "sid:1"
+#         }
+#       }
+#       stateful_rule {
+#         action = "DROP"
+#         header {
+#           destination      = aws_subnet.subnet_user_dmz_pri[1].cidr_block
+#           destination_port = 80
+#           direction        = "ANY"
+#           protocol         = "HTTP"
+#           source           = "0.0.0.0/0"
+#           source_port      = 80
+#         }
+#         rule_option {
+#           keyword = "sid:2"
+#         }
+#       }      
+#     }
+#   }
 
-  tags = {
-    "Name" = "deny-http"
-  }
-}
+#   tags = {
+#     "Name" = "deny-http"
+#   }
+# }
 
 ####################### d. deny all ssh ########################
 resource "aws_networkfirewall_rule_group" "deny-ssh" {
@@ -208,10 +208,10 @@ resource "aws_networkfirewall_firewall_policy" "nwf_policy" {
       resource_arn = aws_networkfirewall_rule_group.deny-ssh.arn
     }  
 
-    stateful_rule_group_reference {
-      # priority     = 2      
-      resource_arn = aws_networkfirewall_rule_group.deny-http.arn
-    }  
+    # stateful_rule_group_reference {
+    #   # priority     = 2      
+    #   resource_arn = aws_networkfirewall_rule_group.deny-http.arn
+    # }  
     # 알려지고 확인된 활성 봇넷과 기타 명령 및 제어(C2) 호스트의 여러 소스에서 자동 생성된 서명(s)    
     stateful_rule_group_reference {
       resource_arn = "arn:aws:network-firewall:ap-northeast-2:aws-managed:stateful-rulegroup/ThreatSignaturesBotnetActionOrder"

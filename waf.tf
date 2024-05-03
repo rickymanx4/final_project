@@ -301,14 +301,14 @@ resource "aws_wafv2_web_acl" "alb_wacl" {
 
 resource "aws_wafv2_web_acl_association" "wacl_user_lb_asso" { 
   count        = 2
-  # local.user_dmz_alb = tolist(data.aws_lb.user_alb_arn[*].arn) -> aws_lb.user_dmz_proxy_lb[count.index] 대체가능할듯?
+  # local.user_dmz_alb = tolist(data.aws_lb.user_alb_arn[*].arn) -> aws_lb.user_dmz_proxy_lb[count.index].arn 대체가능할듯?
   resource_arn = local.user_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.alb_wacl.arn
 }
 
 resource "aws_wafv2_web_acl_association" "wacl_dev_lb_asso" { 
   count        = 2
-  # local.dev_dmz_alb = tolist(data.aws_lb.dev_alb_arn[*].arn) -> aws_lb.dev_dmz_proxy_lb[count.index] 대체가능할듯?
+  # local.dev_dmz_alb = tolist(data.aws_lb.dev_alb_arn[*].arn) -> aws_lb.dev_dmz_proxy_lb[count.index].arn 대체가능할듯?
   resource_arn = local.dev_dmz_alb[count.index]
   web_acl_arn  = aws_wafv2_web_acl.alb_wacl.arn
 }
