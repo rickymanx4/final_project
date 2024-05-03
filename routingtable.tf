@@ -14,11 +14,11 @@ resource "aws_route_table" "user_dmz_igw_rt" {
     network_interface_id = local.user_dmz_end[1]
   }
   route {
-    cidr_block = local.user_dmz_pub_subnet[5]
+    cidr_block = local.user_dmz_pub_subnet[4]
     network_interface_id = local.user_dmz_end[1]
   }
   route {
-    cidr_block = local.user_dmz_pub_subnet[6]
+    cidr_block = local.user_dmz_pub_subnet[5]
     network_interface_id = local.user_dmz_end[1]
   }  
 
